@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.text {
+  color: pink;
+  font-size: 100px;
+}
+
+.nav-link{
+  @apply border border-solid border-transparent justify-around rounded-2xl text-base m-1 py-1 px-1.5 text-white;
+}
+
+.nav-link:hover{
+  color: black;
+  background-color: white;
+  transition-duration: 0.5s;
+}

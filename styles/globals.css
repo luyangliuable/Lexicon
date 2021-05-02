@@ -25,11 +25,11 @@ a {
 }
 
 .nav-link{
-  @apply border border-solid border-transparent justify-around rounded-2xl text-base m-1 py-1 px-1.5 text-white;
+  @apply justify-around text-base mx-4 text-black bg-transparent font-mono;
 }
 
 .nav-link:hover{
-  color: black;
-  background-color: white;
+  color: white;
+  background-color: black;
   transition-duration: 0.5s;
 }

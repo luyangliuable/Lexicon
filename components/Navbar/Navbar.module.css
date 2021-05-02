@@ -1,21 +1,22 @@
 #nav-bar-search-bar{
-    border: 1px solid black;
-    border-radius: 1rem;
+    border: 2px solid black;
+    border-radius: 2rem;
+    height: 2.8rem;
 }
 
 #nav-bar-search-bar:focus{
-    width: 20vw;
+    width: 15vw;
 }
 
 #nav-bar-search-button{
-    border: 1px solid transparent;
-    color: white;
-    font-size: 1.25rem;
-    border: 1px solid transparent;
-    border-radius: 2rem;
+    color: black;
+    font-size: 1.1rem;
+    border: 2px solid black;
+    border-radius: 3rem;
 }
 
 #nav-bar-search-button:hover, #nav-bar-search-button:active{
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: white;
+    transition-duration: 0.5s;
 }

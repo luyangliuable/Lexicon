@@ -1,29 +1,28 @@
 import Link from 'next/link';
 import style from "./Navbar.module.css";
-import { ReactElement } from 'react'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Nav() {
     return(
-  <nav className="navbar navbar-expand-lg flex bg-blue-900">
-  <a className="text-5xl text-gray-100 hover:underline hover:text-gray-100" href="/">Lexicon +</a>
+  <nav className="navbar navbar-expand-lg flex bg-transparent" id={style["main-nav"]}>
+  <span className="text-7xl text-black font-serif">Lexicon</span>
   <div className="collapse navbar-collapse justify-end inline-flex">
     <ul className="navbar-nav">
     <li className="nav-item active">
-        <Link href="/"><a className="nav-link" >About Us</a></Link>
+        <Link href="/"><a className="nav-link" >ABOUT US</a></Link>
       </li>
       <li className="nav-item active">
-        <Link href="/"><a className="nav-link">Our Services</a></Link>
+        <Link href="/"><a className="nav-link">OUR SERVICES</a></Link>
       </li>
       <li className="nav-item active">
-        <Link href="/"><a className="nav-link">Login</a></Link>
+        <Link href="/"><a className="nav-link">LOGIN</a></Link>
       </li>
       <li className="nav-item active">
-        <Link href="/"><a className="nav-link">Register</a></Link>
+        <Link href="/"><a className="nav-link">REGISTER</a></Link>
       </li>
       <li className="nav-item active">
-        <Link href="/"><a className="nav-link">Contact Us</a></Link>
+        <Link href="/"><a className="nav-link">CONTACT US</a></Link>
       </li>
     </ul>
     <form className="form-inline my-2 my-lg-0">

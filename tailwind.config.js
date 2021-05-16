@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
 		backgroundImage: theme => ({
-			'first-section': "url('/public/lexicon_background_image.jpeg')"
+			'time-savings': "url('/public/homepage/time.svg')"
 		   }),
 		height: {
 			"10vh": "10vh",

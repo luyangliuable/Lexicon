@@ -5,32 +5,80 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Nav() {
     return(
-  <nav className="navbar navbar-expand-lg flex bg-transparent" id={style["main-nav"]}>
-  <span className="text-7xl text-black font-serif">Lexicon</span>
-  <div className="collapse navbar-collapse justify-end inline-flex">
-    <ul className="navbar-nav">
-    <li className="nav-item active">
-        <Link href="/"><a className="nav-link" >ABOUT US</a></Link>
-      </li>
-      <li className="nav-item active">
-        <Link href="/"><a className="nav-link">OUR SERVICES</a></Link>
-      </li>
-      <li className="nav-item active">
-        <Link href="/"><a className="nav-link">LOGIN</a></Link>
-      </li>
-      <li className="nav-item active">
-        <Link href="/"><a className="nav-link">REGISTER</a></Link>
-      </li>
-      <li className="nav-item active">
-        <Link href="/"><a className="nav-link">CONTACT US</a></Link>
-      </li>
-    </ul>
-    <form className="form-inline my-2 my-lg-0">
-      <input className="form-control mr-sm-2" id={style["nav-bar-search-bar"]} type="search" placeholder="Search" aria-label="Search" />
-      <button className="btn btn-outline-success my-2 my-sm-0" type="submit" id={style["nav-bar-search-button"]}><FontAwesomeIcon icon={faSearch} /></button>
-    </form>
+  <div className="">
+    {/* Navbar upper section */}
+    <div className="w-screen bg-white h-16 flex justify-between fixed top-0">
+
+      {/* Brand Logo */}
+      <div className="w-1/2 h-full inline-flex">
+        <div className="text-blue-900 text-6xl font-serif mx-4 my-1 flex-1">Lexicon</div>
+      </div>
+      {/* Search Bar Section */}
+      <div className="w-1/2 h-full inline-flex flex-row-reverse">
+        <div className="w-3/6 h-full inline-flex">
+          <div className="flex-1 my-2">
+            {/* Search Bar */}
+            <div className="w-4/5 h-full inline-flex border-2 border-blue-900 rounded-full">
+              <input type="text" placeholder="Search" className="w-full px-2.5 border-none border-blue-900 rounded-full focus:outline-none focus:ring-4"/>
+            </div>
+            {/* Search Bar Button */}
+            <div className="w-1/5 h-full inline-flex">
+            <FontAwesomeIcon className="text-2xl text-blue-900 relative top-1 left-3 focus: cursor-pointer" icon={faSearch} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Navbar lower section */}
+    <div className="w-screen bg-gray-100 h-14 flex justify-between mt-16">
+
+      {/* About Us - Our Services - Contact Us */}
+      <div className=" w-4/12 h-full inline-flex">
+
+        <div className="flex-1 w-full">
+          <div className="
+          text-blue-900 border-2 rounded-xl focus: cursor-pointer
+          mx-2 my-2 py-1 text-center hover:bg-gray-300
+          text-xl font-semibold border-blue-900">About Us</div>
+        </div>
+
+        <div className="flex-1 w-full">
+        <div className="
+          text-blue-900 border-2 rounded-xl focus: cursor-pointer
+           mx-2 my-2 py-1 text-center hover:bg-gray-300
+          text-xl font-semibold border-blue-900 hover:cursor-pointer">Our Services</div>
+        </div>
+
+        <div className="flex-1 w-full">
+        <div className="
+          text-blue-900 border-2 rounded-xl focus: cursor-pointer
+          mx-2 my-2 py-1 text-center hover:bg-gray-300
+          text-xl font-semibold border-blue-900 hover:cursor-pointer">Contact Us</div>
+        </div>
+
+      </div>
+
+      {/* Login - Register */}
+      <div className="inline-flex w-2/12 h-full">
+
+      <div className="flex-1 w-3/6">
+        <div className="
+          text-blue-900 border-2 rounded-xl focus: cursor-pointer
+           mx-2 my-2 py-1 text-center hover:bg-gray-300
+          text-xl font-semibold border-blue-900 hover:cursor-pointer">Login</div>
+        </div>
+
+        <div className="flex-1 w-3/6">
+        <div className="
+          text-blue-900 border-2 rounded-xl focus: cursor-pointer
+          mx-2 my-2 py-1 text-center hover:bg-gray-300
+          text-xl font-semibold border-blue-900 hover:cursor-pointer">Register</div>
+        </div>
+
+      </div>
+    </div>
   </div>
-</nav>
     );
 }
 

@@ -7,7 +7,7 @@ function Nav() {
     return(
   <div className="">
     {/* Navbar upper section */}
-    <div className="w-screen bg-white h-16 flex justify-between fixed top-0">
+    <div className="w-screen bg-white h-16 flex justify-between fixed top-0 border-b-2 border-blue-900">
 
       {/* Brand Logo */}
       <div className="w-1/2 h-full inline-flex">

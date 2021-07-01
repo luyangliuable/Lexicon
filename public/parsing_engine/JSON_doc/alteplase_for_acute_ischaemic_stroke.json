@@ -1,0 +1,796 @@
+{
+  "id": "asdfasdf2134",
+  "meta": {
+    "DOC_TYPE": "monash_health_doc",
+    "ENGINE": "monash_health_parsing_engine"
+  },
+  "content": [
+    {
+      "id": "axs3",
+      "type": "title",
+      "parent": "asdfasdf2134",
+      "content": {
+        "id": "axs3_1",
+        "type": "text",
+        "parent": "axs3",
+        "content": "Alteplase for Acute Ischaemic Stroke Adult Medication Profile",
+        "additional_content": []
+      },
+      "additional_data": []
+    },
+    {
+      "id": "azy5",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "azy5_1",
+          "type": "heading",
+          "parent": "axs341",
+          "content": "Areas applicable",
+          "additional_data": []
+        },
+        {
+          "id": "azy5_2",
+          "type": "comms_seperated_list",
+          "parent": "axs341",
+          "content": [
+            "Monash Medical Centre Clayton Stroke Unit",
+            "Emergency Department",
+            "Intensive Care Unit",
+            "Monash Imaging Departments only"
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "hyu7",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "hyu7_1",
+          "type": "heading",
+          "parent": "hyu7",
+          "content": "Exclusions",
+          "additional_data": []
+        },
+        {
+          "id": "hyu7_2",
+          "type": "comms_seperated_list",
+          "parent": "hyu7_2",
+          "content": [
+            "Paediatrics",
+            "Clinical Areas not listed above"
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "yui5",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "yui5_1",
+          "type": "heading",
+          "parent": "yui5",
+          "content": "Medication Class",
+          "additional_data": []
+        },
+        {
+          "id": "yui5_2",
+          "type": "text",
+          "parent": "yui5",
+          "content": "Fibrinolytic agent",
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "bhu4",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "bhu4_1",
+          "type": "heading",
+          "parent": "bhu4",
+          "content": "Indications approved at Monash Health",
+          "additional_data": []
+        },
+        {
+          "id": "bhu4_2",
+          "type": "space_seperated_list",
+          "parent": "bhu4",
+          "content": [
+            "Acute ischaemic stroke - only to be administered by the Stroke Unit",
+            "Order form for “Thrombolysis Pathway Kit” (enclosed in kit with alteplase) must be completed and returned to Pharmacy as soon as possible"
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "nmn3",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "nmn3_1",
+          "type": "heading",
+          "parent": "nmn3",
+          "content": "contraindications",
+          "additional_data": []
+        },
+        {
+          "id": "nmn3_2",
+          "type": "space_seperated_list",
+          "parent": "nmn3",
+          "content": [
+            "Greater than 4.5 hours from focal anterior circulation ischaemic symptom onset",
+            "Known hypersensitivity to alteplase, gentamicin, natural rubber or latex, or any of the excipients",
+            "Obtunded or comatose patient",
+            "Seizure at stroke onset",
+            "Suspected or history of intracranial haemorrhage or bleeding diathesis",
+            "Ischaemic stroke or serious head injury within the last 3 months",
+            "Blood pressure persistently >185 mmHg systolic or 110 mmHg diastolic despite antihypertensive therapy or patients requiring aggressive therapy to control blood pressure",
+            "Recent (within 7 days) lumbar puncture or arterial puncture at a non-compressible site, prolonged cardiopulmonary resuscitation, obstetric delivery, or biopsy",
+            "Gastrointestinal or urinary tract haemorrhage in past 21 days",
+            "Major surgery in past 14 days",
+            "Significant trauma in the past 30 days",
+            "Myocardial infarction in past 3 months",
+            "Pregnancy",
+            "Presumed septic embolus",
+            "Arterial aneurysms, arterial/venous malformations",
+            "Heparin administration within 48 hours preceding onset with elevated APTT",
+            "Patients with an INR >1.5, Platelet count less than 100 x 109/L",
+            "Plasma glucose <2.8 mmol or >22 mmol",
+            "CT findings of significant early infarction with focal mass effect, hemispheric swelling or haemorrhage",
+            "History of central nervous system damage (e.g. intracranial tumour, aneurysm, surgery)",
+            "Acute pancreatitis, bacterial endocarditis or pericarditis",
+            "Severe hepatic disease or dysfunction"
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "nit7",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "nit7_1",
+          "type": "heading",
+          "parent": "nit7",
+          "content": "precautions",
+          "additional_data": []
+        },
+        {
+          "id": "nit7_2",
+          "type": "space_seperated_list",
+          "parent": "nit7",
+          "content": [
+            "Avoid non-compressible arterial puncture, rigid catheters and intramuscular injections during treatment with alteplase",
+            "Recent minor trauma (within 10 days) e.g. biopsy, major vessel puncture, cardiopulmonary resuscitation",
+            "Previous stroke",
+            "Hypertension",
+            "Advanced age (> 80 years); increased risk of haemorrhage, mortality and decreased efficacy. The use of alteplase should be weighed carefully against anticipated risks on an individual patient basis",
+            "Risk of haemorrhage may be increased with the use of warfarin, anti-platelet aggregation agents, heparin or any other agent which influences haemostasis before, during or within the first 24 hours after treatment with alteplase",
+            "Concomitant use of GP IIb/IIIa antagonists increases the risk of bleeding",
+            "Concomitant treatment with angiotensin converting enzyme inhibitors may increase the risk of anaphylactoid reaction",
+            "Use with caution in patients taking anticoagulants such as rivaroxaban, dabigatran or combination of aspirin and clopidogrel. Withhold aspirin for the first 24 hours after administering alteplase"
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "zxc5",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "zxc5_1",
+          "type": "heading",
+          "parent": "zxc5",
+          "content": "action",
+          "additional_data": []
+        },
+        {
+          "id": "zxc5_2",
+          "type": "text",
+          "parent": "zxc5",
+          "content": "Alteplase (a recombinant tissue plasminogen activator) is a serine protease that enhances conversion of plasminogen to plasmin. It binds to fibrin in a thrombus and converts the entrapped plasminogen to plasmin which initiates local fibrinolysis.",
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "ert6",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "ert6_1",
+          "type": "heading",
+          "parent": "ert6",
+          "content": "pharmacokinetics",
+          "additional_data": []
+        },
+        {
+          "id": "ert6_2",
+          "type": "text",
+          "parent": "ert6",
+          "content": "Rapidly cleared from circulating plasma by the liver. More than 50% present in plasma is cleared within 5 minutes after the infusion has been terminated and approximately 80% is cleared within 10 minutes.",
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "jkl8",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "jkl8_1",
+          "type": "heading",
+          "parent": "jkl8",
+          "content": "presentation",
+          "additional_data": []
+        },
+        {
+          "id": "jkl8_2",
+          "type": "space_seperated_list",
+          "parent": "jkl8",
+          "content": [
+            "Alteplase 10 mg and 50 mg vials: sterile, white to off white, lyophilised powder",
+            "Four acute thrombolysis boxes are kept in the Clayton emergency department imprest. These contain ONE 50 mg vial and FOUR 10 mg vials of alteplase. The stroke team complete the enclosed tracking forms and return to pharmacy."
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "hug4",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "hug4_1",
+          "type": "heading",
+          "parent": "hug4",
+          "content": "storage",
+          "additional_data": []
+        },
+        {
+          "id": "hug4_2",
+          "type": "space_seperated_list",
+          "parent": "hug4",
+          "content": [
+            "Store vials below 30°C. Protect vials from light (protecting the infusion is unnecessary).",
+            "Reconstituted solution stable for up to 24 hours at 2 to 8°C."
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "wer5",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "wer5_1",
+          "type": "heading",
+          "parent": "wer5",
+          "content": "dosing",
+          "additional_data": []
+        },
+        {
+          "id": "qaz4",
+          "type": "text",
+          "parent": "wer5",
+          "content": "0.9 mg/kg (up to maximum 90 mg) intravenously (IV) (see Appendix 1)",
+          "additional_data": {}
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "tyu7",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "tyu7_1",
+          "type": "heading",
+          "parent": "tyu7",
+          "content": "preparation",
+          "additional_data": []
+        },
+        {
+          "id": "tyu7_2",
+          "type": "space_seperated_list",
+          "parent": "tyu7",
+          "content": [
+            "Reconstitute vials with sterile water for injection provided (10 mL for 10 mg vial and 50 mL for 50 mg vial). Gently swirl to mix, do not shake.",
+            "Final solution is 1 mg/mL."
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "bmn6",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "bmn6_1",
+          "type": "heading",
+          "parent": "bmn6",
+          "content": "administration",
+          "additional_data": []
+        },
+        {
+          "id": "bmn6_2",
+          "type": "space_seperated_list",
+          "parent": "bmn6",
+          "content": [
+            "Administer via a dedicated large IV line.",
+            "Bolus dose: 10% of total dose; slow IV push over 1 minute",
+            "Maintenance infusion: Remaining 90% of total dose over 60 minutes via a volumetric infusion pump.",
+            "Refer to Appendix 1 for dosage and administration information."
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "ujh5",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "ujh5_1",
+          "type": "heading",
+          "parent": "ujh5",
+          "content": "monitoring requirements",
+          "additional_data": []
+        },
+        {
+          "id": "ujh5_2",
+          "type": "space_seperated_list",
+          "parent": "ujh5",
+          "content": [
+            "Baseline investigations: Full blood count; urea, electrolytes and creatinine; APTT, INR, blood glucose; liver function tests. CT Brain, ECG, patient weight, vital signs.",
+            {
+              "During infusion: Assess blood pressure and neurological function": {
+                "type": "unordered_list",
+                "content": [
+                  "Every 15 minutes for 2 hours after commencement of infusion then",
+                  "Every 30 minutes for 6 hours then",
+                  "Every hour until 24 hours post alteplase infusion completion"
+                ],
+                "additional_data": []
+              }
+            }
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "yut7",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "yut7_1",
+          "type": "heading",
+          "parent": "yut7",
+          "content": "adverse reactions",
+          "additional_data": []
+        },
+        {
+          "id": "yut7_2",
+          "type": "space_seperated_list",
+          "parent": "yut7",
+          "content": [
+            {
+              "Bleeding (most common)": {
+                "type": "unordered_list",
+                "content": [
+                  "Intracerebral haemorrhage (up to 10% of patients)",
+                  "Gastrointestinal haemorrhage",
+                  "Eye, urogenital, pericardial, respiratory tract haemorrhage",
+                  "Superficial bleeding (injection/puncture sites)"
+                ],
+                "additional_data": []
+              }
+            },
+            "Allergic reactions: Fever, chills, rash, bronchospasm, angioedema, hypotension, anaphylaxis, shock."
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "adg7",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "adg7_1",
+          "type": "heading",
+          "parent": "adg7",
+          "content": "pregnancy",
+          "additional_data": []
+        },
+        {
+          "id": "adg7_2",
+          "type": "space_seperated_list",
+          "parent": "adg7",
+          "content": [
+            "Therapeutic Goods Administration’s Australian Categorisation of Drugs: Category B1",
+            "Alteplase is NOT to be administered to pregnant women at Monash Health."
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "ufg6",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "ufg6_1",
+          "type": "heading",
+          "parent": "ufg6",
+          "content": "breastfeeding",
+          "additional_data": []
+        },
+        {
+          "id": "ufg6_2",
+          "type": "space_seperated_list",
+          "parent": "ufg6",
+          "content": [
+            "It is not known whether alteplase is excreted in human milk. Caution should be exercised when alteplase is administered to breastfeeding women.",
+            "For further information contact the Medicines Information Centre on ext. 42361."
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "yvb6",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "yvb6_1",
+          "type": "heading",
+          "parent": "yvb6",
+          "content": "medication tools",
+          "additional_data": []
+        },
+        {
+          "id": "yvb6_2",
+          "type": "text",
+          "parent": "yvb6",
+          "content": "not applicable",
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "qsc6",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "qsc6_1",
+          "type": "heading",
+          "parent": "qsc6",
+          "content": "references",
+          "additional_data": []
+        },
+        {
+          "id": "qsc6_2",
+          "type": "space_seperated_list",
+          "parent": "qsc6",
+          "content": [
+            "Boehringer Ingelheim, Actilyse MIMS Full Prescribing Information, Accessed June 2015",
+            "Dynamed. Thrombolytics for acute stroke. Ebsco Host.Updated 4/5/15.",
+            "Hacke W, Kaste M, Bluhmki E etal, Thrombolysis with alteplase 3 to 4.5 hours after acute ischaemic stroke, NEJM 2008;359:1317-1329",
+            "National Institute for Health and Clinical Excellence. Alteplase for treating acute ischaemic stroke (review of technology appraisal guidance 122). 2012. Accessed at: http://www.nice.org.uk/guidance/ta264/resources/guidance-alteplase-for-treating-acute-ischaemic-stroke-review-of-technology-appraisal-guidance-122-pdf",
+            "National Stroke Foundation. Clinical Guidelnes for Stroke Management 2010. Accessed at: https://www.nhmrc.gov.au/_files_nhmrc/publications/attachments/cp126.pdf",
+            "Rossi S (Ed.), Australian Medicines Handbook 2015",
+            "Society of Hospital Pharmacists of Australia, Australian Injectable Drugs Handbook, 6th Edition, 2014",
+            "Therapeutic Guidelines; Neurology. Version 4, 2011. Accessed July 2015.",
+            "Wahlgren N, Ahmed N, Davalos etal, Thrombolysis with alteplase 3-4.5 hours after acute ischaemic stroke (SITS-ISTR): an observational study, Lancet 2008;372:1303-1309",
+            "Wardlaw JM et al. Recombinant tissue plasminogen activator for acute ischaemic stroke: an updated systematic review and meta-analysis. Lancet. 2012; 379: 2364-72",
+            "Wardlaw JM et al. Thrombolysis for acute ischaemic stroke (review). Cochrane Database of Systemaic Reviews 2014, issue 7."
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "bvc5",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "bvc5_1",
+          "type": null,
+          "parent": "bvc5",
+          "content": null,
+          "additional_data": []
+        },
+        {
+          "id": "bvc5_2",
+          "type": "text",
+          "parent": "bvc5",
+          "content": "Refer to Medication Administration Procedure and Medication Prescribing Procedure",
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "bnh6",
+      "type": "section",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "bnh6_1",
+          "type": "heading",
+          "parent": "bnh6",
+          "content": "keywords or tags",
+          "additional_data": []
+        },
+        {
+          "id": "bnh6_2",
+          "type": "text",
+          "parent": "bnh6",
+          "content": "Actilyse",
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "bgt6",
+      "type": "table",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "bgt6_1",
+          "type": "table_title",
+          "parent": "bgt6",
+          "content": [],
+          "additional_data": []
+        },
+        {
+          "id": "bgt6_2",
+          "type": "table_content",
+          "parent": "bgt6",
+          "content": [
+            {
+              "heading": [
+                "document management"
+              ]
+            },
+            {
+              "content": [
+                {
+                  "row_id": 1,
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": "Executive Sponsor: Chief Medical Officer"
+                    }
+                  ]
+                },
+                {
+                  "row_id": 2,
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": "Person Responsible: Director of Pharmacy"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": []
+    },
+    {
+      "id": "tuy6",
+      "type": "table",
+      "parent": "asdfasdf2134",
+      "content": [
+        {
+          "id": "tuy6_1",
+          "type": "table_title",
+          "parent": "tuy6",
+          "content": "Appendix 1: Guide to alteplase dosage and administration using 1 mg/mL solution",
+          "additional_data": []
+        },
+        {
+          "id": "tuy6_2",
+          "type": "table_content",
+          "parent": "tuy6",
+          "content": [
+            {
+              "heading": [
+                "Patient weight (kg)",
+                "Total dose (0.9 mg/kg)",
+                "Bolus dose over 1 minute* (mL)",
+                "Maintenance infusion over 60 minutes* (mL/hour)",
+                "Patient weight (kg)",
+                "Total dose (0.9 mg/kg)",
+                "Bolus dose over 1 minute* (mL)",
+                "Maintenance infusion over 60 minutes* (mL/hour)"
+              ]
+            },
+            {
+              "content": [
+                {
+                  "row_id": "1",
+                  "content": [
+                    {
+                      "type": "int",
+                      "content": 40
+                    },
+                    {
+                      "type": "int",
+                      "content": 36
+                    },
+                    {
+                      "type": "float",
+                      "content": 3.6
+                    },
+                    {
+                      "type": "float",
+                      "content": 32.4
+                    },
+                    {
+                      "type": "int",
+                      "content": 70
+                    },
+                    {
+                      "type": "int",
+                      "content": 63
+                    },
+                    {
+                      "type": "float",
+                      "content": 6.3
+                    },
+                    {
+                      "type": "float",
+                      "content": 56.7
+                    }
+                  ]
+                },
+                {
+                  "row_id": "2",
+                  "content": [
+                    {
+                      "type": "int",
+                      "content": 41
+                    },
+                    {
+                      "type": "float",
+                      "content": 36.9
+                    },
+                    {
+                      "type": "float",
+                      "content": 3.7
+                    },
+                    {
+                      "type": "float",
+                      "content": 33.2
+                    },
+                    {
+                      "type": "int",
+                      "content": 71
+                    },
+                    {
+                      "type": "float",
+                      "content": 63.9
+                    },
+                    {
+                      "type": "float",
+                      "content": 6.4
+                    },
+                    {
+                      "type": "float",
+                      "content": 57.5
+                    }
+                  ]
+                },
+                {
+                  "row_id": "3",
+                  "content": [
+                    {
+                      "type": "int",
+                      "content": 42
+                    },
+                    {
+                      "type": "float",
+                      "content": 37.8
+                    },
+                    {
+                      "type": "float",
+                      "content": 3.8
+                    },
+                    {
+                      "type": "int",
+                      "content": 34
+                    },
+                    {
+                      "type": "int",
+                      "content": 72
+                    },
+                    {
+                      "type": "float",
+                      "content": 64.8
+                    },
+                    {
+                      "type": "float",
+                      "content": 6.5
+                    },
+                    {
+                      "type": "float",
+                      "content": 58.3
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "additional_data": []
+        }
+      ],
+      "additional_data": [
+        {
+          "id": "tuy6_1_1",
+          "type": "text",
+          "parent": "tuy6",
+          "content": "*Volumes and rates are for the 1 mg/mL reconstituted solution.",
+          "additonal_data": []
+        }
+      ]
+    }
+  ],
+  "additional_data": []
+}

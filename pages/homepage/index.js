@@ -7,11 +7,10 @@ import HomePageThirdSection from "./thirdSection/thirdSection";
 export default function HomePage() {
   return (
     <div>
-      {/* <NavBar></NavBar> */}
       <HomePageFirstSection></HomePageFirstSection>
       <HomePageSecondSection></HomePageSecondSection>
       <HomePageThirdSection></HomePageThirdSection>
       <Footer></Footer>
     </div>
-  )
+  );
 }

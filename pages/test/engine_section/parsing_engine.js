@@ -72,7 +72,8 @@ export const represent = (adjacency_list_input) => {
   const adjacency_list_input_length = adjacency_list_input.length;
   const doc_uid = Object.keys(adjacency_list_input[0])[0];
   const root_node_content = adjacency_list_input[0][`${doc_uid}`];
-  let ouptput_array = [];
+  let output_array = [];
+
   // iterating through the adjajency list content
   for (let index = 1; index < adjacency_list_input_length; index++) {
     const current_item = adjacency_list_input[index];
@@ -86,7 +87,12 @@ export const represent = (adjacency_list_input) => {
         // checking the type of the current element
         if (element["type"] == "text") {
           if (element["content"].length > 0) {
-            ouptput_array.push(`<h1>${element["content"]}</h1>`)
+            output_array.push(
+              <>
+                <h1>{element["content"]}</h1>
+                <br />
+              </>
+            );
             console.log(element["content"] + "\n");
           }
         }
@@ -106,6 +112,11 @@ export const represent = (adjacency_list_input) => {
         // if the type of the current element is heading
         if (element["type"] == "heading") {
           // console.log("HEADING");
+          output_array.push(
+            <>
+              <h4>{element["content"]}</h4>
+            </>
+          );
           console.log(element["content"] + ":-");
         }
         // if the type of the current element is comms_seperated list
@@ -114,8 +125,20 @@ export const represent = (adjacency_list_input) => {
           let output_string = "";
           for (let index = 0; index < element["content"].length; index++) {
             if (index != element["content"].length - 1) {
+              output_array.push(
+                <>
+                  <span>{element["content"][index]}, </span>
+                </>
+              );
               output_string += element["content"][index] + " , ";
             } else {
+              output_array.push(
+                <>
+                  <span>{element["content"][index]}</span>
+                  <br />
+                  <br />
+                </>
+              );
               output_string += element["content"][index];
             }
           }
@@ -125,6 +148,13 @@ export const represent = (adjacency_list_input) => {
         // if the type of the current element is text
         else if (element["type"] == "text") {
           // console.log("TEXT");
+          output_array.push(
+            <>
+              {element["content"]}
+              <br />
+              <br />
+            </>
+          );
           console.log(element["content"]);
           console.log("\n");
         }
@@ -133,9 +163,33 @@ export const represent = (adjacency_list_input) => {
         else if (element["type"] == "space_seperated_list") {
           for (let index = 0; index < element["content"].length; index++) {
             if (typeof element["content"][index] == "string") {
+              if (index == element["content"].length - 1) {
+                output_array.push(
+                  <>
+                    <li>{element["content"][index]}</li>
+                    <br />
+                  </>
+                );
+              } else {
+                output_array.push(
+                  <>
+                    <li>{element["content"][index]}</li>
+                  </>
+                );
+              }
               console.log(element["content"][index]);
-            } else if (typeof element["content"][index] == "object") {
+            }
+            // if an element of the space separated list is an object
+            else if (typeof element["content"][index] == "object") {
               console.log(Object.keys(element["content"][index])[0] + ": ");
+              const space_seperated_list_obj_key = Object.keys(
+                element["content"][index]
+              )[0];
+              output_array.push(
+                <>
+                  <li>{space_seperated_list_obj_key}: </li>
+                </>
+              );
               const obj_content =
                 element["content"][index][
                   Object.keys(element["content"][index])[0]
@@ -146,7 +200,20 @@ export const represent = (adjacency_list_input) => {
 
               // if the type of the inner object content is unordered list
               if (inner_obj_type == "unordered_list") {
-                inner_obj_content.forEach((obj_item) => {
+                inner_obj_content.forEach((obj_item, index) => {
+                  if (index == inner_obj_content.length - 1) {
+                    output_array.push(
+                      <>
+                        <li className="relative left-6">{obj_item}</li><br/>
+                      </>
+                    );
+                  } else {
+                    output_array.push(
+                      <>
+                        <li className="relative left-6">{obj_item}</li>
+                      </>
+                    );
+                  }
                   console.log("- " + obj_item);
                 });
               }
@@ -157,7 +224,7 @@ export const represent = (adjacency_list_input) => {
 
         // checking the current element for additional data
         if (element["additional_data"].length > 0) {
-          element["additional_data"].forEach((item) => {
+          element["additional_data"].forEach((item, index) => {
             console.log(item["data"] + "\n");
           });
         }
@@ -170,6 +237,7 @@ export const represent = (adjacency_list_input) => {
         if (element["type"] == "table_title") {
           // if the table title is not empty
           if (element["content"].length > 0) {
+            output_array.push(<><br/><h4>{element["content"]}</h4></>);
             console.log("[TABLE TITLE]: " + element["content"]);
           }
         }
@@ -189,19 +257,42 @@ export const represent = (adjacency_list_input) => {
                   output_string += current_element;
                 }
               });
+              output_array.push(
+                <div className="text-sm font-bold">{output_string}</div>
+              );
             }
             // table rows
             else {
               const current_item_content = item["content"];
-              current_item_content.forEach((current_row) => {
+              current_item_content.forEach((current_row, current_index) => {
                 const row_index = current_row["row_id"];
                 const row_content = current_row["content"];
                 output_string += row_index + " | ";
+                output_array.push(<span>{row_index} | </span>);
                 row_content.forEach((current_row_data, index) => {
+                  // if it's not the last item of the current row
                   if (index < row_content.length - 1) {
                     output_string += current_row_data["content"] + " | ";
+                    output_array.push(
+                      <span>{current_row_data["content"]} | </span>
+                    );
                   } else {
                     output_string += current_row_data["content"] + "\n";
+                    if (current_index == current_item_content.length - 1) {
+                      output_array.push(
+                        <span>
+                          {current_row_data["content"]}
+                          <br />
+                        </span>
+                      );
+                    } else {
+                      output_array.push(
+                        <span>
+                          {current_row_data["content"]}
+                          <br />
+                        </span>
+                      );
+                    }
                   }
                 });
               });
@@ -211,16 +302,24 @@ export const represent = (adjacency_list_input) => {
         }
         // table additional content
         if (element["additional_data"].length > 0) {
-          console.log("[ADDITIONAL DATA]: ");
+          console.log("NOTE: ");
+          output_array.push(
+            <>
+              <span className="font-bold">NOTE: </span>
+            </>
+          );
           element["additional_data"].forEach((additional_item) => {
+            output_array.push(<>{additional_item["content"]}</>);
             console.log(additional_item["content"]);
           });
+        } else {
+          output_array.push(<></>);
         }
       });
       console.log("\n");
     }
   }
-  return ouptput_array;
+  return output_array;
 };
 
 // represent(adjacency_list_transform(file_data));

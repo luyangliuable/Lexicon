@@ -126,7 +126,7 @@
           "id": "nmn3_1",
           "type": "heading",
           "parent": "nmn3",
-          "content": "contraindications",
+          "content": "Contraindications",
           "additional_data": []
         },
         {
@@ -171,7 +171,7 @@
           "id": "nit7_1",
           "type": "heading",
           "parent": "nit7",
-          "content": "precautions",
+          "content": "Precautions",
           "additional_data": []
         },
         {
@@ -203,7 +203,7 @@
           "id": "zxc5_1",
           "type": "heading",
           "parent": "zxc5",
-          "content": "action",
+          "content": "Action",
           "additional_data": []
         },
         {
@@ -225,7 +225,7 @@
           "id": "ert6_1",
           "type": "heading",
           "parent": "ert6",
-          "content": "pharmacokinetics",
+          "content": "Pharmacokinetics",
           "additional_data": []
         },
         {
@@ -247,7 +247,7 @@
           "id": "jkl8_1",
           "type": "heading",
           "parent": "jkl8",
-          "content": "presentation",
+          "content": "Presentation",
           "additional_data": []
         },
         {
@@ -272,7 +272,7 @@
           "id": "hug4_1",
           "type": "heading",
           "parent": "hug4",
-          "content": "storage",
+          "content": "Storage",
           "additional_data": []
         },
         {
@@ -297,7 +297,7 @@
           "id": "wer5_1",
           "type": "heading",
           "parent": "wer5",
-          "content": "dosing",
+          "content": "Dosing",
           "additional_data": []
         },
         {
@@ -319,7 +319,7 @@
           "id": "tyu7_1",
           "type": "heading",
           "parent": "tyu7",
-          "content": "preparation",
+          "content": "Preparation",
           "additional_data": []
         },
         {
@@ -344,7 +344,7 @@
           "id": "bmn6_1",
           "type": "heading",
           "parent": "bmn6",
-          "content": "administration",
+          "content": "Administration",
           "additional_data": []
         },
         {
@@ -371,7 +371,7 @@
           "id": "ujh5_1",
           "type": "heading",
           "parent": "ujh5",
-          "content": "monitoring requirements",
+          "content": "Monitoring requirements",
           "additional_data": []
         },
         {
@@ -406,7 +406,7 @@
           "id": "yut7_1",
           "type": "heading",
           "parent": "yut7",
-          "content": "adverse reactions",
+          "content": "Adverse reactions",
           "additional_data": []
         },
         {
@@ -442,7 +442,7 @@
           "id": "adg7_1",
           "type": "heading",
           "parent": "adg7",
-          "content": "pregnancy",
+          "content": "Pregnancy",
           "additional_data": []
         },
         {
@@ -467,7 +467,7 @@
           "id": "ufg6_1",
           "type": "heading",
           "parent": "ufg6",
-          "content": "breastfeeding",
+          "content": "Breastfeeding",
           "additional_data": []
         },
         {
@@ -492,14 +492,14 @@
           "id": "yvb6_1",
           "type": "heading",
           "parent": "yvb6",
-          "content": "medication tools",
+          "content": "Medication tools",
           "additional_data": []
         },
         {
           "id": "yvb6_2",
           "type": "text",
           "parent": "yvb6",
-          "content": "not applicable",
+          "content": "Not Applicable (N/A)",
           "additional_data": []
         }
       ],
@@ -514,7 +514,7 @@
           "id": "qsc6_1",
           "type": "heading",
           "parent": "qsc6",
-          "content": "references",
+          "content": "References",
           "additional_data": []
         },
         {
@@ -570,7 +570,7 @@
           "id": "bnh6_1",
           "type": "heading",
           "parent": "bnh6",
-          "content": "keywords or tags",
+          "content": "Keywords or tags",
           "additional_data": []
         },
         {
@@ -602,7 +602,7 @@
           "content": [
             {
               "heading": [
-                "document management"
+                "Document Management"
               ]
             },
             {

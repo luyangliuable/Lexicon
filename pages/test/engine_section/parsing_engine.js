@@ -204,13 +204,13 @@ export const represent = (adjacency_list_input) => {
                   if (index == inner_obj_content.length - 1) {
                     output_array.push(
                       <>
-                        <li className="relative left-6">{obj_item}</li><br/>
+                        <li className="ml-8">{obj_item}</li><br/>
                       </>
                     );
                   } else {
                     output_array.push(
                       <>
-                        <li className="relative left-6">{obj_item}</li>
+                        <li className="ml-8">{obj_item}</li>
                       </>
                     );
                   }

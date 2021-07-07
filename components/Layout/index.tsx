@@ -8,6 +8,7 @@ const Layout: React.FC<{ children: any; pageId: string }> = ({
 }) => (
   <>
     <Navbar pageId={pageId} />
+    {children}
   </>
 )
 

@@ -9,3 +9,9 @@
 .site-text-dark-blue {
   color: #296DA9;
 }
+
+.site-border-radius {
+  -webkit-border-radius: 27px;
+  -moz-border-radius: 27px;
+  border-radius: 27px;
+}

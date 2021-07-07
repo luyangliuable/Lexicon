@@ -8,9 +8,7 @@ export default function index() {
     <div>
       <NavBar></NavBar>
       <EngineSection></EngineSection>
-      <div className="fixed bottom-0 left-0 right-0">
-        <Footer></Footer>
-      </div>
+      <Footer></Footer>
     </div>
   );
 }

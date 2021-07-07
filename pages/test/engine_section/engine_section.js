@@ -12,7 +12,7 @@ class EngineSection extends Component {
 
   componentDidMount() {
     this.setState({
-      data: represent(adjacency_list_transform(monash_health_json_doc)),
+      data: represent(adjacency_list_transform(monash_health_json_doc))
     });
   }
 
@@ -20,15 +20,15 @@ class EngineSection extends Component {
     return (
       <div>
         {/* Section Heading Block */}
-        <div className="flex justify-between w-screen">
+        <div className="w-screen">
           {/* Heading */}
           <div className="text-4xl text-blue-900 m-1 inline-block">
             Parsing Engine
           </div>
         </div>
         {/* JSON Format Display Section */}
-        <div className="w-screen h-70vh">
-          <div className="m-2 border-2 border-blue-900 rounded-lg bg-gray-100 p-2 min-h-5vh">
+        <div className="w-screen mb-8">
+          <div id="json-doc-display" className="m-2 border-2 border-blue-900 rounded-lg bg-gray-100 p-2 min-h-5vh">
             {this.state.data}
           </div>
         </div>

@@ -17,7 +17,7 @@ module.exports = {
       "100vh": "100vh",
     },
     extend: {
-      backgroundImage: (theme) => ({
+      backgroundImage: theme => ({
         "time-savings": "url('/public/homepage/time.svg')",
       }),
       height: {
@@ -76,4 +76,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-};
+}

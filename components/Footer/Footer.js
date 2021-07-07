@@ -1,4 +1,4 @@
-import style from "./footer.module.css";
+import style from "./footer.module.css"
 
 function Footer() {
   return (
@@ -13,7 +13,7 @@ function Footer() {
         </div>
       </footer>
     </div>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

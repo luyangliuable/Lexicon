@@ -1,7 +1,8 @@
-import Link from "next/link";
-import NavBar from "../../components/Navbar/Nav";
-import Footer from "../../components/Footer/Footer";
-import EngineSection from "../test/engine_section/engine_section";
+import Link from "next/link"
+
+import Footer from "../../components/Footer/Footer"
+import NavBar from "../../components/Navbar/Nav"
+import EngineSection from "../test/engine_section/engine_section"
 
 export default function index() {
   return (
@@ -10,5 +11,5 @@ export default function index() {
       <EngineSection></EngineSection>
       <Footer></Footer>
     </div>
-  );
+  )
 }

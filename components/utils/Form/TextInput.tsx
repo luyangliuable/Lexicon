@@ -1,7 +1,7 @@
 import React from "react"
 
+import { isEmpty } from "../index"
 import Input from "./Input"
-import {isEmpty} from "../index";
 
 interface iTextInput {
   label?: any
@@ -13,6 +13,7 @@ interface iTextInput {
   disable: boolean
   name: string
   [id: string]: any
+  rounded: boolean
 }
 
 const TextInput: React.FC<iTextInput> = ({
@@ -24,11 +25,14 @@ const TextInput: React.FC<iTextInput> = ({
   disable,
   error,
   name,
+  rounded,
   ...rest
 }) => {
   return (
     <>
-      {!isEmpty(label) && <p className="text-sm flex item-center mb-1">{label}</p>}
+      {!isEmpty(label) && (
+        <p className="text-sm flex item-center mb-1">{label}</p>
+      )}
       <Input
         name={name}
         type={type}
@@ -38,7 +42,9 @@ const TextInput: React.FC<iTextInput> = ({
           onChange(e)
         }}
         placeholder={placeholder}
-        className={error ? "border-red-600 rounded-full hover:border-red-700" : ""}
+        className={` ${rounded && "rounded-full"}  ${
+          error && "border-red-600 hover:border-red-700"
+        }`}
         {...rest}
       />
     </>

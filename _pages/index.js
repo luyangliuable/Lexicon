@@ -1,7 +1,5 @@
-import Homepage from ".//homepage/index";
+import Homepage from ".//homepage/index"
 
 export default function Home() {
-  return (
-    <Homepage></Homepage>
-  )
+  return <Homepage></Homepage>
 }

@@ -1,7 +1,8 @@
-import React from 'react'
-import '../styles/globals.css';
+import React from "react"
 
-const LexiconClient : React.FC<any> = ({Component, pageProps}) => (
+import "../styles/globals.css"
+
+const LexiconClient: React.FC<any> = ({ Component, pageProps }) => (
   <Component {...pageProps} />
 )
 

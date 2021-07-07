@@ -1,23 +1,35 @@
-import React from 'react'
-import TextInput from "../utils/Form/TextInput";
-import CircleButton from "../AppButton/CircleButton";
-import {FaSearch} from "react-icons/fa";
+import React, { useState } from "react"
+import { FaSearch } from "react-icons/fa"
 
-interface iSearch{}
+import CircleButton from "../AppButton/CircleButton"
+import TextInput from "../utils/Form/TextInput"
 
-const Search : React.FC<iSearch> = () => {
-  return <div className="flex items-center">
-    <TextInput
-      onChange={()=> {}}
-      placeholder={"Search"}
-      value={""}
-      type={"text"}
-      error={false}
-      disable={false}
-      name={"Search"}/>
+interface iSearch {}
 
-      <CircleButton className="text-blue-800 text-xl text-white ml-3" onClick={() => {}} tooltip={"Search"} Icon={<FaSearch/>} enable={true}/>
-  </div>
+const Search: React.FC<iSearch> = () => {
+  const [search, setSearch] = useState<string | null>(null)
+  return (
+    <div className="flex items-center">
+      <TextInput
+        onChange={e => setSearch(e.target.value)}
+        placeholder={"Search"}
+        value={search || ""}
+        type={"text"}
+        error={false}
+        disable={false}
+        name={"Search"}
+        rounded={true}
+      />
+
+      <CircleButton
+        className="text-blue-800 text-xl text-white ml-3"
+        onClick={() => {}}
+        tooltip={"Search"}
+        Icon={<FaSearch />}
+        enable={true}
+      />
+    </div>
+  )
 }
 
 export default Search

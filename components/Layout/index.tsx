@@ -1,9 +1,13 @@
-import React from 'react'
-import Navbar from "../Navbar";
+import React from "react"
 
-const Layout : React.FC<{children : any}> = ({children}) => (
+import Navbar from "../Navbar"
+
+const Layout: React.FC<{ children: any; pageId: string }> = ({
+  children,
+  pageId,
+}) => (
   <>
-    <Navbar/>
+    <Navbar pageId={pageId} />
   </>
 )
 

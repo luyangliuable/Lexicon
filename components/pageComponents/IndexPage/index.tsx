@@ -1,5 +1,9 @@
 import React from "react"
 
-const IndexPage = () => {}
+import View from "./View"
+
+const IndexPage = () => {
+  return <View />
+}
 
 export default IndexPage

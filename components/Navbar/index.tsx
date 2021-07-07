@@ -19,7 +19,7 @@ const Navbar: React.FC<iNavbar> = ({ pageId }) => {
   return (
     <>
       <nav className="sticky top-0 left-0 bg-white shadow border-b z-40">
-        <div className="bg-gray-200 hidden md:block">
+        <div className="bg-gray-200 hidden">
           <SiteContainer className="flex item-center justify-end py-2">
             <div className="flex items-center">
               <NavbarLinksWrapper>

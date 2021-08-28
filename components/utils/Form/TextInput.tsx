@@ -42,7 +42,7 @@ const TextInput: React.FC<iTextInput> = ({
           onChange(e)
         }}
         placeholder={placeholder}
-        className={` ${rounded && "rounded-full"}  ${
+        className={` ${rounded && "rounded-full border-6 border-blue-900"}  ${
           error && "border-red-600 hover:border-red-700"
         }`}
         {...rest}

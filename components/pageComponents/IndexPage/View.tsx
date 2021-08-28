@@ -2,6 +2,8 @@ import React from "react"
 
 import HeroSection from "./HeroSection"
 import PanelSection from "./PanelSection"
+import WhyUseLexiconSection from "./WhyUseLexiconSection";
+import Footer from "./Footer/index";
 import { iView } from "./types"
 
 const View: React.FC<iView> = ({}) => {
@@ -9,6 +11,8 @@ const View: React.FC<iView> = ({}) => {
     <>
       <HeroSection />
       <PanelSection />
+      <WhyUseLexiconSection/>
+      <Footer/>
     </>
   )
 }

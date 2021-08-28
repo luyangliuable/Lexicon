@@ -1,0 +1,20 @@
+#first-section{
+    background-image: url('../../../../public/homepage/time.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#second-section{
+    background-image: url('../../../../public/homepage/easy_access.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#third-section{
+    background-image: url('../../../../public/homepage/quick_search.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}

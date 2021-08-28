@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { FaBars } from "react-icons/fa"
+import React, { useState } from "react";
+import { FaBars } from "react-icons/fa";
 
 import { WhiteAppButton } from "../AppButton/buttons"
 import LexiconLogo from "../Logos/LexiconLogo"
@@ -8,6 +8,8 @@ import SiteContainer from "../utils/SiteContainer"
 import DesktopNavbarLink from "./DesktopNavbarLink"
 import NavbarLinksWrapper from "./NavbarLinksWrapper"
 import Search from "./Search"
+import NavbarOptions from "../Navbar/NavbarOptions/navbarOptions";
+import Link from "next/link";
 
 interface iNavbar {
   pageId: string
@@ -37,10 +39,16 @@ const Navbar: React.FC<iNavbar> = ({ pageId }) => {
           </SiteContainer>
         </div>
         <SiteContainer className="flex items-center justify-between py-4 text-blue-900">
-          <div>
-            <LexiconLogo size={100} />
+          {/* Lexicon Logo */}
+          <div className="w-1/6">
+            <Link href="/"><LexiconLogo size={100} /></Link>
           </div>
-          <div className="hidden md:block">
+          {/* Navigation Bar Menu Options */}
+          <div className="w-4/6 hidden md:block">
+            <NavbarOptions></NavbarOptions>
+          </div>
+          {/* Search Bar */}
+          <div className="w-1/6 hidden md:block">
             <Search />
           </div>
           <div className="block md:hidden">

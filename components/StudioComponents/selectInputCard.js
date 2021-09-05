@@ -36,7 +36,7 @@ function NumericalInputCard() {
                         <div className="text-blue-900 text-xs">Max Selections</div>
                         <input className="text-sm border rounded px-1 w-20 border-opacity-50" type="number" placeholder="1"/>
                     </div>
-                    <div className="bg-blue-500 w-1/5 h-9 text-center pt-1.5 text-white cursor-pointer hover:bg-blue-600 rounded mr-1">
+                    <div className="bg-blue-500 p-2 text-center text-white cursor-pointer hover:bg-blue-600 rounded mr-1">
                         <FontAwesomeIcon icon={faPlus} className=""></FontAwesomeIcon> Select Item
                     </div>
                 </div>

@@ -44,7 +44,7 @@ function NumericalInputCard() {
                 </div>
                 {/* input row section */}
                 <div className=" flex flex-row-reverse">
-                    <div className="bg-blue-500 w-1/5 h-9 text-center pt-1.5 text-white cursor-pointer hover:bg-blue-600 rounded mr-1">
+                    <div className="bg-blue-500 py-2 px-3 text-center pt-1.5 text-white cursor-pointer hover:bg-blue-600 rounded mr-1">
                         <FontAwesomeIcon icon={faPlus} className=""></FontAwesomeIcon> Units
                     </div>
                 </div>

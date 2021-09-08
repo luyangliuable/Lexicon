@@ -1,7 +1,12 @@
 import { faEye, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
 
 function NumericalInputCard() {
+
+    const [questionText, updateQuestionText] = useState("");
+    const [maxSelectionVal, updateMaxSelection] = useState(1);
+
     return (<>
         <div className="w-full border shadow-md p-2 hover:shadow-xl mb-2">
             {/* card first row */}
@@ -14,7 +19,7 @@ function NumericalInputCard() {
             {/* card first row */}
             {/* card heading row */}
             <div className="h-9 w-full flex flex-row justify-between">
-                <input className="h-5/6 w-5/6 px-1 text-blue-900" placeholder="Edit Question Text ..." />
+                <input className="h-5/6 w-5/6 px-1 text-blue-900" placeholder="Edit Question Text ..." value={questionText} onChange={event => updateQuestionText(event.target.value)} />
                 <FontAwesomeIcon icon={faEye} className="text-xl my-1 cursor-pointer text-blue-900 mr-1"></FontAwesomeIcon>
             </div>
             {/* card heading row */}
@@ -34,7 +39,7 @@ function NumericalInputCard() {
                 <div className=" flex flex-row justify-between mb-1.5">
                     <div className="w-1/5 h-9 ml-1.5">
                         <div className="text-blue-900 text-xs">Max Selections</div>
-                        <input className="text-sm border rounded px-1 w-20 border-opacity-50" type="number" placeholder="1"/>
+                        <input className="text-sm border rounded px-1 w-20 border-opacity-50" type="number" placeholder="1" min="0" value={maxSelectionVal} onChange={event => updateMaxSelection(event.target.value)} />
                     </div>
                     <div className="bg-blue-500 p-2 text-center text-white cursor-pointer hover:bg-blue-600 rounded mr-1">
                         <FontAwesomeIcon icon={faPlus} className=""></FontAwesomeIcon> Select Item

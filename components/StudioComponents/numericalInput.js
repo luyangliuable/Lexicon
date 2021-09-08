@@ -1,7 +1,14 @@
 import { faEye, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
 
 function NumericalInputCard() {
+
+    const [questionText, updateQuestionText] = useState("");
+    const [minInput, updateMinInput] = useState("");
+    const [maxInput, updateMaxInput] = useState("");
+    const [allowedUnitsArray, updateAllowedUnitsArray] = useState([]);
+
     return (<>
         <div className="w-full border shadow-md p-2 hover:shadow-xl mb-2">
             {/* card first row */}
@@ -14,7 +21,7 @@ function NumericalInputCard() {
             {/* card first row */}
             {/* card heading row */}
             <div className="h-9 w-full flex flex-row justify-between">
-                <input className="h-5/6 w-5/6 px-1 text-blue-900" placeholder="Edit Question Text ..." />
+                <input className="h-5/6 w-5/6 px-1 text-blue-900" placeholder="Edit Question Text ..." value={questionText} onChange={event => updateQuestionText(event.target.value)} />
                 <FontAwesomeIcon icon={faEye} className="text-xl my-1 cursor-pointer text-blue-900 mr-1"></FontAwesomeIcon>
             </div>
             {/* card heading row */}
@@ -22,11 +29,11 @@ function NumericalInputCard() {
             <div className="flex justify-between px-1">
                 <div>
                     <div className="text-blue-900">Min Input</div>
-                    <input className="border w-36 rounded px-1" type="number" min="0" placeholder="0" />
+                    <input className="border w-36 rounded px-1" type="number" min="0" placeholder="0" value={minInput} onChange={event => updateMinInput(event.target.value)} />
                 </div>
                 <div>
                     <div className="text-blue-900">Max Input</div>
-                    <input className="border w-36 rounded px-1" type="number" min="0" placeholder="100" />
+                    <input className="border w-36 rounded px-1" type="number" min="0" placeholder="100" value={maxInput} onChange={event => updateMaxInput(event.target.value)} />
                 </div>
             </div>
             {/* min/max input row */}

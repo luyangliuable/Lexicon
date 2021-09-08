@@ -1,4 +1,4 @@
-import { faEllipsisV, faEye, faFileExport, faPlusCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faEye, faEyeSlash, faFileExport, faPlusCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import React, { Component } from "react";
@@ -14,44 +14,62 @@ class studioMain extends Component {
         super(props);
         this.state = {
             showSideBarMenu: false,
-            selectInputCard: [],
-            numericalInputCard: [],
-            descriptionCard: [],
-            referenceCard: [],
-            numericalOutputCard: [],
-            ControllerCard: []
+            metaList: [],
+            inputsList: [],
+            outputsList: [],
+            previewMode: false
         }
         this.toggleSideBarMenu = this.toggleSideBarMenu.bind(this);
+        this.togglePreviewMode = this.togglePreviewMode.bind(this);
     }
 
     // method for handling the opening and the closure of the side bar menu
     toggleSideBarMenu() {
-        console.log("Hello");
-        if (this.state.showSideBarMenu) {
-            this.setState({
-                showSideBarMenu: false
-            })
+        if (!this.state.previewMode) {
+            if (this.state.showSideBarMenu) {
+                this.setState({ showSideBarMenu: false })
+            } else {
+                this.setState({ showSideBarMenu: true })
+            }
+        } else {
+            window.alert("Cards cannot be added or edited in a preview mode !");
         }
-        else {
-            this.setState({ showSideBarMenu: true })
+    }
+
+    // method for toggling the preview mode
+    togglePreviewMode() {
+        if (!this.state.previewMode) { this.setState({ previewMode: true }); } 
+        else { this.setState({ previewMode: false });}
+    }
+
+    // method when one of the side bar options has been selected 
+    sideBarOptionSelected = (event) => {
+        const componentType = event.target.getAttribute('data-component-type');
+        const componentName = event.target.getAttribute('data-component-name');
+        const componentElement = { type: componentType, name: componentName }
+        if (componentType === "input") {
+            this.setState({ inputsList: [...this.state.inputsList, componentElement] })
+        } else if (componentType === "meta") {
+            this.setState({ metaList: [...this.state.metaList, componentElement] })
+        } else {
+            this.setState({ outputsList: [...this.state.outputsList, componentElement] })
         }
     }
 
     render() {
         return (<>
-            <div className="w-100vw h-100vh">
+            <div className="w-100vw min-h-screen">
                 {/* side bar menu for card components */}
                 <Offcanvas show={this.state.showSideBarMenu} onHide={this.toggleSideBarMenu}>
                     <Offcanvas.Header closeButton>
                         <div className="text-4xl text-blue-900">Components</div>
                     </Offcanvas.Header>
                     <Offcanvas.Body className="divide-y divide-gray-300">
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900">Select Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900">Numerical Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900">Description Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900">Reference Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900">Numerical Output Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900">Controller Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type="input" data-component-name="SelectInput" onClick={this.sideBarOptionSelected}>Select Input Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type="input" data-component-name="NumericalInput" onClick={this.sideBarOptionSelected}>Numerical Input Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type="meta" data-component-name="DescriptionComponent" onClick={this.sideBarOptionSelected}>Description Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type="meta" data-component-name="ReferenceComponent" onClick={this.sideBarOptionSelected}>Reference Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type="output" data-component-name="NumericalOutputComponent" onClick={this.sideBarOptionSelected}>Numerical Output Card</div>
                     </Offcanvas.Body>
                 </Offcanvas>
                 {/* side bar menu for card components */}
@@ -62,8 +80,8 @@ class studioMain extends Component {
                         <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={this.toggleSideBarMenu}>
                             <FontAwesomeIcon icon={faPlusCircle} className="mr-1.5" />Create
                         </div>
-                        <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900">
-                            <FontAwesomeIcon icon={faEye} className="mr-1.5" />Preview
+                        <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={this.togglePreviewMode}>
+                            {this.state.previewMode ? (<><FontAwesomeIcon icon={faEyeSlash} className="mr-1.5" />Disable Preview Mode</>) : (<><FontAwesomeIcon icon={faEye} className="mr-1.5" />Enable Preview Mode</>)}
                         </div>
                         <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900">
                             <FontAwesomeIcon icon={faFileExport} className="mr-1.5" />Export to JSON
@@ -78,22 +96,21 @@ class studioMain extends Component {
                         <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
                             <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Meta
                         </div>
-                        <DecriptionCardComponent></DecriptionCardComponent>
-                        <ReferenceCard></ReferenceCard>
+                        {this.state.metaList.map((item, index) => <>{item.name == "ReferenceComponent" ? (<ReferenceCard key={index}></ReferenceCard>) : (<DecriptionCardComponent key={index}></DecriptionCardComponent>)}</>)}
                     </div>
                     {/* meta column */}
                     <div className="w-1/3 mx-2">
                         <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
                             <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Inputs
                         </div>
-                        <NumericalInputCard></NumericalInputCard>
-                        <SelectInputCard></SelectInputCard>
+                        {this.state.inputsList.map((item, index) => <>{item.name == "SelectInput" ? (<SelectInputCard key={index}></SelectInputCard>) : (<NumericalInputCard key={index}></NumericalInputCard>)}</>)}
                     </div>
                     <div className="w-1/3 mx-2">
                         <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
                             <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Outputs
                         </div>
-                        <NumericalOutputCard></NumericalOutputCard>
+                        {this.state.outputsList.map((item, index) => <NumericalOutputCard key={index}></NumericalOutputCard>)}
+
                     </div>
                 </div>
                 {/* card display section */}

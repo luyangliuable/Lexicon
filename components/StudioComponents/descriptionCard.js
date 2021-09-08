@@ -1,7 +1,12 @@
 import { faEye, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
 
 function DescriptionCard() {
+
+    const [description, descriptionUpdate] = useState("");
+    const [content, contentUpdate] = useState("");
+
     return (<>
         <div className="w-full border shadow-md p-2 hover:shadow-xl mb-2">
             {/* card first row */}
@@ -14,12 +19,12 @@ function DescriptionCard() {
             {/* card first row */}
             {/* card heading row */}
             <div className="h-9 w-full flex flex-row justify-between">
-                <input className="h-5/6 w-5/6 px-1 text-blue-900" placeholder="Edit Description Heading ..." />
+                <input className="h-5/6 w-5/6 px-1 text-blue-900" value={description} placeholder="Edit Description Heading ..." onChange={event => descriptionUpdate(event.target.value)} />
                 <FontAwesomeIcon icon={faEye} className="text-xl my-1 cursor-pointer text-blue-900"></FontAwesomeIcon>
             </div>
             {/* card heading row */}
             {/* card textarea row */}
-            <textarea className="h-20 w-full border p-1.5 border-gray-300 rounded" placeholder="Write Content ..."></textarea>
+            <textarea className="h-20 w-full border p-1.5 border-gray-300 rounded" value={content} placeholder="Write Content ..." onChange={event => contentUpdate(event.target.value)}></textarea>
             {/* card textarea row */}
         </div>
     </>)

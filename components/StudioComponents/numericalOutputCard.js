@@ -1,7 +1,12 @@
 import { faEye, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
 
 function NumericalOutputCard() {
+
+    const [outputHeading, updateOutputHeading] = useState("");
+    const [outputDescription, updateOutputDescription] = useState("");
+
     return (<>
         <div className="w-full border shadow-md p-2 hover:shadow-xl mb-2">
             {/* card first row */}
@@ -14,13 +19,13 @@ function NumericalOutputCard() {
             {/* card first row */}
             {/* card heading row */}
             <div className="h-9 w-full flex flex-row justify-between">
-                <input className="h-5/6 w-5/6 px-1 text-blue-900" placeholder="Edit Output Heading ..." />
+                <input className="h-5/6 w-5/6 px-1 text-blue-900" placeholder="Edit Output Heading ..." value={outputHeading} onChange={event=>updateOutputHeading(event.target.value)} />
                 <FontAwesomeIcon icon={faEye} className="text-xl my-1 cursor-pointer text-blue-900"></FontAwesomeIcon>
             </div>
             {/* card heading row */}
             {/* card textarea row */}
             <div className="text-sm text-blue-900 mb-2 mx-1">Add Output Description</div>
-            <textarea className="h-20 w-full border p-1.5 border-gray-300 rounded" placeholder="Output Description ..."></textarea>
+            <textarea className="h-20 w-full border p-1.5 border-gray-300 rounded" placeholder="Output Description ..." value={outputDescription} onChange={event=>updateOutputDescription(event.target.value)}></textarea>
             {/* card textarea row */}
         </div>
     </>)

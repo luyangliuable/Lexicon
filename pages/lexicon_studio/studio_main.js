@@ -2,11 +2,11 @@ import { faEllipsisV, faEye, faEyeSlash, faFileExport, faPlusCircle, faTrashAlt 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import React, { Component } from "react";
-import DecriptionCardComponent from "./../../components/StudioComponents/descriptionCard";
-import NumericalOutputCard from "../../components/StudioComponents/numericalOutputCard";
-import ReferenceCard from "../../components/StudioComponents/referenceCard";
-import NumericalInputCard from "../../components/StudioComponents/numericalInput";
-import SelectInputCard from "../../components/StudioComponents/selectInputCard";
+import DecriptionCardComponent from "./../../components/StudioComponents/descriptionCard/descriptionCard";
+import NumericalOutputCard from "../../components/StudioComponents/numericalOutputCard/numericalOutputCard";
+import ReferenceCard from "../../components/StudioComponents/referenceCard/referenceCard";
+import NumericalInputCard from "../../components/StudioComponents/numericalInputCard/numericalInput";
+import SelectInputCard from "../../components/StudioComponents/selectInputCard/selectInputCard";
 
 class studioMain extends Component {
 
@@ -38,8 +38,8 @@ class studioMain extends Component {
 
     // method for toggling the preview mode
     togglePreviewMode() {
-        if (!this.state.previewMode) { this.setState({ previewMode: true }); } 
-        else { this.setState({ previewMode: false });}
+        if (!this.state.previewMode) { this.setState({ previewMode: true }); }
+        else { this.setState({ previewMode: false }); }
     }
 
     // method when one of the side bar options has been selected 
@@ -96,20 +96,20 @@ class studioMain extends Component {
                         <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
                             <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Meta
                         </div>
-                        {this.state.metaList.map((item, index) => <>{item.name == "ReferenceComponent" ? (<ReferenceCard key={index}></ReferenceCard>) : (<DecriptionCardComponent key={index}></DecriptionCardComponent>)}</>)}
+                        {this.state.metaList.map((item, index) => <>{item.name == "ReferenceComponent" ? (<ReferenceCard elementIndex={index} key={index}></ReferenceCard>) : (<DecriptionCardComponent elementIndex={index} key={index}></DecriptionCardComponent>)}</>)}
                     </div>
                     {/* meta column */}
                     <div className="w-1/3 mx-2">
                         <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
                             <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Inputs
                         </div>
-                        {this.state.inputsList.map((item, index) => <>{item.name == "SelectInput" ? (<SelectInputCard key={index}></SelectInputCard>) : (<NumericalInputCard key={index}></NumericalInputCard>)}</>)}
+                        {this.state.inputsList.map((item, index) => <>{item.name == "SelectInput" ? (<SelectInputCard elementIndex={index} key={index}></SelectInputCard>) : (<NumericalInputCard elementIndex={index} key={index}></NumericalInputCard>)}</>)}
                     </div>
                     <div className="w-1/3 mx-2">
                         <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
                             <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Outputs
                         </div>
-                        {this.state.outputsList.map((item, index) => <NumericalOutputCard key={index}></NumericalOutputCard>)}
+                        {this.state.outputsList.map((item, index) => <NumericalOutputCard elementIndex={index} key={index}></NumericalOutputCard>)}
 
                     </div>
                 </div>

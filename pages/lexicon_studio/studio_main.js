@@ -7,6 +7,18 @@ import NumericalOutputCard from "../../components/StudioComponents/numericalOutp
 import ReferenceCard from "../../components/StudioComponents/referenceCard/referenceCard";
 import NumericalInputCard from "../../components/StudioComponents/numericalInputCard/numericalInput";
 import SelectInputCard from "../../components/StudioComponents/selectInputCard/selectInputCard";
+import { v4 as uuidv4 } from 'uuid';
+import BivalentInputCard from "../../components/StudioComponents/bivalentInputCard/bivalentInputCard";
+import SliderInputCard from "../../components/StudioComponents/sliderInputCard/sliderInputCard";
+import PointInputCard from "../../components/StudioComponents/pointInputCard/pointInputCard";
+import DescriptionCardPreviewMode from "../../components/StudioComponents/descriptionCard/descriptionCardPreviewMode";
+import ReferenceCardPreviewMode from "../../components/StudioComponents/referenceCard/referenceCardPreviewMode";
+import NumericalOutputCardPreviewMode from "../../components/StudioComponents/numericalOutputCard/numericalOutputCardPreviewMode";
+import BivalentInputCardPreviewMode from "../../components/StudioComponents/bivalentInputCard/bivalentInputCardPreviewMode";
+import SliderInputCardPreviewMode from "../../components/StudioComponents/sliderInputCard/sliderInputCardPreviewMode";
+import SelectInputCardPreviewMode from "../../components/StudioComponents/selectInputCard/selectInputCardPreviewMode";
+import NumericalInputCardPreviewMode from "../../components/StudioComponents/numericalInputCard/numericalInputCardPreviewMode";
+import PointInputCardPreviewMode from "../../components/StudioComponents/pointInputCard/pointInputCardPreviewMode";
 
 class studioMain extends Component {
 
@@ -21,6 +33,10 @@ class studioMain extends Component {
         }
         this.toggleSideBarMenu = this.toggleSideBarMenu.bind(this);
         this.togglePreviewMode = this.togglePreviewMode.bind(this);
+        this.sideBarOptionSelected = this.sideBarOptionSelected.bind(this);
+        this.captureCardComponentStateChange = this.captureCardComponentStateChange.bind(this);
+        this.handleCardComponentDelete = this.handleCardComponentDelete.bind(this);
+        this.conditionalCardRender = this.conditionalCardRender.bind(this);
     }
 
     // method for handling the opening and the closure of the side bar menu
@@ -38,7 +54,7 @@ class studioMain extends Component {
 
     // method for toggling the preview mode
     togglePreviewMode() {
-        if (!this.state.previewMode) { this.setState({ previewMode: true }); }
+        if (!this.state.previewMode && this.performCardCheckForPreviewMode()) { this.setState({ previewMode: true }); }
         else { this.setState({ previewMode: false }); }
     }
 
@@ -46,13 +62,395 @@ class studioMain extends Component {
     sideBarOptionSelected = (event) => {
         const componentType = event.target.getAttribute('data-component-type');
         const componentName = event.target.getAttribute('data-component-name');
-        const componentElement = { type: componentType, name: componentName }
-        if (componentType === "input") {
-            this.setState({ inputsList: [...this.state.inputsList, componentElement] })
-        } else if (componentType === "meta") {
-            this.setState({ metaList: [...this.state.metaList, componentElement] })
-        } else {
-            this.setState({ outputsList: [...this.state.outputsList, componentElement] })
+        const componentElement = { type: componentType, name: componentName, uuid: uuidv4() };
+
+        // meta list type element
+        if (componentElement.type === 'meta') {
+            // Description Card
+            if (componentElement.name === 'DescriptionComponent') {
+                componentElement.descriptionHeading = '';
+                componentElement.content = '';
+                componentElement.previewModeDisplay = true;
+                componentElement.editMode = false;
+            }
+            // Reference Card
+            else if (componentElement.name === 'ReferenceComponent') {
+                componentElement.referenceName = '';
+                componentElement.url_link = '';
+                componentElement.previewModeDisplay = true;
+                componentElement.editMode = false;
+            }
+            this.setState({ metaList: [...this.state.metaList, componentElement] });
+        }
+        // input list type element
+        else if (componentElement.type === 'input') {
+
+            // Bivalent Input Card
+            if (componentElement.name === 'BivalentInput') {
+                componentElement.questionText = '';
+                componentElement.previewModeDisplay = true;
+                componentElement.editMode = false;
+            }
+            // Slider Input Card
+            else if (componentElement.name === 'SliderInput') {
+                componentElement.questionText = '';
+                componentElement.minInput = Number.NaN;
+                componentElement.stepInterval = 0;
+                componentElement.maxInput = Number.NaN;
+                componentElement.previewModeDisplay = true;
+                componentElement.editMode = false;
+            }
+
+            // Select Input Card
+            else if (componentElement.name === 'SelectInput') {
+                componentElement.questionText = '';
+                componentElement.previewModeDisplay = true;
+                componentElement.maxSelectionVal = 1;
+                componentElement.optionsObject = {};
+                componentElement.editMode = false;
+            }
+
+            // Numerical Input Card
+            else if (componentElement.name === 'NumericalInput') {
+                componentElement.questionText = '';
+                componentElement.previewModeDisplay = true;
+                componentElement.minInput = Number.NaN;
+                componentElement.maxInput = Number.NaN;
+                componentElement.unitsObject = {};
+                componentElement.editMode = false;
+            }
+
+            // Point Input Card
+            else if (componentElement.name === 'PointInput') {
+                componentElement.questionText = '';
+                componentElement.previewModeDisplay = true;
+                componentElement.optionsObject = {};
+                componentElement.editMode = false;
+            }
+
+            this.setState({ inputsList: [...this.state.inputsList, componentElement] });
+        }
+        // outputs list type element
+        else if (componentElement.type === 'output') {
+
+            // Numerical Output Card
+            if (componentElement.name === 'NumericalOutputComponent') {
+                componentElement.outputHeading = '';
+                componentElement.previewModeDisplay = true;
+                componentElement.outputDescription = '';
+                componentElement.editMode = false;
+            }
+            this.setState({ outputsList: [...this.state.outputsList, componentElement] });
+        }
+
+    }
+
+    // method for capturing the state changes in the card components
+    captureCardComponentStateChange(stateObject) {
+        switch (stateObject.type) {
+            case "meta":
+                const stateObjectToBeUpdatedIndex_m = this.state.metaList.findIndex(item => item.uuid == stateObject.uuid);
+                switch (stateObject.name) {
+                    case 'DescriptionComponent':
+                        this.setState(prevState => {
+                            let metaListLocalCopy = prevState.metaList;
+                            metaListLocalCopy[stateObjectToBeUpdatedIndex_m].descriptionHeading = stateObject.descriptionHeading;
+                            metaListLocalCopy[stateObjectToBeUpdatedIndex_m].content = stateObject.content;
+                            metaListLocalCopy[stateObjectToBeUpdatedIndex_m].previewModeDisplay = stateObject.previewModeDisplay;
+                            return { metaList: metaListLocalCopy };
+                        })
+                    case 'ReferenceComponent':
+                        this.setState(prevState => {
+                            let metaListLocalCopy = prevState.metaList;
+                            metaListLocalCopy[stateObjectToBeUpdatedIndex_m].referenceName = stateObject.referenceName;
+                            metaListLocalCopy[stateObjectToBeUpdatedIndex_m].url_link = stateObject.url_link;
+                            metaListLocalCopy[stateObjectToBeUpdatedIndex_m].previewModeDisplay = stateObject.previewModeDisplay;
+                            return { metaList: metaListLocalCopy };
+                        })
+                }
+            case 'input':
+                const stateObjectToBeUpdatedIndex_i = this.state.inputsList.findIndex(item => item.uuid == stateObject.uuid);
+                switch (stateObject.name) {
+                    case 'BivalentInput':
+                        this.setState(prevState => {
+                            let inputListLocalCopy = prevState.inputsList;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].questionText = stateObject.questionText;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].previewModeDisplay = stateObject.previewModeDisplay;
+                            return { inputsList: inputListLocalCopy };
+                        })
+
+                    case 'SliderInput':
+                        this.setState(prevState => {
+                            let inputListLocalCopy = prevState.inputsList;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].questionText = stateObject.questionText;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].minInput = stateObject.minInput;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].stepInterval = stateObject.stepInterval;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].maxInput = stateObject.maxInput;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].previewModeDisplay = stateObject.previewModeDisplay;
+                            return { inputsList: inputListLocalCopy };
+                        })
+
+                    case 'SelectInput':
+                        this.setState(prevState => {
+                            let inputListLocalCopy = prevState.inputsList;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].questionText = stateObject.questionText;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].previewModeDisplay = stateObject.previewModeDisplay;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].maxSelectionVal = stateObject.maxSelectionVal;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].optionsObject = stateObject.optionsObject;
+                            return { inputsList: inputListLocalCopy };
+                        });
+
+                    case 'NumericalInput':
+                        this.setState(prevState => {
+                            let inputListLocalCopy = prevState.inputsList;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].questionText = stateObject.questionText;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].previewModeDisplay = stateObject.previewModeDisplay;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].minInput = stateObject.minInput;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].maxInput = stateObject.maxInput;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].unitsObject = stateObject.unitsObject;
+                            return { inputsList: inputListLocalCopy };
+                        });
+
+                    case 'PointInput':
+                        this.setState(prevState => {
+                            let inputListLocalCopy = prevState.inputsList;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].questionText = stateObject.questionText;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].previewModeDisplay = stateObject.previewModeDisplay;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].optionsObject = stateObject.optionsObject;
+                            return { inputsList: inputListLocalCopy };
+                        })
+                }
+            case 'output':
+                const stateObjectToBeUpdatedIndex_o = this.state.outputsList.findIndex(item => item.uuid == stateObject.uuid);
+                switch (stateObject.name) {
+                    case 'NumericalOutputComponent':
+                        this.setState(prevState => {
+                            let outputListLocalCopy = prevState.outputsList;
+                            outputListLocalCopy[stateObjectToBeUpdatedIndex_o].outputHeading = stateObject.outputHeading;
+                            outputListLocalCopy[stateObjectToBeUpdatedIndex_o].outputDescription = stateObject.outputDescription;
+                            outputListLocalCopy[stateObjectToBeUpdatedIndex_o].previewModeDisplay = stateObject.previewModeDisplay;
+                            return { outputsList: outputListLocalCopy };
+                        })
+                }
+        }
+    }
+
+    // method that performs a check against those cards whose preview mode is enabled
+    performCardCheckForPreviewMode() {
+
+        // check for cards in the meta list
+        const metaListLocalCopy = this.state.metaList;
+        for (let index_m = 0; index_m < metaListLocalCopy.length; index_m++) {
+            const current_card_m = metaListLocalCopy[index_m];
+            if (!current_card_m.previewModeDisplay) { continue; } // skipping those cards whose preivew mode is disabled
+            switch (current_card_m.name) {
+
+                case 'DescriptionComponent':
+                    if (current_card_m.descriptionHeading.length === 0) {
+                        alert('Description Card: Please provide the description heading !');
+                        return false;
+                    } else if (current_card_m.content.length === 0) {
+                        alert('Description Card: Please provide the description content !');
+                        return false;
+                    } else { break; }
+
+                case 'ReferenceComponent':
+                    if (current_card_m.referenceName.length === 0) {
+                        alert('Reference Card: Please provide the reference link name !');
+                        return false;
+                    } else if (current_card_m.url_link.length === 0) {
+                        alert('Reference Card: Please provide the reference link !');
+                        return false;
+                    } else { break; }
+            }
+        }
+        // check for cards in inputs list
+        const inputListLocalCopy = this.state.inputsList;
+        for (let index_i = 0; index_i < inputListLocalCopy.length; index_i++) {
+            const current_card_i = inputListLocalCopy[index_i];
+            if (!current_card_i.previewModeDisplay) { continue; } // skipping those cards whose preivew mode is disabled
+            switch (current_card_i.name) {
+
+                case 'BivalentInput':
+                    if (current_card_i.questionText.length === 0) {
+                        alert('Bivalent Input Card: Please enter the question !');
+                        return false;
+                    } else { break; }
+
+                case 'SliderInput':
+                    if (current_card_i.questionText.length === 0) {
+                        alert('Slider Input Card: Please enter the question !');
+                        return false;
+                    } else if (Number.isNaN(current_card_i.minInput)) {
+                        alert('Slider Input Card: Please provide the min value for the slider !');
+                        return false;
+                    } else if (Number.isNaN(current_card_i.maxInput)) {
+                        alert('Slider Input Card: Please provide the max value for the slider !');
+                        return false;
+                    } else if (Number.isNaN(current_card_i.stepInterval)) {
+                        alert('Slider Input Card: Please provide the step interval value for the slider !');
+                        return false
+                    } else if (current_card_i.minInput >= current_card_i.maxInput) {
+                        alert('Slider Input Card: Min value for the slider cannot be greater than or equal to the max value !');
+                        return false;
+                    } else if (current_card_i.maxInput <= current_card_i.minInput) {
+                        alert('Slider Input Card: Max value for the slider cannot be less than or equal to the min value !');
+                        return false;
+                    } else if ((current_card_i.stepInterval > 0) && ((current_card_i.maxInput % current_card_i.stepInterval) != 0)) {
+                        alert('Slider Input Card: Please enter a valid value for the step interval !');
+                        return false;
+                    } else { break; }
+
+                case 'SelectInput':
+                    if (current_card_i.questionText.length === 0) {
+                        alert('Select Input Card: Please provide the question !');
+                        return false;
+                    } else if (Object.keys(current_card_i.optionsObject).length === 0) {
+                        alert('Select Input Card: Please add some options for the user to select !');
+                        return false;
+                    } else if (current_card_i.maxSelectionVal > Object.keys(current_card_i.optionsObject).length) {
+                        alert('Select Input Card: Max selection value cannot be greater than the number of options provided !');
+                        return false;
+                    } else if (Object.keys(current_card_i.optionsObject).length > 0) {
+                        for (const [key, value] of Object.entries(current_card_i.optionsObject)) {
+                            if (value.length === 0) {
+                                alert('Select Input Card: No provided option can be empty !');
+                                return false;
+                            }
+                        }
+                        break;
+                    } else { break; }
+
+                case 'NumericalInput':
+                    if (current_card_i.questionText.length === 0) {
+                        alert('Numerical Input Card: Please provide the question !');
+                        return false;
+                    } else if (Number.isNaN(current_card_i.minInput)) {
+                        alert('Numerical Input Card: Please provide the min value !');
+                        return false;
+                    } else if (Number.isNaN(current_card_i.maxInput)) {
+                        alert('Numerical Input Card: Please provide the max value !');
+                        return false;
+                    } else if (current_card_i.minInput >= current_card_i.maxInput) {
+                        alert('Numerical Input Card: Min value cannot be greater than or equal to the max value !');
+                        return false;
+                    } else if (current_card_i.maxInput <= current_card_i.minInput) {
+                        alert('Numerical Input Card: Max value cannot be less than or equal to min value');
+                        return false;
+                    } else if (Object.keys(current_card_i.unitsObject).length > 0) {
+                        for (const [key, value] of Object.entries(current_card_i.unitsObject)) {
+                            if (value.length === 0) {
+                                alert('Numerical Input Card: No provided unit option can be empty !');
+                                return false;
+                            }
+                        }
+                        break;
+                    } else { break; }
+
+                case 'PointInput':
+                    if (current_card_i.questionText.length === 0) {
+                        alert('Point Input Card: Please provide the question !');
+                        return false;
+                    } else if (Object.keys(current_card_i.optionsObject).length === 0) {
+                        alert('Point Input Card: Please add some options for the user to select !');
+                        return false;
+                    } else if (Object.keys(current_card_i.optionsObject).length > 0) {
+                        for (const [keyName, value] of Object.entries(current_card_i.optionsObject)){
+                            const currentOptionObj = current_card_i.optionsObject[keyName];
+                            if (currentOptionObj.optionText.length === 0) {
+                                alert('Point Input Card: No provided option can be empty !');
+                                return false;
+                            } else if (currentOptionObj.optionScore <= 0) {
+                                alert('Point Input Card: No provided option can have a score less than 1 !');
+                                return false;
+                            }
+                        }
+                        break;
+                    } else { break; }
+
+
+            }
+        }
+
+        // check for cards in outputs list
+        const outputListLocalCopy = this.state.outputsList;
+        for (let index_o = 0; index_o < outputListLocalCopy.length; index_o++) {
+            const current_card_o = outputListLocalCopy[index_o];
+            if (!current_card_o.previewModeDisplay) { continue; } // skipping those cards whose preivew mode is disabled
+            switch (current_card_o.name) {
+
+                case 'NumericalOutputComponent':
+                    if (current_card_o.outputHeading.length === 0) {
+                        alert('Numerical Output Card: Please provide the output heading !');
+                        return false;
+                    } else if (current_card_o.outputDescription.length === 0) {
+                        alert('Numerical Output Card: Please provide the output description !');
+                        return false;
+                    } else { break; }
+            }
+        }
+        return true;
+    }
+
+    // method for conditionally rendering card components
+    conditionalCardRender(cardItem, index) {
+        switch (this.state.previewMode) {
+            // if preview mode is disabled
+            case false:
+                switch (cardItem.name) {
+                    case "SelectInput":
+                        return (<SelectInputCard cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid}></SelectInputCard>);
+                    case "NumericalInput":
+                        return (<NumericalInputCard cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid}></NumericalInputCard>);
+                    case "BivalentInput":
+                        return (<BivalentInputCard cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid}></BivalentInputCard>);
+                    case "SliderInput":
+                        return (<SliderInputCard cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid}></SliderInputCard>);
+                    case "PointInput":
+                        return (<PointInputCard cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid}></PointInputCard>);
+                    case "DescriptionComponent":
+                        return (<DecriptionCardComponent cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid}></DecriptionCardComponent>);
+                    case "ReferenceComponent":
+                        return (<ReferenceCard cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid}></ReferenceCard>);
+                    case "NumericalOutputComponent":
+                        return (<NumericalOutputCard cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid}></NumericalOutputCard>);
+                }
+            // if preview mode is enabled
+            case true:
+                switch (cardItem.name) {
+                    case "SelectInput":
+                        return (cardItem.previewModeDisplay ? (<SelectInputCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></SelectInputCardPreviewMode>) : (<></>))
+                    case "NumericalInput":
+                        return (cardItem.previewModeDisplay ? (<NumericalInputCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></NumericalInputCardPreviewMode>) : (<></>));
+                    case "BivalentInput":
+                        return (cardItem.previewModeDisplay ? (<BivalentInputCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></BivalentInputCardPreviewMode>) : (<></>));
+                    case "SliderInput":
+                        return (cardItem.previewModeDisplay ? (<SliderInputCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></SliderInputCardPreviewMode>) : (<></>));
+                    case "PointInput":
+                        return (cardItem.previewModeDisplay ? (<PointInputCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></PointInputCardPreviewMode>) : (<></>));
+                    case "DescriptionComponent":
+                        return (cardItem.previewModeDisplay ? (<DescriptionCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></DescriptionCardPreviewMode>) : (<></>));
+                    case "ReferenceComponent":
+                        return (cardItem.previewModeDisplay ? (<ReferenceCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></ReferenceCardPreviewMode>) : (<></>));
+                    case "NumericalOutputComponent":
+                        return (cardItem.previewModeDisplay ? (<NumericalOutputCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></NumericalOutputCardPreviewMode>) : (<></>));
+                }
+        }
+    }
+
+    // method for handling the delete action of a card component
+    handleCardComponentDelete(stateObject) {
+        const objectToBeDeletedUUID = stateObject.uuid;
+        switch (stateObject.type) {
+            case 'meta':
+                let updatedMetaList = this.state.metaList.filter(item => item.uuid != objectToBeDeletedUUID);
+                this.setState({ metaList: updatedMetaList });
+            case 'input':
+                let updatedInputList = this.state.inputsList.filter(item => item.uuid != objectToBeDeletedUUID);
+                this.setState({ inputsList: updatedInputList })
+            case 'output':
+                let updatedOutputList = this.state.outputsList.filter(item => item.uuid != objectToBeDeletedUUID);
+                this.setState({ outputsList: updatedOutputList });
         }
     }
 
@@ -65,11 +463,14 @@ class studioMain extends Component {
                         <div className="text-4xl text-blue-900">Components</div>
                     </Offcanvas.Header>
                     <Offcanvas.Body className="divide-y divide-gray-300">
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type="input" data-component-name="SelectInput" onClick={this.sideBarOptionSelected}>Select Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type="input" data-component-name="NumericalInput" onClick={this.sideBarOptionSelected}>Numerical Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type="meta" data-component-name="DescriptionComponent" onClick={this.sideBarOptionSelected}>Description Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type="meta" data-component-name="ReferenceComponent" onClick={this.sideBarOptionSelected}>Reference Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type="output" data-component-name="NumericalOutputComponent" onClick={this.sideBarOptionSelected}>Numerical Output Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='meta' data-component-name='DescriptionComponent' onClick={this.sideBarOptionSelected}>Description Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='meta' data-component-name='ReferenceComponent' onClick={this.sideBarOptionSelected}>Reference Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='input' data-component-name='SelectInput' onClick={this.sideBarOptionSelected}>Select Input Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='input' data-component-name='NumericalInput' onClick={this.sideBarOptionSelected}>Numerical Input Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='input' data-component-name='BivalentInput' onClick={this.sideBarOptionSelected}>Bivalent Input Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='input' data-component-name='SliderInput' onClick={this.sideBarOptionSelected}>Slider Input Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='input' data-component-name='PointInput' onClick={this.sideBarOptionSelected}>Point Input Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='output' data-component-name='NumericalOutputComponent' onClick={this.sideBarOptionSelected}>Numerical Output Card</div>
                     </Offcanvas.Body>
                 </Offcanvas>
                 {/* side bar menu for card components */}
@@ -83,9 +484,9 @@ class studioMain extends Component {
                         <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={this.togglePreviewMode}>
                             {this.state.previewMode ? (<><FontAwesomeIcon icon={faEyeSlash} className="mr-1.5" />Disable Preview Mode</>) : (<><FontAwesomeIcon icon={faEye} className="mr-1.5" />Enable Preview Mode</>)}
                         </div>
-                        <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900">
+                        {/* <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900">
                             <FontAwesomeIcon icon={faFileExport} className="mr-1.5" />Export to JSON
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 {/* studio navbar */}
@@ -96,22 +497,25 @@ class studioMain extends Component {
                         <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
                             <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Meta
                         </div>
-                        {this.state.metaList.map((item, index) => <>{item.name == "ReferenceComponent" ? (<ReferenceCard elementIndex={index} key={index}></ReferenceCard>) : (<DecriptionCardComponent elementIndex={index} key={index}></DecriptionCardComponent>)}</>)}
+                        {this.state.metaList.map((item, index) => (this.conditionalCardRender(item, index)))}
                     </div>
                     {/* meta column */}
+                    {/* inputs column */}
                     <div className="w-1/3 mx-2">
                         <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
                             <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Inputs
                         </div>
-                        {this.state.inputsList.map((item, index) => <>{item.name == "SelectInput" ? (<SelectInputCard elementIndex={index} key={index}></SelectInputCard>) : (<NumericalInputCard elementIndex={index} key={index}></NumericalInputCard>)}</>)}
+                        {this.state.inputsList.map((item, index) => (this.conditionalCardRender(item, index)))}
                     </div>
+                    {/* input column */}
+                    {/* outputs column */}
                     <div className="w-1/3 mx-2">
                         <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
                             <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Outputs
                         </div>
-                        {this.state.outputsList.map((item, index) => <NumericalOutputCard elementIndex={index} key={index}></NumericalOutputCard>)}
-
+                        {this.state.outputsList.map((item, index) => (this.conditionalCardRender(item, index)))}
                     </div>
+                    {/* outputs column */}
                 </div>
                 {/* card display section */}
             </div>

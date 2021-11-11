@@ -6,7 +6,9 @@ export default function index() {
   return (
     <div>
       <NavBar></NavBar>
-      <StudioMain></StudioMain>
+      <div className="xl:min-h-80vh 2xl:min-h-90vh">
+        <StudioMain></StudioMain>
+      </div>
       <Footer></Footer>
     </div>
   );

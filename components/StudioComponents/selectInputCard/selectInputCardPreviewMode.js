@@ -11,29 +11,24 @@ function SelectInputCardPreviewMode(props) {
 
     // function for updating the options selected array
     function updateOptionsSelectedArray(optionSelectedUUID, optionsSelectedArrayCopy, MaxOptionsUsersCanSelect) {
-        // if the option has already been selected, then remove it from the array, 
-        // else add it to the array making sure there are only two items in the array.
         if (optionsSelectedArrayCopy.includes(optionSelectedUUID)) {
-            const indexOfItemToBeRemoved = optionsSelectedArrayCopy.indexOf(optionSelectedUUID);
-            const updatedOptionsSelectedArray = optionsSelectedArrayCopy.splice(indexOfItemToBeRemoved, 1);
-            setOptionsSelectedArray(updatedOptionsSelectedArray);
-            console.log('Selected option UUID: ', optionSelectedUUID, 'Options selected array: ', optionsSelectedArray);
-            return null;
+            setOptionsSelectedArray(oldArray => oldArray.filter(item => item != optionSelectedUUID));
         } else if (optionsSelectedArrayCopy.length === MaxOptionsUsersCanSelect) {
-            optionsSelectedArrayCopy.shift();
+            setOptionsSelectedArray(oldArray => {
+                oldArray.shift();
+                return [...oldArray, optionSelectedUUID]
+            });
+        } else {
+            setOptionsSelectedArray(oldArray => [...oldArray, optionSelectedUUID]);
         }
-        optionsSelectedArrayCopy.push(optionSelectedUUID);
-        setOptionsSelectedArray(optionsSelectedArrayCopy);
-        console.log('Selected option UUID: ', optionSelectedUUID, 'Options selected array: ', optionsSelectedArray);
-        return null;
     }
 
     // function for adding styling the options as per the user selection
     function updateOptionsStyling(optionSelectedUUID, optionsSelectedArray) {
-        if (optionsSelectedArray.includes(optionSelectedUUID)) { 
-            return 'w-full h-9 mb-1 bg-blue-200 border-1 border-blue-900 rounded flex flex-row cursor-pointer hover:bg-blue-200 hover:border-blue-900'; 
+        if (optionsSelectedArray.includes(optionSelectedUUID)) {
+            return 'w-full h-9 mb-1 bg-blue-200 border-1 border-blue-900 rounded flex flex-row cursor-pointer hover:bg-blue-200 hover:border-blue-900';
         } else {
-            return 'w-full h-9 mb-1 bg-blue-100 border-1 border-blue-400 rounded flex flex-row cursor-pointer hover:bg-blue-200 hover:border-blue-900'; 
+            return 'w-full h-9 mb-1 bg-blue-100 border-1 border-blue-400 rounded flex flex-row cursor-pointer hover:bg-blue-200 hover:border-blue-900';
         }
     }
 

@@ -29,8 +29,8 @@ function NumericalOutputCard(props) {
         return state.editMode ?
             (<>
                 {state.previewModeDisplay ?
-                    (<FontAwesomeIcon icon={faEye} onClick={() => updateNumericalOutputCard({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900"></FontAwesomeIcon>) :
-                    (<FontAwesomeIcon icon={faEyeSlash} onClick={() => updateNumericalOutputCard({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900"></FontAwesomeIcon>)
+                    (<FontAwesomeIcon icon={faEye} onClick={() => updateNumericalOutputCard({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900" title="Preview mode enabled"></FontAwesomeIcon>) :
+                    (<FontAwesomeIcon icon={faEyeSlash} onClick={() => updateNumericalOutputCard({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900" title="Preview mode disabled"></FontAwesomeIcon>)
                 }
             </>)
             :

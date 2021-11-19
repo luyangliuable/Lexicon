@@ -29,8 +29,8 @@ function DescriptionCard(props) {
         return state.editMode ?
             (<>
                 {state.previewModeDisplay ?
-                    (<FontAwesomeIcon icon={faEye} onClick={() => updateDescriptionCard({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900" title="Preview mode enabled."></FontAwesomeIcon>) :
-                    (<FontAwesomeIcon icon={faEyeSlash} onClick={() => updateDescriptionCard({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900" title="Preview mode disabled."></FontAwesomeIcon>)
+                    (<FontAwesomeIcon icon={faEye} onClick={() => updateDescriptionCard({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900" title="Preview mode enabled"></FontAwesomeIcon>) :
+                    (<FontAwesomeIcon icon={faEyeSlash} onClick={() => updateDescriptionCard({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900" title="Preview mode disabled"></FontAwesomeIcon>)
                 }
             </>)
             :

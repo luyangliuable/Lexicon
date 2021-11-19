@@ -38,8 +38,8 @@ function SliderInputCard(props) {
         return state.editMode ?
             (<>
                 {state.previewModeDisplay ?
-                    (<FontAwesomeIcon icon={faEye} onClick={() => updateSliderInputCard({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900"></FontAwesomeIcon>) :
-                    (<FontAwesomeIcon icon={faEyeSlash} onClick={() => updateSliderInputCard({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900"></FontAwesomeIcon>)
+                    (<FontAwesomeIcon icon={faEye} onClick={() => updateSliderInputCard({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900" title="Preview mode enabled"></FontAwesomeIcon>) :
+                    (<FontAwesomeIcon icon={faEyeSlash} onClick={() => updateSliderInputCard({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900" title="Preview mode disabled"></FontAwesomeIcon>)
                 }
             </>)
             :

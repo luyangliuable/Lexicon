@@ -1,6 +1,7 @@
 import { faEllipsisV, faEye, faEyeSlash, faFileExport, faPlusCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import { Modal, Button } from "react-bootstrap";
 import React, { Component } from "react";
 import DecriptionCardComponent from "./../../components/StudioComponents/descriptionCard/descriptionCard";
 import NumericalOutputCard from "../../components/StudioComponents/numericalOutputCard/numericalOutputCard";
@@ -29,14 +30,20 @@ class studioMain extends Component {
             metaList: [],
             inputsList: [],
             outputsList: [],
-            previewMode: false
+            previewMode: false,
+            cardDeleteConfirmation: false,
+            cardDeleteModalDisplay: false,
+            objectToBeDeleted: null
         }
+        this.handleModalClose = this.handleModalClose.bind(this);
+        this.handleCardDelete = this.handleCardDelete.bind(this);
         this.toggleSideBarMenu = this.toggleSideBarMenu.bind(this);
         this.togglePreviewMode = this.togglePreviewMode.bind(this);
         this.sideBarOptionSelected = this.sideBarOptionSelected.bind(this);
         this.captureCardComponentStateChange = this.captureCardComponentStateChange.bind(this);
         this.handleCardComponentDelete = this.handleCardComponentDelete.bind(this);
         this.conditionalCardRender = this.conditionalCardRender.bind(this);
+        this.deleteAssistFunction = this.deleteAssistFunction.bind(this);
     }
 
     // method for handling the opening and the closure of the side bar menu
@@ -355,7 +362,7 @@ class studioMain extends Component {
                         alert('Point Input Card: Please add some options for the user to select !');
                         return false;
                     } else if (Object.keys(current_card_i.optionsObject).length > 0) {
-                        for (const [keyName, value] of Object.entries(current_card_i.optionsObject)){
+                        for (const [keyName, value] of Object.entries(current_card_i.optionsObject)) {
                             const currentOptionObj = current_card_i.optionsObject[keyName];
                             if (currentOptionObj.optionText.length === 0) {
                                 alert('Point Input Card: No provided option can be empty !');
@@ -390,6 +397,16 @@ class studioMain extends Component {
             }
         }
         return true;
+    }
+
+    // function for triggering the closure of the card delete modal
+    handleModalClose() {
+        this.setState({ cardDeleteModalDisplay: false, objectToBeDeleted: null });
+    }
+
+    // function for triggering the opening of the card delete modal
+    handleCardDelete() {
+        this.setState({ cardDeleteModalDisplay: false }, () => { this.deleteAssistFunction() });
     }
 
     // method for conditionally rendering card components
@@ -440,22 +457,49 @@ class studioMain extends Component {
 
     // method for handling the delete action of a card component
     handleCardComponentDelete(stateObject) {
-        const objectToBeDeletedUUID = stateObject.uuid;
-        switch (stateObject.type) {
+        this.setState({ cardDeleteModalDisplay: true, objectToBeDeleted: stateObject })
+    }
+
+    // method for performing the deletion of a card once the user presses 
+    // delete button in the dialog box ( delete confirmation modal )
+    deleteAssistFunction() {
+        const objectToBeDeletedUUID = this.state.objectToBeDeleted.uuid;
+        switch (this.state.objectToBeDeleted.type) {
             case 'meta':
                 let updatedMetaList = this.state.metaList.filter(item => item.uuid != objectToBeDeletedUUID);
-                this.setState({ metaList: updatedMetaList });
+                this.setState({ metaList: updatedMetaList, cardDeleteConfirmation: false });
+                break;
             case 'input':
                 let updatedInputList = this.state.inputsList.filter(item => item.uuid != objectToBeDeletedUUID);
-                this.setState({ inputsList: updatedInputList })
+                this.setState({ inputsList: updatedInputList, cardDeleteConfirmation: false });
+                break;
             case 'output':
                 let updatedOutputList = this.state.outputsList.filter(item => item.uuid != objectToBeDeletedUUID);
-                this.setState({ outputsList: updatedOutputList });
+                this.setState({ outputsList: updatedOutputList, cardDeleteConfirmation: false });
+                break;
         }
     }
 
     render() {
         return (<>
+
+            {/* Card Delete Confirmation */}
+            <Modal show={this.state.cardDeleteModalDisplay} onHide={this.handleModalClose} backdrop="static" keyboard={false}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirm Delete</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to delete the selected card ?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={this.handleModalClose}>
+                        Close
+                    </Button>
+                    <Button variant="danger" onClick={this.handleCardDelete}>
+                        Delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            {/* Card Delete Confirmation */}
+
             <div className="w-100vw min-h-screen">
                 {/* side bar menu for card components */}
                 <Offcanvas show={this.state.showSideBarMenu} onHide={this.toggleSideBarMenu}>

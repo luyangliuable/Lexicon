@@ -56,8 +56,8 @@ function PointInputCard(props) {
         return state.editMode ?
             (<>
                 {state.previewModeDisplay ?
-                    (<FontAwesomeIcon icon={faEye} onClick={() => updateOptionsObject({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900" title="Preview mode enabled."></FontAwesomeIcon>) :
-                    (<FontAwesomeIcon icon={faEyeSlash} onClick={() => updateOptionsObject({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900" title="Preview mode disabled."></FontAwesomeIcon>)
+                    (<FontAwesomeIcon icon={faEye} onClick={() => updateOptionsObject({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900" title="Preview mode enabled"></FontAwesomeIcon>) :
+                    (<FontAwesomeIcon icon={faEyeSlash} onClick={() => updateOptionsObject({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900" title="Preview mode disabled"></FontAwesomeIcon>)
                 }
             </>)
             :

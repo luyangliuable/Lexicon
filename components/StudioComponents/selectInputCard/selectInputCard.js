@@ -46,8 +46,8 @@ function SelectInputCard(props) {
         return state.editMode ?
             (<>
                 {state.previewModeDisplay ?
-                    (<FontAwesomeIcon icon={faEye} onClick={() => updateOptionsObject({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900"></FontAwesomeIcon>) :
-                    (<FontAwesomeIcon icon={faEyeSlash} onClick={() => updateOptionsObject({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900"></FontAwesomeIcon>)
+                    (<FontAwesomeIcon icon={faEye} onClick={() => updateOptionsObject({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900" title="Preview mode enabled"></FontAwesomeIcon>) :
+                    (<FontAwesomeIcon icon={faEyeSlash} onClick={() => updateOptionsObject({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900" title="Preview mode disabled"></FontAwesomeIcon>)
                 }
             </>)
             :
@@ -116,7 +116,7 @@ function SelectInputCard(props) {
                 </div>
             </div>
             {state.editMode ? 
-            (<div className="text-sm mx-1.5 text-blue-900"><span className="font-bold">NOTE:</span> The default value for the maximum number of option(s) that the users can select is 1 and this value must be greater than 0. </div>):(<></>)}
+            (<div className="text-sm mx-1.5 text-blue-900 mt-2.5"><span className="font-bold">NOTE:</span> The default value for the maximum number of option(s) that the users can select is 1 and this value must be greater than 0. </div>):(<></>)}
         </div>
     </>)
 }

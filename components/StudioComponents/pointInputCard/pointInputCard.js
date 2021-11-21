@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 function PointInputCard(props) {
 
-    const initialState = { type: props.cardElement.type, name: props.cardElement.name, uuid: props.cardElement.uuid, questionText: props.cardElement.questionText, previewModeDisplay: props.cardElement.previewModeDisplay, optionsObject: props.cardElement.optionsObject, editMode: props.cardElement.editMode };
+    const initialState = { type: props.cardElement.type, name: props.cardElement.name, uuid: props.cardElement.uuid, questionText: props.cardElement.questionText, previewModeDisplay: props.cardElement.previewModeDisplay, optionsObject: props.cardElement.optionsObject, editMode: props.cardElement.editMode, maxSelectionVal: props.cardElement.maxSelectionVal };
     const [state, updateOptionsObject] = useReducer(handleoptionsObjectChanges, initialState);
 
     // function for handling the changes in the options array
@@ -14,25 +14,28 @@ function PointInputCard(props) {
         const optionElementUUID = action.value;
         switch (action.type) {
             case "QUESTION_TEXT":
-                const updatedState_question_text = { type: state.type, name: state.name, uuid: state.uuid, questionText: action.value, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode };
+                const updatedState_question_text = { type: state.type, name: state.name, uuid: state.uuid, questionText: action.value, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal };
                 return updatedState_question_text;
             case "PREVIEW_MODE":
-                const updatedState_preview_mode = { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: !state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode };
+                const updatedState_preview_mode = { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: !state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal };
                 return updatedState_preview_mode;
             case "ADD_OPTION":
-                state.optionsObject[optionElementUUID] = { optionText: '', optionScore: 1 };
-                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode };
+                state.optionsObject[optionElementUUID] = { optionText: '', optionScore: 0 };
+                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal };
             case "EDIT_OPTION_TEXT":
                 state.optionsObject[optionElementUUID].optionText = action.content;
-                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode };
+                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal };
             case "EDIT_OPTION_SCORE":
                 state.optionsObject[optionElementUUID].optionScore = Number.isNaN(parseInt(action.content)) ? 1 : parseInt(action.content);
-                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode };
+                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal };
             case "DELETE_OPTION":
                 delete state.optionsObject[optionElementUUID];
-                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode };
+                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal };
             case "EDIT":
-                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: !state.editMode };
+                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: !state.editMode, maxSelectionVal: state.maxSelectionVal };
+            case "MAX_SELECTIONS":
+                const max_selection_new_value = action.value;
+                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: max_selection_new_value };
         }
     }
 
@@ -119,12 +122,16 @@ function PointInputCard(props) {
                 {state.editMode ?
                     (<>
                         <div className=" flex flex-row justify-end mb-1.5 justify-between">
-                            <div className="text-blue-900 text-sm pt-2.5">
-                                <span className="font-bold">NOTE:</span> A score must be provided for each option.
+                            <div>
+                                <div className="text-blue-900 text-xs">Max options users can select:</div>
+                                <input className="border-1 rounded px-1 w-32 border-blue-900 h-6 w-32 text-sm" type="number" min="1" value={state.maxSelectionVal} readOnly={!state.editMode} onKeyDown={event => { event.preventDefault() }} onChange={event => updateOptionsObject({ type: "MAX_SELECTIONS", value: event.target.value })} ></input>
                             </div>
                             <div className="bg-blue-500 p-2 text-center text-white cursor-pointer hover:bg-blue-600 rounded mr-1" onClick={() => updateOptionsObject({ type: "ADD_OPTION", value: uuidv4() })}>
                                 <FontAwesomeIcon icon={faPlus} className=""></FontAwesomeIcon> Add Option
                             </div>
+                        </div>
+                        <div className="text-blue-900 text-sm">
+                            <span className="font-bold">NOTE:</span> A score must be provided for each option and it must be greater than or equal to 0. The default value for the maximum number of option(s) that the users can select is 1 and this value must be greater than 0.
                         </div>
                     </>) : (<></>)}
             </div>

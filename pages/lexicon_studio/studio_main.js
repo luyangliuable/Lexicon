@@ -33,7 +33,9 @@ class studioMain extends Component {
             previewMode: false,
             cardDeleteConfirmation: false,
             cardDeleteModalDisplay: false,
-            objectToBeDeleted: null
+            objectToBeDeleted: null,
+            totalInputScore: 0,
+            displayTotalInputScore: false
         }
         this.handleModalClose = this.handleModalClose.bind(this);
         this.handleCardDelete = this.handleCardDelete.bind(this);
@@ -44,6 +46,21 @@ class studioMain extends Component {
         this.handleCardComponentDelete = this.handleCardComponentDelete.bind(this);
         this.conditionalCardRender = this.conditionalCardRender.bind(this);
         this.deleteAssistFunction = this.deleteAssistFunction.bind(this);
+        this.updateInputCardTotalScore = this.updateInputCardTotalScore.bind(this);
+    }
+
+    // method for updating the total score for input cards
+    updateInputCardTotalScore(optionScore, operationString){
+        switch(operationString){
+            case 'ADD':
+                const updatedScore_add = this.state.totalInputScore + optionScore;
+                this.setState({totalInputScore: updatedScore_add});
+                break;
+            case 'SUBTRACT':
+                const updatedScore_subtract = this.state.totalInputScore - optionScore;
+                this.setState({totalInputScore: updatedScore_subtract});
+                break;
+        }
     }
 
     // method for handling the opening and the closure of the side bar menu
@@ -61,7 +78,7 @@ class studioMain extends Component {
 
     // method for toggling the preview mode
     togglePreviewMode() {
-        if (!this.state.previewMode && this.performCardCheckForPreviewMode()) { this.setState({ previewMode: true }); }
+        if (!this.state.previewMode && this.performCardCheckForPreviewMode()) { this.setState({ previewMode: true, totalInputScore: 0 }); }
         else { this.setState({ previewMode: false }); }
     }
 
@@ -133,6 +150,7 @@ class studioMain extends Component {
                 componentElement.previewModeDisplay = true;
                 componentElement.optionsObject = {};
                 componentElement.editMode = false;
+                componentElement.maxSelectionVal = 1
             }
 
             this.setState({ inputsList: [...this.state.inputsList, componentElement] });
@@ -165,7 +183,9 @@ class studioMain extends Component {
                             metaListLocalCopy[stateObjectToBeUpdatedIndex_m].content = stateObject.content;
                             metaListLocalCopy[stateObjectToBeUpdatedIndex_m].previewModeDisplay = stateObject.previewModeDisplay;
                             return { metaList: metaListLocalCopy };
-                        })
+                        });
+                        break;
+
                     case 'ReferenceComponent':
                         this.setState(prevState => {
                             let metaListLocalCopy = prevState.metaList;
@@ -173,7 +193,8 @@ class studioMain extends Component {
                             metaListLocalCopy[stateObjectToBeUpdatedIndex_m].url_link = stateObject.url_link;
                             metaListLocalCopy[stateObjectToBeUpdatedIndex_m].previewModeDisplay = stateObject.previewModeDisplay;
                             return { metaList: metaListLocalCopy };
-                        })
+                        });
+                        break;
                 }
             case 'input':
                 const stateObjectToBeUpdatedIndex_i = this.state.inputsList.findIndex(item => item.uuid == stateObject.uuid);
@@ -184,7 +205,8 @@ class studioMain extends Component {
                             inputListLocalCopy[stateObjectToBeUpdatedIndex_i].questionText = stateObject.questionText;
                             inputListLocalCopy[stateObjectToBeUpdatedIndex_i].previewModeDisplay = stateObject.previewModeDisplay;
                             return { inputsList: inputListLocalCopy };
-                        })
+                        });
+                        break;
 
                     case 'SliderInput':
                         this.setState(prevState => {
@@ -195,7 +217,8 @@ class studioMain extends Component {
                             inputListLocalCopy[stateObjectToBeUpdatedIndex_i].maxInput = stateObject.maxInput;
                             inputListLocalCopy[stateObjectToBeUpdatedIndex_i].previewModeDisplay = stateObject.previewModeDisplay;
                             return { inputsList: inputListLocalCopy };
-                        })
+                        });
+                        break;
 
                     case 'SelectInput':
                         this.setState(prevState => {
@@ -206,6 +229,7 @@ class studioMain extends Component {
                             inputListLocalCopy[stateObjectToBeUpdatedIndex_i].optionsObject = stateObject.optionsObject;
                             return { inputsList: inputListLocalCopy };
                         });
+                        break;
 
                     case 'NumericalInput':
                         this.setState(prevState => {
@@ -217,6 +241,7 @@ class studioMain extends Component {
                             inputListLocalCopy[stateObjectToBeUpdatedIndex_i].unitsObject = stateObject.unitsObject;
                             return { inputsList: inputListLocalCopy };
                         });
+                        break;
 
                     case 'PointInput':
                         this.setState(prevState => {
@@ -224,8 +249,10 @@ class studioMain extends Component {
                             inputListLocalCopy[stateObjectToBeUpdatedIndex_i].questionText = stateObject.questionText;
                             inputListLocalCopy[stateObjectToBeUpdatedIndex_i].previewModeDisplay = stateObject.previewModeDisplay;
                             inputListLocalCopy[stateObjectToBeUpdatedIndex_i].optionsObject = stateObject.optionsObject;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].maxSelectionVal = stateObject.maxSelectionVal;
                             return { inputsList: inputListLocalCopy };
-                        })
+                        });
+                        break;
                 }
             case 'output':
                 const stateObjectToBeUpdatedIndex_o = this.state.outputsList.findIndex(item => item.uuid == stateObject.uuid);
@@ -237,7 +264,8 @@ class studioMain extends Component {
                             outputListLocalCopy[stateObjectToBeUpdatedIndex_o].outputDescription = stateObject.outputDescription;
                             outputListLocalCopy[stateObjectToBeUpdatedIndex_o].previewModeDisplay = stateObject.previewModeDisplay;
                             return { outputsList: outputListLocalCopy };
-                        })
+                        });
+                        break;
                 }
         }
     }
@@ -326,6 +354,9 @@ class studioMain extends Component {
                             }
                         }
                         break;
+                    } else if (current_card_i.maxSelectionVal < 1) {
+                        alert('Select Input Card: Max selection value must greater than or equal to 1 !');
+                        return false;
                     } else { break; }
 
                 case 'NumericalInput':
@@ -367,12 +398,18 @@ class studioMain extends Component {
                             if (currentOptionObj.optionText.length === 0) {
                                 alert('Point Input Card: No provided option can be empty !');
                                 return false;
-                            } else if (currentOptionObj.optionScore <= 0) {
-                                alert('Point Input Card: No provided option can have a score less than 1 !');
+                            } else if (currentOptionObj.optionScore < 0) {
+                                alert('Point Input Card: No provided option can have a score less than 0 !');
                                 return false;
                             }
                         }
                         break;
+                    } else if (current_card_i.maxSelectionVal < 1) {
+                        alert('Point Input Card: Max selection value must greater than or equal to 1 !');
+                        return false;
+                    } else if (current_card_i.maxSelectionVal > Object.keys(current_card_i.optionsObject).length) {
+                        alert('Point Input Card: Max selection value cannot be greater than the number of options provided !');
+                        return false;
                     } else { break; }
 
 
@@ -444,7 +481,8 @@ class studioMain extends Component {
                     case "SliderInput":
                         return (cardItem.previewModeDisplay ? (<SliderInputCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></SliderInputCardPreviewMode>) : (<></>));
                     case "PointInput":
-                        return (cardItem.previewModeDisplay ? (<PointInputCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></PointInputCardPreviewMode>) : (<></>));
+                        { !this.state.displayTotalInputScore ? this.setState({ displayTotalInputScore: true }) : null };
+                        return (cardItem.previewModeDisplay ? (<PointInputCardPreviewMode inputCardtotalScoreUpdateMethod={this.updateInputCardTotalScore} cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></PointInputCardPreviewMode>) : (<></>));
                     case "DescriptionComponent":
                         return (cardItem.previewModeDisplay ? (<DescriptionCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></DescriptionCardPreviewMode>) : (<></>));
                     case "ReferenceComponent":
@@ -550,6 +588,14 @@ class studioMain extends Component {
                             <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Inputs
                         </div>
                         {this.state.inputsList.map((item, index) => (this.conditionalCardRender(item, index)))}
+                        {(this.state.displayTotalInputScore && this.state.previewMode) ? 
+                        (<>
+                        <div className="flex justify-between p-1 text-xl border-2 px-2 rounded-lg border-blue-900">
+                            <div className="text-blue-900 font-normal">Result:</div>
+                            <div className="text-blue-900">{this.state.totalInputScore}</div>
+                        </div>
+                        </>)
+                        :(<></>)}
                     </div>
                     {/* input column */}
                     {/* outputs column */}

@@ -15,7 +15,7 @@ function OptionElement(props) {
                     <input className="bg-blue-100 px-2 w-4/5 ml-1" placeholder="Edit Option ..." value={props.optionElementText} onChange={event => { props.editOptionTextFunction(uuid, event.target.value) }} />
                 </div>
                 <div className="flex flex-row justify-around py-0.5">
-                    <input className="bg-white w-3/5 h-5/6 p-2 text-xs p-0.5 border-1 rounded border-blue-900 mt-1" placeholder="Score ..." min="1" type="number" value={props.optionElementScore} onKeyDown={event => { event.preventDefault() }} onChange={event => { props.editOptionScoreFunction(uuid, event.target.value) }} />
+                    <input className="bg-white w-3/5 h-5/6 p-2 text-xs p-0.5 border-1 rounded border-blue-900 mt-1" placeholder="Score ..." min="0" type="number" value={props.optionElementScore} onKeyDown={event => { event.preventDefault() }} onChange={event => { props.editOptionScoreFunction(uuid, event.target.value) }} />
                     <div className="h-full w-9 text-center pt-1 border rounded bg-red-600 text-white mx-1 hover:bg-red-500 cursor-pointer" onClick={() => props.deleteOptionFunction({ type: "DELETE_OPTION", value: uuid })}><FontAwesomeIcon icon={faTrashAlt} className=""></FontAwesomeIcon></div>
                 </div>
             </div>
@@ -27,7 +27,7 @@ function OptionElement(props) {
                 <input className="bg-blue-100 px-2 w-4/5 ml-1 cursor-not-allowed text-blue-900 font-medium	" placeholder="Edit Option ..." readOnly={true} value={props.optionElementText} onChange={event => { props.editOptionTextFunction(uuid, event.target.value) }} />
             </div>
             <div className="flex flex-row justify-end py-0.5">
-                <input className="bg-white w-3/5 h-5/6 p-2 text-xs p-0.5 border-1 rounded border-blue-900 mt-1 mr-2 cursor-not-allowed" readOnly={true} placeholder="Score ..." min="1" type="number" value={props.optionElementScore} onKeyDown={event => { event.preventDefault() }} onChange={event => { props.editOptionScoreFunction(uuid, event.target.value) }} />
+                <input className="bg-white w-3/5 h-5/6 p-2 text-xs p-0.5 border-1 rounded border-blue-900 mt-1 mr-2 cursor-not-allowed" readOnly={true} placeholder="Score ..." min="0" type="number" value={props.optionElementScore} onKeyDown={event => { event.preventDefault() }} onChange={event => { props.editOptionScoreFunction(uuid, event.target.value) }} />
             </div>
         </div>
         </>)}

@@ -10,7 +10,7 @@ function SliderInputCardPreviewMode(props) {
     return (<>
         <div className="w-full border shadow-md p-2 hover:shadow-xl mb-2">
             {/* question row */}
-            <div className="inline-block font-semibold text-xl w-full text-blue-900">
+            <div className="inline-block font-semibold text-xl w-full text-blue-900 break-all">
                 {props.cardElement.questionText}
             </div>
             {/* question row */}
@@ -18,7 +18,7 @@ function SliderInputCardPreviewMode(props) {
             <div className="w-full flex mt-2">
                 <div className="w-full inline-block">
                     <RangeSlider
-                        className="w-full"
+                        className="w-full cursor-pointer"
                         min={props.cardElement.minInput}
                         tooltip='off'
                         max={props.cardElement.maxInput}

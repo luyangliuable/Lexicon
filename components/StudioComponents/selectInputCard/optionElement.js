@@ -28,7 +28,7 @@ function OptionElement(props) {
                             {props.elementIndex}
                         </div>
                     </div>
-                    <div className="w-11/12 pt-2 font-medium text-blue-900 ml-1.5">
+                    <div className="w-11/12 pt-2 font-medium text-blue-900 ml-1.5 overflow-x-auto">
                         {props.elementValue}
                     </div>
                 </>)}

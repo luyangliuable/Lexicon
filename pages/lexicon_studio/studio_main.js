@@ -538,11 +538,11 @@ class studioMain extends Component {
             {/* Card Delete Confirmation */}
             <Modal show={this.state.cardDeleteModalDisplay} onHide={this.handleModalClose} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Confirm Delete</Modal.Title>
+                    <Modal.Title className="text-blue-900">Confirm Delete</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Are you sure you want to delete the selected card ?</Modal.Body>
+                <Modal.Body className="text-blue-900">Are you sure you want to delete the selected card ?</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={this.handleModalClose}>
+                    <Button variant="primary" onClick={this.handleModalClose}>
                         Close
                     </Button>
                     <Button variant="danger" onClick={this.handleCardDelete}>
@@ -604,7 +604,7 @@ class studioMain extends Component {
                         {this.state.inputsList.map((item, index) => (this.conditionalCardRender(item, index)))}
                         {(this.state.displayTotalInputScore && this.state.previewMode) ? 
                         (<>
-                        <div className="flex justify-between p-1 text-xl border-2 px-2 rounded-lg border-blue-900">
+                        <div className="flex justify-between p-1 mb-2 text-xl border-2 px-2 rounded-lg border-blue-900">
                             <div className="text-blue-900 font-normal">Result:</div>
                             <div className="text-blue-900">{this.state.totalInputScore}</div>
                         </div>

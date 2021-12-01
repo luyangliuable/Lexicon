@@ -6,12 +6,12 @@ function NumericalOutputCardPreviewMode(props){
     return (<>
         <div className="w-full border shadow-md p-2 hover:shadow-xl mb-2">
             {/* card heading row */}
-            <div className="flex flex-row h-9 my-1 mb-0">
-                <div className="inline-block font-black text-2xl w-full text-blue-900">{props.cardElement.outputHeading}</div>
+            <div className="flex flex-row my-1 mb-0">
+                <div className="inline-block font-black text-2xl w-full text-blue-900 break-all">{props.cardElement.outputHeading}</div>
             </div>
             {/* card heading row */}
             {/* card content area */}
-            <div className="mb-1">{props.cardElement.outputDescription}</div>
+            <div className="mb-1 break-all">{props.cardElement.outputDescription}</div>
             {/* card content area */}
         </div>
     </>)

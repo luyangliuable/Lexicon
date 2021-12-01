@@ -36,7 +36,7 @@ function PointInputCardPreviewMode(props) {
     return (<>
         <div className="w-full border shadow-md p-2 hover:shadow-xl mb-2">
             {/* question row */}
-            <div className="inline-block font-semibold text-lg w-full text-blue-900 mb-2">
+            <div className="inline-block font-semibold text-lg w-full text-blue-900 mb-2 break-all">
                 {props.cardElement.questionText}
             </div>
             {/* question row */}
@@ -44,14 +44,13 @@ function PointInputCardPreviewMode(props) {
             <div className="">
                 {Object.keys(props.cardElement.optionsObject).map((keyName, index) => (
                     <div key={keyName} className='w-full h-9 mb-1 bg-blue-100 border-1 border-blue-400 rounded flex flex-row justify-between'>
-                        <div className="flex">
+                        <div className="flex w-full">
                             <div className="flex flex-row justify-around py-0.5 mx-0.5">
-                                <div className="h-full w-9 text-center pt-0.5 border rounded bg-blue-600 text-white">{index}</div>
+                                <div className="h-full px-2 pt-0.5 w-7 text-center border rounded bg-blue-600 text-white">{index}</div>
                             </div>
-                            <div className="font-bold pt-1 pl-2 text-lg text-blue-800">{props.cardElement.optionsObject[keyName].optionText}</div>
-                        </div>
                         {(props.cardElement.maxSelectionVal > 1) ?
                             (<>
+                            <div className="font-bold px-1 text-lg text-blue-800 overflow-x-hidden w-2/3 border-1 m-0.5 mr-1.5 border-blue-900 rounded">{props.cardElement.optionsObject[keyName].optionText}</div>
                                 <div className="flex text-sm my-1 w-1/3 border-2 border-blue-900 mr-3 rounded">
                                     <div className={optionsSelectedArray.some(option => option.optionUUID === keyName) ? optionNotSelectedStyleString : optionSelectedStyleString}
                                         onClick={() => removeOptionFromOptionsSelectedArray(keyName, props.cardElement.optionsObject[keyName].optionScore, optionsSelectedArray)}>
@@ -66,6 +65,7 @@ function PointInputCardPreviewMode(props) {
                                 </div>
                             </>) :
                             (<>
+                            <div className="font-bold text-lg text-blue-800 overflow-x-auto w-4/5 border-1 m-0.5 border-blue-900 rounded px-1">{props.cardElement.optionsObject[keyName].optionText}</div>
                                 <div className="flex">
                                     <div className="px-1.5 py-0.5 m-1">
                                         <input type="radio" className="cursor-pointer" name={props.cardElement.uuid}
@@ -79,6 +79,7 @@ function PointInputCardPreviewMode(props) {
                                     </div>
                                 </div>
                             </>)}
+                            </div>
                     </div>
                 ))}
             </div>

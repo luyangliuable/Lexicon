@@ -95,7 +95,7 @@ function PointInputCard(props) {
             {/* card first row */}
             {/* card heading row */}
             <div className="h-9 w-full flex flex-row justify-between">
-                <input className={state.editMode ? "h-5/6 w-5/6 px-1 text-blue-900" : "h-5/6 w-5/6 px-1 text-blue-900 cursor-not-allowed"} readOnly={!state.editMode} placeholder="Edit Question Text ..." value={state.questionText} onChange={event => updateOptionsObject({ type: "QUESTION_TEXT", value: event.target.value })} />
+                <input className={state.editMode ? "h-5/6 w-11/12 px-1 text-blue-900" : "h-5/6 w-11/12 px-1 text-blue-900 cursor-not-allowed"} readOnly={!state.editMode} placeholder="Edit Question Text ..." value={state.questionText} onChange={event => updateOptionsObject({ type: "QUESTION_TEXT", value: event.target.value })} />
                 {handlePreviewButtonDisplay(state)}
             </div>
             {/* card heading row */}

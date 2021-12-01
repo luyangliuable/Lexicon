@@ -12,7 +12,7 @@ function NumericalInputCardPreviewMode(props) {
     return (<>
         <div className="w-full border shadow-md p-2 hover:shadow-xl mb-2">
             {/* question row */}
-            <div className="inline-block font-semibold text-xl w-full text-blue-900">
+            <div className="inline-block font-semibold text-xl w-full text-blue-900 break-all">
                 {props.cardElement.questionText}
             </div>
             {/* question row */}

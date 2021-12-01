@@ -35,7 +35,7 @@ function SelectInputCardPreviewMode(props) {
     return (<>
         <div className="w-full border shadow-md p-2 hover:shadow-xl mb-2">
             {/* question row */}
-            <div className="inline-block font-semibold text-lg w-full text-blue-900 mb-2">
+            <div className="min-h-full font-semibold text-lg text-blue-900 mb-2 break-all">
                 {props.cardElement.questionText}
             </div>
             {/* question row */}
@@ -47,7 +47,7 @@ function SelectInputCardPreviewMode(props) {
                 <div className="flex flex-row justify-around py-0.5 mx-0.5">
                     <div className="h-full w-9 text-center pt-0.5 border rounded bg-blue-600 text-white">{index}</div>
                 </div>
-                <div className="font-bold pt-1 pl-2 text-lg text-blue-800">{props.cardElement.optionsObject[keyName]}</div>
+                <div className="font-bold mx-2 mt-1 text-lg text-blue-800 overflow-x-scroll">{props.cardElement.optionsObject[keyName]}</div>
             </div>)
 
             )}

@@ -6,13 +6,15 @@ function DescriptionCardPreviewMode(props) {
     return (<>
         <div className="w-full border shadow-md p-2 hover:shadow-xl mb-2">
             {/* card heading row */}
-            <div className="flex flex-row h-9 my-1 mb-0">
-                <div className="inline-block font-black text-2xl w-full text-blue-900">{props.cardElement.descriptionHeading}</div>
-                <div className="inline-block"> <FontAwesomeIcon className="text-blue-900 text-2xl" icon={faInfoCircle}></FontAwesomeIcon> </div>
+            <div className="">
+                <div className="flex font-bold text-2xl text-blue-900 h-auto inline-block break-all">
+                {props.cardElement.descriptionHeading}
+                </div>
+                {/* <div className=""> <FontAwesomeIcon className="text-blue-900 text-2xl" icon={faInfoCircle}></FontAwesomeIcon> </div> */}
             </div>
             {/* card heading row */}
             {/* card content area */}
-            <div className="mb-1">{props.cardElement.content}</div>
+            <div className="mb-1 break-all">{props.cardElement.content}</div>
             {/* card content area */}
         </div>
     </>);

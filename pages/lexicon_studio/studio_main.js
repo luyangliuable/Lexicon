@@ -88,86 +88,100 @@ class studioMain extends Component {
         const componentName = event.target.getAttribute('data-component-name');
         const componentElement = { type: componentType, name: componentName, uuid: uuidv4() };
 
-        // meta list type element
-        if (componentElement.type === 'meta') {
-            // Description Card
-            if (componentElement.name === 'DescriptionComponent') {
-                componentElement.descriptionHeading = '';
-                componentElement.content = '';
-                componentElement.previewModeDisplay = true;
-                componentElement.editMode = false;
-            }
-            // Reference Card
-            else if (componentElement.name === 'ReferenceComponent') {
-                componentElement.referenceName = '';
-                componentElement.url_link = '';
-                componentElement.previewModeDisplay = true;
-                componentElement.editMode = false;
-            }
-            this.setState({ metaList: [...this.state.metaList, componentElement] });
+        switch(componentElement.type) {
+            // meta list type element
+            case 'meta':
+                switch(componentElement.name){
+
+                    // Description Card
+                    case 'DescriptionComponent':
+                        componentElement.descriptionHeading = '';
+                        componentElement.content = '';
+                        componentElement.previewModeDisplay = true;
+                        componentElement.editMode = false;
+                        this.setState({ metaList: [...this.state.metaList, componentElement] });
+                        break;
+
+                    // Reference Card
+                    case 'ReferenceComponent':
+                        componentElement.referenceName = '';
+                        componentElement.url_link = '';
+                        componentElement.previewModeDisplay = true;
+                        componentElement.editMode = false;
+                        this.setState({ metaList: [...this.state.metaList, componentElement] });
+                        break;
+                }
+                break;
+
+            // input list type element
+            case 'input':
+                switch(componentElement.name){
+
+                    // Bivalent Input Card
+                    case 'BivalentInput':
+                        componentElement.questionText = '';
+                        componentElement.previewModeDisplay = true;
+                        componentElement.editMode = false;
+                        this.setState({ inputsList: [...this.state.inputsList, componentElement] });
+                        break;
+                    
+                    // Slider Input Card
+                    case 'SliderInput':
+                        componentElement.questionText = '';
+                        componentElement.minInput = Number.NaN;
+                        componentElement.stepInterval = 0;
+                        componentElement.maxInput = Number.NaN;
+                        componentElement.previewModeDisplay = true;
+                        componentElement.editMode = false;
+                        this.setState({ inputsList: [...this.state.inputsList, componentElement] });
+                        break;
+
+                    // Select Input Card
+                    case 'SelectInput':
+                        componentElement.questionText = '';
+                        componentElement.previewModeDisplay = true;
+                        componentElement.maxSelectionVal = 1;
+                        componentElement.optionsObject = {};
+                        componentElement.editMode = false;
+                        this.setState({ inputsList: [...this.state.inputsList, componentElement] });
+                        break;
+
+                    // Numerical Input Card
+                    case 'NumericalInput':
+                        componentElement.questionText = '';
+                        componentElement.previewModeDisplay = true;
+                        componentElement.minInput = Number.NaN;
+                        componentElement.maxInput = Number.NaN;
+                        componentElement.unitsObject = {};
+                        componentElement.editMode = false;
+                        this.setState({ inputsList: [...this.state.inputsList, componentElement] });
+                        break;
+
+                    // Point Input Card
+                    case 'PointInput':
+                        componentElement.questionText = '';
+                        componentElement.previewModeDisplay = true;
+                        componentElement.optionsObject = {};
+                        componentElement.editMode = false;
+                        componentElement.maxSelectionVal = 1;
+                        this.setState({ inputsList: [...this.state.inputsList, componentElement] });
+                        break;
+                }
+                break;
+
+            // output list type element
+            case 'output':
+                switch(componentElement.name){
+                    case 'NumericalOutputComponent':
+                        componentElement.outputHeading = '';
+                        componentElement.previewModeDisplay = true;
+                        componentElement.outputDescription = '';
+                        componentElement.editMode = false;
+                        this.setState({ outputsList: [...this.state.outputsList, componentElement] });
+                        break;
+                }
+                break;
         }
-        // input list type element
-        else if (componentElement.type === 'input') {
-
-            // Bivalent Input Card
-            if (componentElement.name === 'BivalentInput') {
-                componentElement.questionText = '';
-                componentElement.previewModeDisplay = true;
-                componentElement.editMode = false;
-            }
-            // Slider Input Card
-            else if (componentElement.name === 'SliderInput') {
-                componentElement.questionText = '';
-                componentElement.minInput = Number.NaN;
-                componentElement.stepInterval = 0;
-                componentElement.maxInput = Number.NaN;
-                componentElement.previewModeDisplay = true;
-                componentElement.editMode = false;
-            }
-
-            // Select Input Card
-            else if (componentElement.name === 'SelectInput') {
-                componentElement.questionText = '';
-                componentElement.previewModeDisplay = true;
-                componentElement.maxSelectionVal = 1;
-                componentElement.optionsObject = {};
-                componentElement.editMode = false;
-            }
-
-            // Numerical Input Card
-            else if (componentElement.name === 'NumericalInput') {
-                componentElement.questionText = '';
-                componentElement.previewModeDisplay = true;
-                componentElement.minInput = Number.NaN;
-                componentElement.maxInput = Number.NaN;
-                componentElement.unitsObject = {};
-                componentElement.editMode = false;
-            }
-
-            // Point Input Card
-            else if (componentElement.name === 'PointInput') {
-                componentElement.questionText = '';
-                componentElement.previewModeDisplay = true;
-                componentElement.optionsObject = {};
-                componentElement.editMode = false;
-                componentElement.maxSelectionVal = 1
-            }
-
-            this.setState({ inputsList: [...this.state.inputsList, componentElement] });
-        }
-        // outputs list type element
-        else if (componentElement.type === 'output') {
-
-            // Numerical Output Card
-            if (componentElement.name === 'NumericalOutputComponent') {
-                componentElement.outputHeading = '';
-                componentElement.previewModeDisplay = true;
-                componentElement.outputDescription = '';
-                componentElement.editMode = false;
-            }
-            this.setState({ outputsList: [...this.state.outputsList, componentElement] });
-        }
-
     }
 
     // method for capturing the state changes in the card components

@@ -1,8 +1,4 @@
-import { faEye, faEyeSlash, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useReducer, useState } from "react";
-import OptionElement from "./optionElement";
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState } from "react";
 
 function SelectInputCardPreviewMode(props) {
 

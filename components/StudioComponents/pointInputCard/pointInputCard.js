@@ -1,12 +1,26 @@
-import { faEye, faEyeSlash, faTrashAlt, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import OptionElement from "./optionElement";
 import { v4 as uuidv4 } from 'uuid';
+import Switch from "react-switch";
+import { DropdownButton, Dropdown } from "react-bootstrap";
 
 function PointInputCard(props) {
 
-    const initialState = { type: props.cardElement.type, name: props.cardElement.name, uuid: props.cardElement.uuid, questionText: props.cardElement.questionText, previewModeDisplay: props.cardElement.previewModeDisplay, optionsObject: props.cardElement.optionsObject, editMode: props.cardElement.editMode, maxSelectionVal: props.cardElement.maxSelectionVal };
+    const initialState = {
+        type: props.cardElement.type,
+        name: props.cardElement.name,
+        uuid: props.cardElement.uuid,
+        questionText: props.cardElement.questionText,
+        previewModeDisplay: props.cardElement.previewModeDisplay,
+        optionsObject: props.cardElement.optionsObject,
+        editMode: props.cardElement.editMode,
+        maxSelectionVal: props.cardElement.maxSelectionVal,
+        outputAssociation: props.cardElement.outputAssociation,
+        outputAssociationElement: props.cardElement.outputAssociationElement
+    };
+
     const [state, updateOptionsObject] = useReducer(handleoptionsObjectChanges, initialState);
 
     // function for handling the changes in the options array
@@ -14,28 +28,47 @@ function PointInputCard(props) {
         const optionElementUUID = action.value;
         switch (action.type) {
             case "QUESTION_TEXT":
-                const updatedState_question_text = { type: state.type, name: state.name, uuid: state.uuid, questionText: action.value, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal };
+                const updatedState_question_text = { type: state.type, name: state.name, uuid: state.uuid, questionText: action.value, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal, outputAssociation: state.outputAssociation, outputAssociationElement: state.outputAssociationElement };
                 return updatedState_question_text;
             case "PREVIEW_MODE":
-                const updatedState_preview_mode = { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: !state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal };
+                const updatedState_preview_mode = { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: !state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal, outputAssociation: state.outputAssociation, outputAssociationElement: state.outputAssociationElement };
                 return updatedState_preview_mode;
             case "ADD_OPTION":
                 state.optionsObject[optionElementUUID] = { optionText: '', optionScore: 0 };
-                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal };
+                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal, outputAssociation: state.outputAssociation, outputAssociationElement: state.outputAssociationElement };
             case "EDIT_OPTION_TEXT":
                 state.optionsObject[optionElementUUID].optionText = action.content;
-                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal };
+                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal, outputAssociation: state.outputAssociation, outputAssociationElement: state.outputAssociationElement };
             case "EDIT_OPTION_SCORE":
                 state.optionsObject[optionElementUUID].optionScore = Number.isNaN(parseInt(action.content)) ? 1 : parseInt(action.content);
-                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal };
+                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal, outputAssociation: state.outputAssociation, outputAssociationElement: state.outputAssociationElement };
             case "DELETE_OPTION":
                 delete state.optionsObject[optionElementUUID];
-                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal };
+                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal, outputAssociation: state.outputAssociation, outputAssociationElement: state.outputAssociationElement };
             case "EDIT":
-                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: !state.editMode, maxSelectionVal: state.maxSelectionVal };
+                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: !state.editMode, maxSelectionVal: state.maxSelectionVal, outputAssociation: state.outputAssociation, outputAssociationElement: state.outputAssociationElement };
             case "MAX_SELECTIONS":
                 const max_selection_new_value = action.value;
-                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: max_selection_new_value };
+                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: max_selection_new_value, outputAssociation: state.outputAssociation, outputAssociationElement: state.outputAssociationElement };
+            case "OUTPUT_ASSOCIATION":
+                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal, outputAssociation: !state.outputAssociation, outputAssociationElement: state.outputAssociationElement };
+            case "OUTPUT_ASSOCIATION_ELEMENT":
+                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal, outputAssociation: state.outputAssociation, outputAssociationElement: action.value };
+
+        }
+    }
+
+    // function for performing the necessary task for output association
+    function outputAssociationHelper(actionType, cardUUID) {
+        if (actionType === "NEW") {
+            if (state.outputAssociationElement === null) {
+                const elementUUID = cardUUID;
+                props.outputAssociation('output', 'NumericalOutputComponent', elementUUID);
+            } else {
+                alert("Point Input Card: An output card has already been added for output association !");
+            }
+        } else if (actionType === "EXISTING") {
+
         }
     }
 
@@ -100,10 +133,10 @@ function PointInputCard(props) {
             </div>
             {/* card heading row */}
             <div className="">
-                {state.editMode ? (<div className="text-blue-900 text-sm p-1">Options Added:</div>):
-                (<>
-                {Object.keys(state.optionsObject).length > 0 ? (<div className="text-sm text-blue-900">Options Added:</div>) : (<div className="text-blue-900 text-sm"><span className="font-bold">NOTE:</span> No options has been added.</div>)}
-                </>)}
+                {state.editMode ? (<div className="text-blue-900 text-sm p-1">Options Added:</div>) :
+                    (<>
+                        {Object.keys(state.optionsObject).length > 0 ? (<div className="text-sm text-blue-900">Options Added:</div>) : (<div className="text-blue-900 text-sm"><span className="font-bold">NOTE:</span> No options has been added.</div>)}
+                    </>)}
                 {/*input row section */}
                 <div className="w-full p-1">
                     {Object.keys(state.optionsObject).map((item, index) => {
@@ -130,8 +163,36 @@ function PointInputCard(props) {
                                 <FontAwesomeIcon icon={faPlus} className=""></FontAwesomeIcon> Add Option
                             </div>
                         </div>
-                        <div className="text-blue-900 text-sm">
-                            <span className="font-bold">NOTE:</span> A score must be provided for each option and it must be greater than or equal to 0. The default value for the maximum number of option(s) that the users can select is 1 and this value must be greater than 0.
+                        <div className="flex justify-between text-base px-0.5">
+                            <div className="mt-1.5 text-blue-900">Card Output Association: </div>
+                            <div className="mt-0.5">
+                                <Switch
+                                    onChange={() => { updateOptionsObject({ type: "OUTPUT_ASSOCIATION" }) }}
+                                    checked={state.outputAssociation}
+                                    offColor="#326ced"
+                                    onColor="#326ced"
+                                    className="text-sm"
+                                />
+                            </div>
+                        </div>
+                        {state.outputAssociation && (
+                            <div className="flex justify-between px-0.5 mb-1">
+                                <div className="text-blue-900 pt-2.5 ">Associate card output with:</div>
+                                <div className="">
+                                    <DropdownButton className="w-full" id="dropdown-item-button" title={state.outputAssociationElement ? state.outputAssociationElement.display : "Select Element "}>
+                                        <Dropdown.Item as="button" onClick={() => {
+                                            const elementUUID = uuidv4();
+                                            updateOptionsObject({ type: "OUTPUT_ASSOCIATION_ELEMENT", value: { type: "NEW", uuid: elementUUID, display: "New Card" } });
+                                            outputAssociationHelper("NEW", elementUUID);
+                                        }}>New Card</Dropdown.Item>
+                                        {/* <Dropdown.Item as="button" onClick={() => { updateOptionsObject({ type: "OUTPUT_ASSOCIATION_ELEMENT", value: { type: "EXISTING", uuid: uuidv4(), display: "Existing Card" } }) }}>Existing Card</Dropdown.Item> */}
+                                    </DropdownButton>
+                                </div>
+                            </div>
+                        )}
+                        <div className="text-blue-900 text-sm mt-1.5">
+                            <div><span className="font-bold">NOTE:</span> The card output can be associated with only one of the output category cards.</div>
+                            <div className="mt-1" ><span className="font-bold">NOTE:</span> A score must be provided for each option and it must be greater than or equal to 0. The default value for the maximum number of option(s) that the users can select is 1 and this value must be greater than 0.</div>
                         </div>
                     </>) : (<></>)}
             </div>

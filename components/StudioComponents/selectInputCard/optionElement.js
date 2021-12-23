@@ -1,7 +1,6 @@
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import React from "react";
 
 function OptionElement(props) {
 

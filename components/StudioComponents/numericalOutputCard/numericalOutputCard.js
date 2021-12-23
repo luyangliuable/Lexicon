@@ -1,25 +1,25 @@
-import { faEye, faEyeSlash, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 
 function NumericalOutputCard(props) {
 
-    const initialState = { type: props.cardElement.type, name: props.cardElement.name, uuid: props.cardElement.uuid, outputHeading: props.cardElement.outputHeading, previewModeDisplay: props.cardElement.previewModeDisplay, outputDescription: props.cardElement.outputDescription, editMode: props.cardElement.editMode };
+    const initialState = { type: props.cardElement.type, name: props.cardElement.name, uuid: props.cardElement.uuid, outputHeading: props.cardElement.outputHeading, previewModeDisplay: props.cardElement.previewModeDisplay, outputDescription: props.cardElement.outputDescription, editMode: props.cardElement.editMode, totalScore: props.cardElement.totalScore };
     const [state, updateNumericalOutputCard] = useReducer(handleNumericalOutputCardChanges, initialState);
 
     function handleNumericalOutputCardChanges(state, action) {
         switch (action.type) {
             case "HEADING":
-                const updatedState_h = { type: state.type, name: state.name, uuid: state.uuid, outputHeading: action.value, previewModeDisplay: state.previewModeDisplay, outputDescription: state.outputDescription, editMode: state.editMode };
+                const updatedState_h = { type: state.type, name: state.name, uuid: state.uuid, outputHeading: action.value, previewModeDisplay: state.previewModeDisplay, outputDescription: state.outputDescription, editMode: state.editMode, totalScore: state.totalScore };
                 return updatedState_h;
             case "PREVIEW_MODE":
-                const updatedState_p = { type: state.type, name: state.name, uuid: state.uuid, outputHeading: state.outputHeading, previewModeDisplay: !state.previewModeDisplay, outputDescription: state.outputDescription, editMode: state.editMode };
+                const updatedState_p = { type: state.type, name: state.name, uuid: state.uuid, outputHeading: state.outputHeading, previewModeDisplay: !state.previewModeDisplay, outputDescription: state.outputDescription, editMode: state.editMode, totalScore: state.totalScore };
                 return updatedState_p;
             case "DESCRIPTION":
-                const updatedState_d = { type: state.type, name: state.name, uuid: state.uuid, outputHeading: state.outputHeading, previewModeDisplay: state.previewModeDisplay, outputDescription: action.value, editMode: state.editMode };
+                const updatedState_d = { type: state.type, name: state.name, uuid: state.uuid, outputHeading: state.outputHeading, previewModeDisplay: state.previewModeDisplay, outputDescription: action.value, editMode: state.editMode, totalScore: state.totalScore };
                 return updatedState_d;
             case "EDIT":
-                const updatedState_e = { type: state.type, name: state.name, uuid: state.uuid, outputHeading: state.outputHeading, previewModeDisplay: state.previewModeDisplay, outputDescription: state.outputDescription, editMode: !state.editMode };
+                const updatedState_e = { type: state.type, name: state.name, uuid: state.uuid, outputHeading: state.outputHeading, previewModeDisplay: state.previewModeDisplay, outputDescription: state.outputDescription, editMode: !state.editMode, totalScore: state.totalScore };
                 return updatedState_e;
         }
     }

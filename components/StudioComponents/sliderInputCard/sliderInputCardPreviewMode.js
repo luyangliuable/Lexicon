@@ -1,5 +1,3 @@
-import { faEye, faEyeSlash, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import RangeSlider from 'react-bootstrap-range-slider';
 import React, { useState } from "react";
 

@@ -1,6 +1,6 @@
-import { faEye, faEyeSlash, faInfoCircle, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import OptionElement from "./optionElement";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -115,8 +115,8 @@ function SelectInputCard(props) {
                         (<></>)}
                 </div>
             </div>
-            {state.editMode ? 
-            (<div className="text-sm mx-1.5 text-blue-900 mt-2.5"><span className="font-bold">NOTE:</span> The default value for the maximum number of option(s) that the users can select is 1 and this value must be greater than 0. </div>):(<></>)}
+            {state.editMode ?
+                (<div className="text-sm mx-1.5 text-blue-900 mt-2.5"><span className="font-bold">NOTE:</span> The default value for the maximum number of option(s) that the users can select is 1 and this value must be greater than 0. </div>) : (<></>)}
         </div>
     </>)
 }

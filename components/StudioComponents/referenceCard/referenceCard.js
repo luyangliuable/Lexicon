@@ -1,4 +1,4 @@
-import { faEye, faEyeSlash, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useReducer } from "react";
 
@@ -43,7 +43,7 @@ function ReferenceCard(props) {
     }
 
     // function for sending the changes of the reference card to the parent component
-    function saveChanges(state){
+    function saveChanges(state) {
         props.stateChangeMethod(state);
     }
 
@@ -73,7 +73,7 @@ function ReferenceCard(props) {
             {/* card first row */}
             {/* card heading row */}
             <div className="h-9 w-full flex flex-row justify-between">
-                <input className={state.editMode? "h-5/6 w-5/6 px-1 text-blue-900": "h-5/6 w-5/6 px-1 text-blue-900 cursor-not-allowed"} readOnly={!state.editMode} value={state.referenceName} placeholder="Edit Reference Name ..." onChange={event => updateReferenceCard({ type: "REFERENCE_NAME", value: event.target.value })} />
+                <input className={state.editMode ? "h-5/6 w-5/6 px-1 text-blue-900" : "h-5/6 w-5/6 px-1 text-blue-900 cursor-not-allowed"} readOnly={!state.editMode} value={state.referenceName} placeholder="Edit Reference Name ..." onChange={event => updateReferenceCard({ type: "REFERENCE_NAME", value: event.target.value })} />
                 {/* {state.previewModeDisplay ?
                     (<FontAwesomeIcon icon={faEye} onClick={() => updateReferenceCard({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900"></FontAwesomeIcon>) :
                     (<FontAwesomeIcon icon={faEyeSlash} onClick={() => updateReferenceCard({ type: "PREVIEW_MODE" })} className="text-xl my-1 cursor-pointer text-blue-900"></FontAwesomeIcon>)} */}

@@ -1,6 +1,6 @@
-import { faEye, faEyeSlash, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import UnitElement from "./unitElement";
 import { v4 as uuidv4 } from 'uuid';
 

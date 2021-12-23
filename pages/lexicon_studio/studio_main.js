@@ -47,18 +47,36 @@ class studioMain extends Component {
         this.conditionalCardRender = this.conditionalCardRender.bind(this);
         this.deleteAssistFunction = this.deleteAssistFunction.bind(this);
         this.updateInputCardTotalScore = this.updateInputCardTotalScore.bind(this);
+        this.updateNumericalOutputCardTotalScore = this.updateNumericalOutputCardTotalScore.bind(this);
     }
 
     // method for updating the total score for input cards
-    updateInputCardTotalScore(optionScore, operationString){
-        switch(operationString){
+    updateNumericalOutputCardTotalScore(optionScore, operationString, cardUUID) {
+        const numericalOutputCardToBeUpdatedIndex = this.state.outputsList.findIndex(currentItem => currentItem.uuid === cardUUID);
+        this.setState(prevState => {
+            let outputsListLocalCopy = prevState.outputsList;
+            switch (operationString) {
+                case 'ADD':
+                    outputsListLocalCopy[numericalOutputCardToBeUpdatedIndex].totalScore += optionScore;
+                    break;
+                case 'SUBTRACT':
+                    outputsListLocalCopy[numericalOutputCardToBeUpdatedIndex].totalScore -= optionScore;
+                    break;
+            }
+            return { outputsList: outputsListLocalCopy };
+        })
+    }
+
+    // method for updating the total score for input cards
+    updateInputCardTotalScore(optionScore, operationString) {
+        switch (operationString) {
             case 'ADD':
                 const updatedScore_add = this.state.totalInputScore + optionScore;
-                this.setState({totalInputScore: updatedScore_add});
+                this.setState({ totalInputScore: updatedScore_add });
                 break;
             case 'SUBTRACT':
                 const updatedScore_subtract = this.state.totalInputScore - optionScore;
-                this.setState({totalInputScore: updatedScore_subtract});
+                this.setState({ totalInputScore: updatedScore_subtract });
                 break;
         }
     }
@@ -72,7 +90,7 @@ class studioMain extends Component {
                 this.setState({ showSideBarMenu: true })
             }
         } else {
-            window.alert("Cards cannot be added or edited in a preview mode !");
+            alert("Cards cannot be added or edited in a preview mode !");
         }
     }
 
@@ -83,15 +101,16 @@ class studioMain extends Component {
     }
 
     // method when one of the side bar options has been selected 
-    sideBarOptionSelected = (event) => {
-        const componentType = event.target.getAttribute('data-component-type');
-        const componentName = event.target.getAttribute('data-component-name');
-        const componentElement = { type: componentType, name: componentName, uuid: uuidv4() };
+    sideBarOptionSelected = (elementType, elementName, elementUUID) => {
+        const componentType = elementType;
+        const componentName = elementName;
+        const componentUUID = elementUUID ? elementUUID : uuidv4();
+        const componentElement = { type: componentType, name: componentName, uuid: componentUUID };
 
-        switch(componentElement.type) {
+        switch (componentElement.type) {
             // meta list type element
             case 'meta':
-                switch(componentElement.name){
+                switch (componentElement.name) {
 
                     // Description Card
                     case 'DescriptionComponent':
@@ -115,7 +134,7 @@ class studioMain extends Component {
 
             // input list type element
             case 'input':
-                switch(componentElement.name){
+                switch (componentElement.name) {
 
                     // Bivalent Input Card
                     case 'BivalentInput':
@@ -124,7 +143,7 @@ class studioMain extends Component {
                         componentElement.editMode = false;
                         this.setState({ inputsList: [...this.state.inputsList, componentElement] });
                         break;
-                    
+
                     // Slider Input Card
                     case 'SliderInput':
                         componentElement.questionText = '';
@@ -164,6 +183,8 @@ class studioMain extends Component {
                         componentElement.optionsObject = {};
                         componentElement.editMode = false;
                         componentElement.maxSelectionVal = 1;
+                        componentElement.outputAssociation = false;
+                        componentElement.outputAssociationElement = null;
                         this.setState({ inputsList: [...this.state.inputsList, componentElement] });
                         break;
                 }
@@ -171,12 +192,13 @@ class studioMain extends Component {
 
             // output list type element
             case 'output':
-                switch(componentElement.name){
+                switch (componentElement.name) {
                     case 'NumericalOutputComponent':
                         componentElement.outputHeading = '';
                         componentElement.previewModeDisplay = true;
                         componentElement.outputDescription = '';
                         componentElement.editMode = false;
+                        componentElement.totalScore = 0;
                         this.setState({ outputsList: [...this.state.outputsList, componentElement] });
                         break;
                 }
@@ -264,6 +286,8 @@ class studioMain extends Component {
                             inputListLocalCopy[stateObjectToBeUpdatedIndex_i].previewModeDisplay = stateObject.previewModeDisplay;
                             inputListLocalCopy[stateObjectToBeUpdatedIndex_i].optionsObject = stateObject.optionsObject;
                             inputListLocalCopy[stateObjectToBeUpdatedIndex_i].maxSelectionVal = stateObject.maxSelectionVal;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].outputAssociation = stateObject.outputAssociation;
+                            inputListLocalCopy[stateObjectToBeUpdatedIndex_i].outputAssociationElement = stateObject.outputAssociationElement;
                             return { inputsList: inputListLocalCopy };
                         });
                         break;
@@ -277,6 +301,7 @@ class studioMain extends Component {
                             outputListLocalCopy[stateObjectToBeUpdatedIndex_o].outputHeading = stateObject.outputHeading;
                             outputListLocalCopy[stateObjectToBeUpdatedIndex_o].outputDescription = stateObject.outputDescription;
                             outputListLocalCopy[stateObjectToBeUpdatedIndex_o].previewModeDisplay = stateObject.previewModeDisplay;
+                            outputListLocalCopy[stateObjectToBeUpdatedIndex_o].totalScore = stateObject.totalScore;
                             return { outputsList: outputListLocalCopy };
                         });
                         break;
@@ -295,22 +320,36 @@ class studioMain extends Component {
             switch (current_card_m.name) {
 
                 case 'DescriptionComponent':
+
+                    // CHECK: Card heading has been provided.
                     if (current_card_m.descriptionHeading.length === 0) {
                         alert('Description Card: Please provide the description heading !');
                         return false;
-                    } else if (current_card_m.content.length === 0) {
+                    }
+
+                    // CHECK: Card content has been provided.
+                    if (current_card_m.content.length === 0) {
                         alert('Description Card: Please provide the description content !');
                         return false;
-                    } else { break; }
+                    }
+
+                    break;
 
                 case 'ReferenceComponent':
+
+                    // CHECK: Card heading has been provided.
                     if (current_card_m.referenceName.length === 0) {
                         alert('Reference Card: Please provide the reference link name !');
                         return false;
-                    } else if (current_card_m.url_link.length === 0) {
+                    }
+
+                    // CHECK: URL Link has been provided.
+                    if (current_card_m.url_link.length === 0) {
                         alert('Reference Card: Please provide the reference link !');
                         return false;
-                    } else { break; }
+                    }
+
+                    break;
             }
         }
         // check for cards in inputs list
@@ -321,46 +360,84 @@ class studioMain extends Component {
             switch (current_card_i.name) {
 
                 case 'BivalentInput':
+
+                    // CHECK: Card question has been provided.
                     if (current_card_i.questionText.length === 0) {
                         alert('Bivalent Input Card: Please enter the question !');
                         return false;
-                    } else { break; }
+                    }
+
+                    break;
 
                 case 'SliderInput':
+
+                    // CHECK: Card question has been provided.
                     if (current_card_i.questionText.length === 0) {
                         alert('Slider Input Card: Please enter the question !');
                         return false;
-                    } else if (Number.isNaN(current_card_i.minInput)) {
+                    }
+
+                    // CHECK: Slider min-input value has been provided.
+                    if (Number.isNaN(current_card_i.minInput)) {
                         alert('Slider Input Card: Please provide the min value for the slider !');
                         return false;
-                    } else if (Number.isNaN(current_card_i.maxInput)) {
+                    }
+
+                    // CHECK: Slider max-input value has been provided.
+                    if (Number.isNaN(current_card_i.maxInput)) {
                         alert('Slider Input Card: Please provide the max value for the slider !');
                         return false;
-                    } else if (Number.isNaN(current_card_i.stepInterval)) {
+                    }
+
+                    // CHECK: Slider step interval value has been provided.
+                    if (Number.isNaN(current_card_i.stepInterval)) {
                         alert('Slider Input Card: Please provide the step interval value for the slider !');
                         return false
-                    } else if (current_card_i.minInput >= current_card_i.maxInput) {
+                    }
+
+                    // CHECK: Slider min-input value is less than the max-input value.
+                    if (current_card_i.minInput >= current_card_i.maxInput) {
                         alert('Slider Input Card: Min value for the slider cannot be greater than or equal to the max value !');
                         return false;
-                    } else if (current_card_i.maxInput <= current_card_i.minInput) {
+                    }
+
+                    // CHECK: Slider max-input value is greater than the min-input value.
+                    if (current_card_i.maxInput <= current_card_i.minInput) {
                         alert('Slider Input Card: Max value for the slider cannot be less than or equal to the min value !');
                         return false;
-                    } else if ((current_card_i.stepInterval > 0) && ((current_card_i.maxInput % current_card_i.stepInterval) != 0)) {
+                    }
+
+                    // CHECK: If step interval value is greater than 0, then the slider range can be divided into equal parts as
+                    // the step interval value.
+                    if ((current_card_i.stepInterval > 0) && ((current_card_i.maxInput % current_card_i.stepInterval) != 0)) {
                         alert('Slider Input Card: Please enter a valid value for the step interval !');
                         return false;
-                    } else { break; }
+                    }
+
+                    break;
 
                 case 'SelectInput':
+
+                    // CHECK: Card question has been provided.
                     if (current_card_i.questionText.length === 0) {
                         alert('Select Input Card: Please provide the question !');
                         return false;
-                    } else if (Object.keys(current_card_i.optionsObject).length === 0) {
+                    }
+
+                    // CHECK: Options has been provided.
+                    if (Object.keys(current_card_i.optionsObject).length === 0) {
                         alert('Select Input Card: Please add some options for the user to select !');
                         return false;
-                    } else if (current_card_i.maxSelectionVal > Object.keys(current_card_i.optionsObject).length) {
+                    }
+
+                    // CHECK: Max selection value is less than or equal to the number of options provided.
+                    if (current_card_i.maxSelectionVal > Object.keys(current_card_i.optionsObject).length) {
                         alert('Select Input Card: Max selection value cannot be greater than the number of options provided !');
                         return false;
-                    } else if (Object.keys(current_card_i.optionsObject).length > 0) {
+                    }
+
+                    // CHECK: Content for provided options is non-empty.
+                    if (Object.keys(current_card_i.optionsObject).length > 0) {
                         for (const [key, value] of Object.entries(current_card_i.optionsObject)) {
                             if (value.length === 0) {
                                 alert('Select Input Card: No provided option can be empty !');
@@ -368,63 +445,106 @@ class studioMain extends Component {
                             }
                         }
                         break;
-                    } else if (current_card_i.maxSelectionVal < 1) {
+                    }
+
+                    // CHECK: Max selection value is greater than 0.
+                    if (current_card_i.maxSelectionVal < 1) {
                         alert('Select Input Card: Max selection value must greater than or equal to 1 !');
                         return false;
-                    } else { break; }
+                    }
+
+                    break;
 
                 case 'NumericalInput':
+
+                    // CHECK: Card question has been provided.
                     if (current_card_i.questionText.length === 0) {
                         alert('Numerical Input Card: Please provide the question !');
                         return false;
-                    } else if (Number.isNaN(current_card_i.minInput)) {
+                    }
+
+                    // CHECK: Min input value has been provided.
+                    if (Number.isNaN(current_card_i.minInput)) {
                         alert('Numerical Input Card: Please provide the min value !');
                         return false;
-                    } else if (Number.isNaN(current_card_i.maxInput)) {
+                    }
+
+                    // CHECK: Max input value has been provided.
+                    if (Number.isNaN(current_card_i.maxInput)) {
                         alert('Numerical Input Card: Please provide the max value !');
                         return false;
-                    } else if (current_card_i.minInput >= current_card_i.maxInput) {
+                    }
+
+                    // CHECK: Min input value is less than the max input value.
+                    if (current_card_i.minInput >= current_card_i.maxInput) {
                         alert('Numerical Input Card: Min value cannot be greater than or equal to the max value !');
                         return false;
-                    } else if (current_card_i.maxInput <= current_card_i.minInput) {
+                    }
+
+                    // CHECK: Max input value is greater than the min input value.
+                    if (current_card_i.maxInput <= current_card_i.minInput) {
                         alert('Numerical Input Card: Max value cannot be less than or equal to min value');
                         return false;
-                    } else if (Object.keys(current_card_i.unitsObject).length > 0) {
+                    }
+
+                    // CHECK: Content for the provided options is non-empty.
+                    if (Object.keys(current_card_i.unitsObject).length > 0) {
                         for (const [key, value] of Object.entries(current_card_i.unitsObject)) {
                             if (value.length === 0) {
                                 alert('Numerical Input Card: No provided unit option can be empty !');
                                 return false;
                             }
                         }
-                        break;
-                    } else { break; }
+                    }
+
+                    break;
 
                 case 'PointInput':
+
+                    // CHECK: Card question has been provided.
                     if (current_card_i.questionText.length === 0) {
                         alert('Point Input Card: Please provide the question !');
                         return false;
-                    } else if (Object.keys(current_card_i.optionsObject).length === 0) {
+                    }
+
+                    // CHECK: Options has been provided.
+                    if (Object.keys(current_card_i.optionsObject).length === 0) {
                         alert('Point Input Card: Please add some options for the user to select !');
                         return false;
-                    } else if (Object.keys(current_card_i.optionsObject).length > 0) {
+                    }
+
+                    // CHECK: Content for the provided options is non-empty and their score is non-negative.
+                    if (Object.keys(current_card_i.optionsObject).length > 0) {
                         for (const [keyName, value] of Object.entries(current_card_i.optionsObject)) {
                             const currentOptionObj = current_card_i.optionsObject[keyName];
                             if (currentOptionObj.optionText.length === 0) {
                                 alert('Point Input Card: No provided option can be empty !');
                                 return false;
-                            } else if (currentOptionObj.optionScore < 0) {
+                            } else if (!Number.isInteger(currentOptionObj.optionScore)) {
                                 alert('Point Input Card: No provided option can have a score less than 0 !');
                                 return false;
                             }
                         }
-                        break;
-                    } else if (current_card_i.maxSelectionVal < 1) {
+                    }
+
+                    // CHECK: Max selection value is greater than 0.
+                    if (current_card_i.maxSelectionVal < 1) {
                         alert('Point Input Card: Max selection value must greater than or equal to 1 !');
                         return false;
-                    } else if (current_card_i.maxSelectionVal > Object.keys(current_card_i.optionsObject).length) {
+                    }
+
+                    // CHECK: Max selection value is less than or equal to the number of options provided.
+                    if (current_card_i.maxSelectionVal > Object.keys(current_card_i.optionsObject).length) {
                         alert('Point Input Card: Max selection value cannot be greater than the number of options provided !');
                         return false;
-                    } else { break; }
+                    }
+
+                    // CHECK: If output associations has been selected, then some element for output association has been provided.
+                    if (current_card_i.outputAssociation && (current_card_i.outputAssociationElement === null)) {
+                        alert('Point Input Card: No element selected for output association !');
+                        return false;
+                    }
+                    break;
 
 
             }
@@ -438,13 +558,20 @@ class studioMain extends Component {
             switch (current_card_o.name) {
 
                 case 'NumericalOutputComponent':
+
+                    // CHECK: Heading has been provided.
                     if (current_card_o.outputHeading.length === 0) {
                         alert('Numerical Output Card: Please provide the output heading !');
                         return false;
-                    } else if (current_card_o.outputDescription.length === 0) {
+                    }
+
+                    // CHECK: Description has been provided.
+                    if (current_card_o.outputDescription.length === 0) {
                         alert('Numerical Output Card: Please provide the output description !');
                         return false;
-                    } else { break; }
+                    }
+
+                    break;
             }
         }
         return true;
@@ -475,7 +602,7 @@ class studioMain extends Component {
                     case "SliderInput":
                         return (<SliderInputCard cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid}></SliderInputCard>);
                     case "PointInput":
-                        return (<PointInputCard cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid}></PointInputCard>);
+                        return (<PointInputCard cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid} outputAssociation={this.sideBarOptionSelected}></PointInputCard>);
                     case "DescriptionComponent":
                         return (<DecriptionCardComponent cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid}></DecriptionCardComponent>);
                     case "ReferenceComponent":
@@ -496,7 +623,7 @@ class studioMain extends Component {
                         return (cardItem.previewModeDisplay ? (<SliderInputCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></SliderInputCardPreviewMode>) : (<></>));
                     case "PointInput":
                         { !this.state.displayTotalInputScore ? this.setState({ displayTotalInputScore: true }) : null };
-                        return (cardItem.previewModeDisplay ? (<PointInputCardPreviewMode inputCardtotalScoreUpdateMethod={this.updateInputCardTotalScore} cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></PointInputCardPreviewMode>) : (<></>));
+                        return (cardItem.previewModeDisplay ? (<PointInputCardPreviewMode inputCardtotalScoreUpdateMethod={this.updateNumericalOutputCardTotalScore} cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></PointInputCardPreviewMode>) : (<></>));
                     case "DescriptionComponent":
                         return (cardItem.previewModeDisplay ? (<DescriptionCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></DescriptionCardPreviewMode>) : (<></>));
                     case "ReferenceComponent":
@@ -559,14 +686,14 @@ class studioMain extends Component {
                         <div className="text-4xl text-blue-900">Components</div>
                     </Offcanvas.Header>
                     <Offcanvas.Body className="divide-y divide-gray-300">
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='meta' data-component-name='DescriptionComponent' onClick={this.sideBarOptionSelected}>Description Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='meta' data-component-name='ReferenceComponent' onClick={this.sideBarOptionSelected}>Reference Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='input' data-component-name='SelectInput' onClick={this.sideBarOptionSelected}>Select Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='input' data-component-name='NumericalInput' onClick={this.sideBarOptionSelected}>Numerical Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='input' data-component-name='BivalentInput' onClick={this.sideBarOptionSelected}>Bivalent Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='input' data-component-name='SliderInput' onClick={this.sideBarOptionSelected}>Slider Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='input' data-component-name='PointInput' onClick={this.sideBarOptionSelected}>Point Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" data-component-type='output' data-component-name='NumericalOutputComponent' onClick={this.sideBarOptionSelected}>Numerical Output Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('meta', 'DescriptionComponent') }}>Description Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('meta', 'ReferenceComponent') }}>Reference Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('input', 'SelectInput') }}>Select Input Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('input', 'NumericalInput') }}>Numerical Input Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('input', 'BivalentInput') }} >Bivalent Input Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('input', 'SliderInput') }}>Slider Input Card</div>
+                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('input', 'PointInput') }}>Point Input Card</div>
+                        {/* <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('output', 'NumericalOutputComponent') }}>Numerical Output Card</div> */}
                     </Offcanvas.Body>
                 </Offcanvas>
                 {/* side bar menu for card components */}
@@ -602,14 +729,16 @@ class studioMain extends Component {
                             <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Inputs
                         </div>
                         {this.state.inputsList.map((item, index) => (this.conditionalCardRender(item, index)))}
-                        {(this.state.displayTotalInputScore && this.state.previewMode) ? 
-                        (<>
-                        <div className="flex justify-between p-1 mb-2 text-xl border-2 px-2 rounded-lg border-blue-900">
-                            <div className="text-blue-900 font-normal">Result:</div>
-                            <div className="text-blue-900">{this.state.totalInputScore}</div>
-                        </div>
-                        </>)
-                        :(<></>)}
+                        {/* points card total score */}
+                        {/* {(this.state.displayTotalInputScore && this.state.previewMode) ?
+                            (<>
+                                <div className="flex justify-between p-1 mb-2 text-xl border-2 px-2 rounded-lg border-blue-900">
+                                    <div className="text-blue-900 font-normal">Result:</div>
+                                    <div className="text-blue-900">{this.state.totalInputScore}</div>
+                                </div>
+                            </>)
+                            : (<></>)} */}
+                        {/* points card total score */}
                     </div>
                     {/* input column */}
                     {/* outputs column */}

@@ -1,10 +1,11 @@
 import { faEye, faEyeSlash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import OptionElement from "./optionElement";
 import { v4 as uuidv4 } from 'uuid';
 import Switch from "react-switch";
 import { DropdownButton, Dropdown } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 
 function PointInputCard(props) {
 
@@ -22,6 +23,8 @@ function PointInputCard(props) {
     };
 
     const [state, updateOptionsObject] = useReducer(handleoptionsObjectChanges, initialState);
+    const [existingCardDialogBoxState, setExistingCardDialogBoxState] = useState(false);
+    const [existingCardDialogBoxSelectionState, setExistingCardDialogBoxSelectionState] = useState(null);
 
     // function for handling the changes in the options array
     function handleoptionsObjectChanges(state, action) {
@@ -51,7 +54,7 @@ function PointInputCard(props) {
                 const max_selection_new_value = action.value;
                 return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: max_selection_new_value, outputAssociation: state.outputAssociation, outputAssociationElement: state.outputAssociationElement };
             case "OUTPUT_ASSOCIATION":
-                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal, outputAssociation: !state.outputAssociation, outputAssociationElement: state.outputAssociationElement };
+                return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal, outputAssociation: !state.outputAssociation, outputAssociationElement: null };
             case "OUTPUT_ASSOCIATION_ELEMENT":
                 return { type: state.type, name: state.name, uuid: state.uuid, questionText: state.questionText, previewModeDisplay: state.previewModeDisplay, optionsObject: state.optionsObject, editMode: state.editMode, maxSelectionVal: state.maxSelectionVal, outputAssociation: state.outputAssociation, outputAssociationElement: action.value };
 
@@ -61,14 +64,18 @@ function PointInputCard(props) {
     // function for performing the necessary task for output association
     function outputAssociationHelper(actionType, cardUUID) {
         if (actionType === "NEW") {
-            if (state.outputAssociationElement === null) {
+            if (state.outputAssociationElement === null || state.outputAssociationElement.type === "EXISTING") {
                 const elementUUID = cardUUID;
                 props.outputAssociation('output', 'NumericalOutputComponent', elementUUID);
             } else {
                 alert("Point Input Card: An output card has already been added for output association !");
             }
         } else if (actionType === "EXISTING") {
-
+            if (props.outputsListCopy.length > 0) {
+                setExistingCardDialogBoxState(true);
+            } else {
+                alert("Point Input Card: There are no existing numerical output cards to select from !");
+            }
         }
     }
 
@@ -106,6 +113,40 @@ function PointInputCard(props) {
     }
 
     return (<>
+
+        {/* Card Delete Confirmation */}
+        <Modal show={existingCardDialogBoxState} onHide={() => { setExistingCardDialogBoxState(false); }} backdrop="static" keyboard={false}>
+            <Modal.Header closeButton>
+                <Modal.Title className="text-blue-900">Card Output Association</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="text-blue-900">
+                {console.log(props.outputsListCopy)}
+                <div>Select a numerical output card for the association of output: </div>
+                <div className="mt-2">
+                    <DropdownButton className="w-full" id="dropdown-item-button" title={existingCardDialogBoxSelectionState ? existingCardDialogBoxSelectionState.display : "Select Element "}>
+                        {props.outputsListCopy.map((currentItem) => (
+                            <Dropdown.Item as="button" onClick={() => {
+                                setExistingCardDialogBoxSelectionState({ uuid: currentItem.uuid, display: currentItem.outputHeading });
+                            }}>
+                                {currentItem.outputHeading}
+                            </Dropdown.Item>))}
+                    </DropdownButton>
+                </div>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="primary" onClick={() => { setExistingCardDialogBoxState(false) }}>
+                    Cancel
+                </Button>
+                <Button variant="success" onClick={() => {
+                    updateOptionsObject({ type: "OUTPUT_ASSOCIATION_ELEMENT", value: { type: "EXISTING", uuid: existingCardDialogBoxSelectionState.uuid, display: existingCardDialogBoxSelectionState.display } });
+                    setExistingCardDialogBoxState(false);
+                }}>
+                    Save
+                </Button>
+            </Modal.Footer>
+        </Modal>
+        {/* Card Delete Confirmation */}
+
         <div className="w-full border shadow-md p-2 hover:shadow-xl mb-2">
             {/* card first row */}
             <div className="flex flex-row h-9 my-2">
@@ -167,7 +208,10 @@ function PointInputCard(props) {
                             <div className="mt-1.5 text-blue-900">Card Output Association: </div>
                             <div className="mt-0.5">
                                 <Switch
-                                    onChange={() => { updateOptionsObject({ type: "OUTPUT_ASSOCIATION" }) }}
+                                    onChange={() => {
+                                        updateOptionsObject({ type: "OUTPUT_ASSOCIATION" });
+                                        setExistingCardDialogBoxSelectionState(null);
+                                    }}
                                     checked={state.outputAssociation}
                                     offColor="#326ced"
                                     onColor="#326ced"
@@ -185,7 +229,11 @@ function PointInputCard(props) {
                                             updateOptionsObject({ type: "OUTPUT_ASSOCIATION_ELEMENT", value: { type: "NEW", uuid: elementUUID, display: "New Card" } });
                                             outputAssociationHelper("NEW", elementUUID);
                                         }}>New Card</Dropdown.Item>
-                                        {/* <Dropdown.Item as="button" onClick={() => { updateOptionsObject({ type: "OUTPUT_ASSOCIATION_ELEMENT", value: { type: "EXISTING", uuid: uuidv4(), display: "Existing Card" } }) }}>Existing Card</Dropdown.Item> */}
+                                        {/* Display the option of selecting from the existing card only if there are any numerical output card to choose from*/}
+                                        {props.outputsListCopy.length > 0 &&
+                                            (<Dropdown.Item as="button" onClick={() => {
+                                                outputAssociationHelper("EXISTING");
+                                            }}>Existing Card</Dropdown.Item>)}
                                     </DropdownButton>
                                 </div>
                             </div>

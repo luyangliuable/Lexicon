@@ -96,7 +96,21 @@ class studioMain extends Component {
 
     // method for toggling the preview mode
     togglePreviewMode() {
-        if (!this.state.previewMode && this.performCardCheckForPreviewMode()) { this.setState({ previewMode: true, totalInputScore: 0 }); }
+        if (!this.state.previewMode && this.performCardCheckForPreviewMode()) {
+            this.setState(prevState => {
+                let outputListLocalCopy = prevState.outputsList;
+                // resetting the numerical output card total score
+                if (outputListLocalCopy.length > 0) {
+                    const outputListModified = outputListLocalCopy.map(currentItem => {
+                        currentItem.totalScore = 0;
+                        return currentItem;
+                    });
+                    return { outputsList: outputListModified, previewMode: true, totalInputScore: 0 };
+                } else {
+                    return { previewMode: true, totalInputScore: 0 };
+                }
+            });
+        }
         else { this.setState({ previewMode: false }); }
     }
 
@@ -602,7 +616,7 @@ class studioMain extends Component {
                     case "SliderInput":
                         return (<SliderInputCard cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid}></SliderInputCard>);
                     case "PointInput":
-                        return (<PointInputCard cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid} outputAssociation={this.sideBarOptionSelected}></PointInputCard>);
+                        return (<PointInputCard cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid} outputAssociation={this.sideBarOptionSelected} outputsListCopy={this.state.outputsList}></PointInputCard>);
                     case "DescriptionComponent":
                         return (<DecriptionCardComponent cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid}></DecriptionCardComponent>);
                     case "ReferenceComponent":

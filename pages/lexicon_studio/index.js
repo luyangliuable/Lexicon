@@ -1,6 +1,6 @@
-import NavBar from "../../components/Navbar/index";
-import Footer from "../../components/Footer/Footer";
-import StudioMain from "./studio_main";
+import Footer from "../../components/Footer/Footer"
+import NavBar from "../../components/Navbar/index"
+import StudioMain from "./studio_main"
 
 export default function index() {
   return (
@@ -9,7 +9,7 @@ export default function index() {
       <div className="xl:min-h-80vh 2xl:min-h-90vh">
         <StudioMain></StudioMain>
       </div>
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </div>
-  );
+  )
 }

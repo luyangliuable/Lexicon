@@ -1,7 +1,7 @@
 import { faEllipsisV, faEye, faEyeSlash, faFileExport, faPlusCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Toast, ToastContainer } from "react-bootstrap";
 import React, { Component } from "react";
 import DecriptionCardComponent from "./../../components/StudioComponents/descriptionCard/descriptionCard";
 import NumericalOutputCard from "../../components/StudioComponents/numericalOutputCard/numericalOutputCard";
@@ -35,7 +35,8 @@ class studioMain extends Component {
             cardDeleteModalDisplay: false,
             objectToBeDeleted: null,
             totalInputScore: 0,
-            displayTotalInputScore: false
+            displayTotalInputScore: false,
+            displayCardAdditionToast: false
         }
         this.handleModalClose = this.handleModalClose.bind(this);
         this.handleCardDelete = this.handleCardDelete.bind(this);
@@ -132,7 +133,7 @@ class studioMain extends Component {
                         componentElement.content = '';
                         componentElement.previewModeDisplay = true;
                         componentElement.editMode = false;
-                        this.setState({ metaList: [...this.state.metaList, componentElement] });
+                        this.setState({ metaList: [...this.state.metaList, componentElement], displayCardAdditionToast: true});
                         break;
 
                     // Reference Card
@@ -141,7 +142,7 @@ class studioMain extends Component {
                         componentElement.url_link = '';
                         componentElement.previewModeDisplay = true;
                         componentElement.editMode = false;
-                        this.setState({ metaList: [...this.state.metaList, componentElement] });
+                        this.setState({ metaList: [...this.state.metaList, componentElement], displayCardAdditionToast: true });
                         break;
                 }
                 break;
@@ -155,7 +156,7 @@ class studioMain extends Component {
                         componentElement.questionText = '';
                         componentElement.previewModeDisplay = true;
                         componentElement.editMode = false;
-                        this.setState({ inputsList: [...this.state.inputsList, componentElement] });
+                        this.setState({ inputsList: [...this.state.inputsList, componentElement], displayCardAdditionToast: true });
                         break;
 
                     // Slider Input Card
@@ -166,7 +167,7 @@ class studioMain extends Component {
                         componentElement.maxInput = Number.NaN;
                         componentElement.previewModeDisplay = true;
                         componentElement.editMode = false;
-                        this.setState({ inputsList: [...this.state.inputsList, componentElement] });
+                        this.setState({ inputsList: [...this.state.inputsList, componentElement], displayCardAdditionToast: true });
                         break;
 
                     // Select Input Card
@@ -176,7 +177,7 @@ class studioMain extends Component {
                         componentElement.maxSelectionVal = 1;
                         componentElement.optionsObject = {};
                         componentElement.editMode = false;
-                        this.setState({ inputsList: [...this.state.inputsList, componentElement] });
+                        this.setState({ inputsList: [...this.state.inputsList, componentElement], displayCardAdditionToast: true });
                         break;
 
                     // Numerical Input Card
@@ -187,7 +188,7 @@ class studioMain extends Component {
                         componentElement.maxInput = Number.NaN;
                         componentElement.unitsObject = {};
                         componentElement.editMode = false;
-                        this.setState({ inputsList: [...this.state.inputsList, componentElement] });
+                        this.setState({ inputsList: [...this.state.inputsList, componentElement], displayCardAdditionToast: true });
                         break;
 
                     // Point Input Card
@@ -199,7 +200,7 @@ class studioMain extends Component {
                         componentElement.maxSelectionVal = 1;
                         componentElement.outputAssociation = false;
                         componentElement.outputAssociationElement = null;
-                        this.setState({ inputsList: [...this.state.inputsList, componentElement] });
+                        this.setState({ inputsList: [...this.state.inputsList, componentElement], displayCardAdditionToast: true });
                         break;
                 }
                 break;
@@ -676,6 +677,15 @@ class studioMain extends Component {
     render() {
         return (<>
 
+            <ToastContainer position='bottom-end' className="m-4">
+            <Toast onClose={() => this.setState({displayCardAdditionToast: false})} show={this.state.displayCardAdditionToast} delay={5000} autohide>
+            <Toast.Header>
+                <strong className="me-auto text-blue-900">Alert</strong>
+            </Toast.Header>
+                <Toast.Body className="text-blue-900">The selected card has been added to dashboard !</Toast.Body>
+            </Toast>
+            </ToastContainer>
+
             {/* Card Delete Confirmation */}
             <Modal show={this.state.cardDeleteModalDisplay} onHide={this.handleModalClose} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
@@ -721,9 +731,9 @@ class studioMain extends Component {
                         <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={this.togglePreviewMode}>
                             {this.state.previewMode ? (<><FontAwesomeIcon icon={faEyeSlash} className="mr-1.5" />Disable Preview Mode</>) : (<><FontAwesomeIcon icon={faEye} className="mr-1.5" />Enable Preview Mode</>)}
                         </div>
-                        {/* <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900">
-                            <FontAwesomeIcon icon={faFileExport} className="mr-1.5" />Export to JSON
-                        </div> */}
+                        <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900">
+                            <FontAwesomeIcon icon={faFileExport} className="mr-1.5" />Save
+                        </div>
                     </div>
                 </div>
                 {/* studio navbar */}

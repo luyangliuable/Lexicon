@@ -1,4 +1,4 @@
-import { faEllipsisV, faEye, faEyeSlash, faFileExport, faPlusCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faEye, faEyeSlash, faFileExport, faPlusCircle, faBook } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Modal, Button, Toast, ToastContainer } from "react-bootstrap";
@@ -36,7 +36,10 @@ class studioMain extends Component {
             objectToBeDeleted: null,
             totalInputScore: 0,
             displayTotalInputScore: false,
-            displayCardAdditionToast: false
+            displayCardAdditionToast: false,
+            viewSavedFormsMenu: false,
+            savedFormsList: [],
+            saveFormDialogBoxOptions: { display: false, formName: '', name_requirement_warning: false }
         }
         this.handleModalClose = this.handleModalClose.bind(this);
         this.handleCardDelete = this.handleCardDelete.bind(this);
@@ -49,6 +52,8 @@ class studioMain extends Component {
         this.deleteAssistFunction = this.deleteAssistFunction.bind(this);
         this.updateInputCardTotalScore = this.updateInputCardTotalScore.bind(this);
         this.updateNumericalOutputCardTotalScore = this.updateNumericalOutputCardTotalScore.bind(this);
+        this.handleSaveFormOption = this.handleSaveFormOption.bind(this);
+        this.handleSaveFormOptionConfirmation = this.handleSaveFormOptionConfirmation.bind(this);
     }
 
     // method for updating the total score for input cards
@@ -83,15 +88,26 @@ class studioMain extends Component {
     }
 
     // method for handling the opening and the closure of the side bar menu
-    toggleSideBarMenu() {
-        if (!this.state.previewMode) {
-            if (this.state.showSideBarMenu) {
-                this.setState({ showSideBarMenu: false })
-            } else {
-                this.setState({ showSideBarMenu: true })
-            }
-        } else {
-            alert("Cards cannot be added or edited in a preview mode !");
+    toggleSideBarMenu(callingEntity) {
+        switch(callingEntity){
+            case "CREATE-CARD-OPTION":
+                if (!this.state.previewMode) {
+                    if (this.state.showSideBarMenu) {
+                        this.setState({ showSideBarMenu: false })
+                    } else {
+                        this.setState({ showSideBarMenu: true })
+                    }
+                } else {
+                    alert("Cards cannot be added or edited in a preview mode !");
+                }
+                break;
+            case "VIEW-SAVED-FORMS-OPTION":
+                if (this.state.viewSavedFormsMenu){
+                    this.setState({ viewSavedFormsMenu: false })
+                } else {
+                    this.setState({ viewSavedFormsMenu: true })
+                }
+                break;
         }
     }
 
@@ -674,9 +690,119 @@ class studioMain extends Component {
         }
     }
 
+    // method for handling the save form option confirmation
+    handleSaveFormOptionConfirmation(actionType){
+        switch(actionType){
+            case 'SAVE':
+                if (this.state.saveFormDialogBoxOptions.formName.length > 0) {
+                    const FORM_UUID = uuidv4();
+                    const FORM_NAME = this.state.saveFormDialogBoxOptions.formName;
+                    const META_CARD_LIST = this.state.metaList;
+                    const INPUTS_CARD_LIST = this.state.inputsList;
+                    const OUTPUTS_CARD_LIST = this.state.outputsList;
+
+                    this.setState(prevState => {
+                        let saveFormDialogBoxOptionsCopy = prevState.saveFormDialogBoxOptions;
+                        saveFormDialogBoxOptionsCopy['display'] = false;
+                        saveFormDialogBoxOptionsCopy['name_requirement_warning'] = false;
+                        saveFormDialogBoxOptionsCopy['formName'] = '';
+                        return { saveFormDialogBoxOptions: saveFormDialogBoxOptionsCopy }
+                    });
+
+                    console.log('Form save success !');
+
+                } else {
+                    this.setState(prevState => {
+                        prevState.saveFormDialogBoxOptions['name_requirement_warning'] = true;
+                        return {saveFormDialogBoxOptions: prevState.saveFormDialogBoxOptions };
+                    });
+                }
+                break;
+            case 'CANCEL':
+                this.setState(prevState => {
+                    let saveFormDialogBoxOptionsCopy = prevState.saveFormDialogBoxOptions;
+                    saveFormDialogBoxOptionsCopy['display'] = false;
+                    saveFormDialogBoxOptionsCopy['name_requirement_warning'] = false;
+                    saveFormDialogBoxOptionsCopy['formName'] = '';
+                    return { saveFormDialogBoxOptions: saveFormDialogBoxOptionsCopy }
+                })
+                break;
+        }
+    }
+
+    // method for handling the save form option
+    handleSaveFormOption(){
+        if (this.state.previewMode){
+
+            const META_CARD_LIST = this.state.metaList;
+            const INPUTS_CARD_LIST = this.state.inputsList;
+            const OUTPUTS_CARD_LIST = this.state.outputsList;
+
+            // checking whether the form to be saved is not empty and contains some cards
+            if (META_CARD_LIST.length > 0 || INPUTS_CARD_LIST.length > 0 || OUTPUTS_CARD_LIST.length > 0) {
+                this.setState(prevState => {
+                    prevState.saveFormDialogBoxOptions['display'] = true;
+                    return { saveFormDialogBoxOptions: prevState.saveFormDialogBoxOptions }
+                }) 
+            } else {
+                alert('A form cannot be empty and needs to have some card components within it !');
+            }
+        } else {
+            alert('A form can be saved in preview mode only !');
+        }
+    }
+
     render() {
         return (<>
 
+            {/* Save Form Dialog Box */}
+            <Modal 
+            show={this.state.saveFormDialogBoxOptions['display']} 
+            onHide = { () => {
+                this.setState(prevState => {
+                    prevState.saveFormDialogBoxOptions['display'] = false;
+                    return { saveFormDialogBoxOptions: prevState.saveFormDialogBoxOptions };
+                })
+            } }
+            backdrop="static"
+            keyboard={false}>
+
+            <Modal.Header closeButton>
+                <Modal.Title>From Details Confirmation</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <div>Please provide a name for the form:</div>
+                <div>
+                    <input 
+                    className="w-full border-2 border-black	rounded p-1 px-2 mt-1.5" 
+                    placeholder="Form Name"
+                    value = {this.state.saveFormDialogBoxOptions['formName']}
+                    onChange={(e)=>{
+                        this.setState(prevState=>{
+                            let saveFormDialogBoxOptionsCopy = prevState.saveFormDialogBoxOptions;
+                            saveFormDialogBoxOptionsCopy['formName'] = e.target.value
+                            return { saveFormDialogBoxOptions: saveFormDialogBoxOptionsCopy }
+                        })
+                    }
+                    }/>
+                </div>
+                {this.state.saveFormDialogBoxOptions['name_requirement_warning'] && (
+                <div className="text-sm mt-2 text-red-500">
+                    Please provide a name for the form.
+                </div>)}
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="primary" onClick={()=>{this.handleSaveFormOptionConfirmation('CANCEL')}}>
+                    Close
+                </Button>
+                <Button variant="success" onClick={()=>{this.handleSaveFormOptionConfirmation('SAVE')}}>
+                    Save
+                </Button>
+            </Modal.Footer>
+            </Modal>
+            {/* Save Form Dialog Box */}
+
+            {/* Card Selection Confirmation Toast message */}
             <ToastContainer position='bottom-end' className="m-4">
             <Toast onClose={() => this.setState({displayCardAdditionToast: false})} show={this.state.displayCardAdditionToast} delay={5000} autohide>
             <Toast.Header>
@@ -685,6 +811,7 @@ class studioMain extends Component {
                 <Toast.Body className="text-blue-900">The selected card has been added to dashboard !</Toast.Body>
             </Toast>
             </ToastContainer>
+            {/* Card Selection Confirmation Toast message */}
 
             {/* Card Delete Confirmation */}
             <Modal show={this.state.cardDeleteModalDisplay} onHide={this.handleModalClose} backdrop="static" keyboard={false}>
@@ -705,7 +832,7 @@ class studioMain extends Component {
 
             <div className="w-100vw min-h-screen">
                 {/* side bar menu for card components */}
-                <Offcanvas show={this.state.showSideBarMenu} onHide={this.toggleSideBarMenu}>
+                <Offcanvas show={this.state.showSideBarMenu} onHide={()=>this.toggleSideBarMenu("CREATE-CARD-OPTION")}>
                     <Offcanvas.Header closeButton>
                         <div className="text-4xl text-blue-900">Components</div>
                     </Offcanvas.Header>
@@ -721,18 +848,37 @@ class studioMain extends Component {
                     </Offcanvas.Body>
                 </Offcanvas>
                 {/* side bar menu for card components */}
+
+                {/* side bar menu for viewing saved forms menu */}
+                <Offcanvas show={this.state.viewSavedFormsMenu} onHide={()=>this.toggleSideBarMenu("VIEW-SAVED-FORMS-OPTION")}>
+                    <Offcanvas.Header closeButton>
+                        <div className="text-4xl text-blue-900">Saved Forms</div>
+                    </Offcanvas.Header>
+                    <Offcanvas.Body className="divide-y divide-gray-300">
+                        {this.state.savedFormsList.length > 0 ? 
+                        (<div></div>)
+                        :(<div className="text-lg text-blue-900">No saved forms found !</div>)}
+                    </Offcanvas.Body>
+                </Offcanvas>
+                {/* side bar menu for viewing saved forms menu */}
+
                 {/* studio navbar */}
                 <div className="w-screen p-1 flex justify-between items-center">
                     <div className="text-3xl text-blue-900 m-1 inline-block font-semibold">Lexicon Studio</div>
                     <div className="flex items-center">
-                        <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={this.toggleSideBarMenu}>
+                        {!this.state.previewMode && (
+                            <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={()=>this.toggleSideBarMenu("CREATE-CARD-OPTION")}>
                             <FontAwesomeIcon icon={faPlusCircle} className="mr-1.5" />Create
                         </div>
+                        )}
                         <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={this.togglePreviewMode}>
                             {this.state.previewMode ? (<><FontAwesomeIcon icon={faEyeSlash} className="mr-1.5" />Disable Preview Mode</>) : (<><FontAwesomeIcon icon={faEye} className="mr-1.5" />Enable Preview Mode</>)}
                         </div>
-                        <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900">
-                            <FontAwesomeIcon icon={faFileExport} className="mr-1.5" />Save
+                        <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={this.handleSaveFormOption}>
+                            <FontAwesomeIcon icon={faFileExport} className="mr-1.5" />Save Form
+                        </div>
+                        <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={()=>this.toggleSideBarMenu("VIEW-SAVED-FORMS-OPTION")}>
+                            <FontAwesomeIcon icon={faBook} className="mr-1.5" />View Saved Forms
                         </div>
                     </div>
                 </div>

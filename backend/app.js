@@ -1,31 +1,24 @@
-const express = require("express")
-const bodyParser = require("body-parser")
-const { graphqlHTTP } = require("express-graphql")
-const mongoose = require("mongoose")
-const app = express()
-const port = 9000
+const express = require("express");
+const bodyParser = require('body-parser');
+const mongoose = require("mongoose");
+const cors = require("cors");
+const app = express();
+const PORT = 9000;
+const lexiconStudioRoutes = require("./routes/lexiconStudio");
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+app.use(cors());
+app.use("/", lexiconStudioRoutes);
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*")
-  res.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS")
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type")
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200)
-  }
-  next()
-})
-
-// app.use(
-//   "/graphql",
-//   graphqlHTTP({
-//     schema: graphqlSchema,
-//     rootValue: graphqlResolvers,
-//     graphiql: true,
-//   })
-// )
-
-app.listen(port, () => {
-  console.log("Server is running 🔥 ...")
-})
+// Establishing connection with database
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.jyksr.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`).then(
+    () => {
+        app.listen(PORT, () => {
+            console.log("The server is running 🔥 ...");
+        });
+    }
+).catch(
+    err => {
+        console.log(err);
+    }
+);

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Modal, Button, Toast, ToastContainer } from "react-bootstrap";
 import React, { Component } from "react";
+import { createForm, fetchFormNameAndID, deleteForm, fetchForm } from "./api_lexicon_studio";
 import DecriptionCardComponent from "./../../components/StudioComponents/descriptionCard/descriptionCard";
 import NumericalOutputCard from "../../components/StudioComponents/numericalOutputCard/numericalOutputCard";
 import ReferenceCard from "../../components/StudioComponents/referenceCard/referenceCard";
@@ -39,7 +40,14 @@ class studioMain extends Component {
             displayCardAdditionToast: false,
             viewSavedFormsMenu: false,
             savedFormsList: [],
-            saveFormDialogBoxOptions: { display: false, formName: '', name_requirement_warning: false }
+            saveFormDialogBoxOptions: { display: false, formName: '', name_requirement_warning: false },
+            error: { occurence: false, message: '' },
+            viewSavedFormsDialogBox: { 
+                display: false, 
+                viewSelectedForm: false, 
+                deleteSelectedForm: false,
+                selectedFormDetails: { UUID: '', name: '' }
+             }
         }
         this.handleModalClose = this.handleModalClose.bind(this);
         this.handleCardDelete = this.handleCardDelete.bind(this);
@@ -54,6 +62,9 @@ class studioMain extends Component {
         this.updateNumericalOutputCardTotalScore = this.updateNumericalOutputCardTotalScore.bind(this);
         this.handleSaveFormOption = this.handleSaveFormOption.bind(this);
         this.handleSaveFormOptionConfirmation = this.handleSaveFormOptionConfirmation.bind(this);
+        this.handleViewSavedFormSelectionRequest = this.handleViewSavedFormSelectionRequest.bind(this);
+        this.deleteSavedFormRequest = this.deleteSavedFormRequest.bind(this);
+        this.fetchSavedForm = this.fetchSavedForm.bind(this);
     }
 
     // method for updating the total score for input cards
@@ -106,6 +117,13 @@ class studioMain extends Component {
                     this.setState({ viewSavedFormsMenu: false })
                 } else {
                     this.setState({ viewSavedFormsMenu: true })
+                    fetchFormNameAndID().then(data => {
+                      if (data.error) {
+                          alert('There was an error in processing your request. Please try again later !');
+                      } else {
+                          this.setState({ savedFormsList: data.output })
+                      }
+                    })
                 }
                 break;
         }
@@ -695,7 +713,6 @@ class studioMain extends Component {
         switch(actionType){
             case 'SAVE':
                 if (this.state.saveFormDialogBoxOptions.formName.length > 0) {
-                    const FORM_UUID = uuidv4();
                     const FORM_NAME = this.state.saveFormDialogBoxOptions.formName;
                     const META_CARD_LIST = this.state.metaList;
                     const INPUTS_CARD_LIST = this.state.inputsList;
@@ -709,7 +726,14 @@ class studioMain extends Component {
                         return { saveFormDialogBoxOptions: saveFormDialogBoxOptionsCopy }
                     });
 
-                    console.log('Form save success !');
+                    // Performing the form saving action.
+                    createForm(FORM_NAME, META_CARD_LIST, INPUTS_CARD_LIST, OUTPUTS_CARD_LIST).then(data => {
+                       if (data.error) {
+                           alert("The form couldn't be saved. Please try again !");
+                       } else {
+                           alert('The form has been saved successfully !');
+                       }
+                    })
 
                 } else {
                     this.setState(prevState => {
@@ -752,8 +776,99 @@ class studioMain extends Component {
         }
     }
 
+    // method for handling saved form selection request
+    handleViewSavedFormSelectionRequest(formID, formName){
+        const selectedFormUUID = formID;
+        const selectedFormName = formName;
+        this.setState({
+            viewSavedFormsDialogBox: { 
+                display: true, 
+                viewSelectedForm: false, 
+                deleteSelectedForm: false,
+                selectedFormDetails: { UUID: selectedFormUUID, name: selectedFormName }
+            }
+        })
+    }
+
+    // method for handling delete saved form request
+    deleteSavedFormRequest(){
+        const formToBeDeletedUUID = this.state.viewSavedFormsDialogBox.selectedFormDetails['UUID'];
+        deleteForm(formToBeDeletedUUID).then(data => {
+            if (data.error) {
+                alert(' Form deletion failed. Please try again later ! ');
+            } else {
+                this.setState( prevState => {
+                    const savedFormListFilteredCopy = prevState.savedFormsList.filter(form => form._id != this.state.viewSavedFormsDialogBox['selectedFormDetails']['UUID'])
+                    return {
+                        viewSavedFormsDialogBox: {
+                            display: false,
+                            viewSelectedForm: false, 
+                            deleteSelectedForm: false,
+                            selectedFormDetails: { UUID: '', name: '' }
+                        },
+                        viewSavedFormsMenu: false,
+                        savedFormsList: savedFormListFilteredCopy
+                    }
+                });
+                alert('The form has been deleted successfully !');
+            }
+        }).catch(err => {console.log(err);});
+    }
+
+    // method for handling the fetching a saved form request
+    fetchSavedForm(){
+        // Checking if the preview mode is enabled.
+        if (this.state.previewMode){
+            const formToBeViewedUUID = this.state.viewSavedFormsDialogBox.selectedFormDetails['UUID'];
+            fetchForm(formToBeViewedUUID).then( data => {
+                if (data.error){
+                    alert( ' Failure in fetching the form. Please try again later !' );
+                } else {
+                    this.setState({
+                        metaList: data.form.metaCardList,
+                        inputsList: data.form.inputsCardList,
+                        outputsList: data.form.outputsCardList,
+                        viewSavedFormsDialogBox: {
+                            display: false,
+                            viewSelectedForm: false, 
+                            deleteSelectedForm: false,
+                            selectedFormDetails: { UUID: '', name: '' }
+                        },
+                        viewSavedFormsMenu: false
+                    })
+                }
+            }).catch(err => console.log(err))
+
+        } else {
+            alert('Please enable preview mode to view a saved form !');
+        }
+    }
+
     render() {
         return (<>
+
+            {/* View Selected Saved Form Dialog Box */}
+            <Modal 
+            show={this.state.viewSavedFormsDialogBox['display']} 
+            onHide = { () => {
+                this.setState(prevState => {
+                    prevState.viewSavedFormsDialogBox['display'] = false;
+                    return { viewSavedFormsDialogBox: prevState.viewSavedFormsDialogBox };
+                })
+            } }
+            backdrop="static"
+            keyboard={false}>
+
+            <Modal.Header closeButton>
+                <Modal.Title>{this.state.viewSavedFormsDialogBox['selectedFormDetails']['name']}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <div>Please select from the following options that would you like to perform on the selcted form: </div>
+                <div className="text-center border-2 border-blue-900 rounded my-1.5 font-semibold hover:bg-blue-900 hover:text-white cursor-pointer" onClick={this.fetchSavedForm}>View / Edit</div>
+                <div className="text-center border-2 border-red-500 rounded my-1.5 font-semibold hover:bg-red-500 hover:text-white cursor-pointer" onClick={this.deleteSavedFormRequest}>Delete</div>
+            </Modal.Body>
+            </Modal>
+            {/* View Selected Saved Form Dialog Box */}
 
             {/* Save Form Dialog Box */}
             <Modal 
@@ -856,7 +971,9 @@ class studioMain extends Component {
                     </Offcanvas.Header>
                     <Offcanvas.Body className="divide-y divide-gray-300">
                         {this.state.savedFormsList.length > 0 ? 
-                        (<div></div>)
+                        (<>{this.state.savedFormsList.map((form, id) => {
+                            return (<div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" id={id} onClick={() => { this.handleViewSavedFormSelectionRequest(form._id, form.name) }}>{form.name}</div>)
+                        })}</>)
                         :(<div className="text-lg text-blue-900">No saved forms found !</div>)}
                     </Offcanvas.Body>
                 </Offcanvas>

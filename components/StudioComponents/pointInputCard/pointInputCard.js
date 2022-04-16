@@ -303,7 +303,6 @@ function PointInputCard(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-blue-900">
-          {console.log(props.outputsListCopy)}
           <div>
             Select a numerical output card for the association of output:{" "}
           </div>

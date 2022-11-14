@@ -11,7 +11,9 @@ app.use(cors());
 app.use("/", lexiconStudioRoutes);
 
 // Establishing connection with database
-mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.jyksr.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`).then(
+var MONGO_URL = "mongodb://localhost:27017";
+var old = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.jyksr.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
+mongoose.connect(MONGO_URL).then(
     () => {
         app.listen(PORT, () => {
             console.log("The server is running 🔥 ...");

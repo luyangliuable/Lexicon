@@ -6,7 +6,7 @@ export const createForm = ( formName, metaCardList, inputsCardList, outputsCardL
         META_CARD_LIST: metaCardList,
         INPUTS_CARD_LIST: inputsCardList,
         OUTPUTS_CARD_LIST: outputsCardList
-    }
+    };
 
     return (
         fetch('http://localhost:9000/lexiconStudio/saveForm', {
@@ -19,8 +19,8 @@ export const createForm = ( formName, metaCardList, inputsCardList, outputsCardL
         }).then((response) => {
             return response.json();
         }).catch((error) => console.log(error))
-    )
-}
+    );
+};
 
 // Method for fetching the name and the IDs of all the forms
 export const fetchFormNameAndID = () => {

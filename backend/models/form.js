@@ -4,22 +4,22 @@ const Schema = mongoose.Schema;
 const formSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: false
     },
     metaCardList: {
         type: Array,
         default: [],
-        required: true
+        required: false
     },
     inputsCardList: {
         type: Array,
         default: [],
-        required: true
+        required: false
     },
     outputsCardList: {
         type: Array,
         default: [],
-        required: true
+        required: false
     }
 });
 

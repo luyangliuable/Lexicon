@@ -32,9 +32,6 @@
     "@types/node" "*"
     "@types/webidl-conversions" "*"
 
-"@xmldom/xmldom@^0.8.6":
-  "version" "0.8.6"
-
 "abbrev@1":
   "integrity" "sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q=="
   "resolved" "https://registry.npmjs.org/abbrev/-/abbrev-1.1.1.tgz"
@@ -1211,13 +1208,6 @@
   dependencies:
     "debug" "^3.1.0"
     "node-ensure" "^0.0.0"
-
-"pdf2json@^3.0.1":
-  "integrity" "sha512-1pNsakC8F+OuFS72U+ZI0u8J/voPYYDYHj/0B/7ywYUm3w0QurkDBy3pH35kzygjgmJJVHk2a9I6gBswFF8hQQ=="
-  "resolved" "https://registry.npmjs.org/pdf2json/-/pdf2json-3.0.1.tgz"
-  "version" "3.0.1"
-  dependencies:
-    "@xmldom/xmldom" "^0.8.6"
 
 "pdftojson@^0.0.3":
   "integrity" "sha512-dRs3cLAJt6FAhyV4QrpF00C1JhP+zA8+2G+WI0ZPWd4aMhavYUDFIxC7q9mImCutvueCNGG2rGPfZgzfEmDa3g=="

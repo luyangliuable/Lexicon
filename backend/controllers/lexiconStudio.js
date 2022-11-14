@@ -17,7 +17,7 @@ exports.createForm = async (req, res, next) => {
             return res.status(200).json({ ...result._doc, _id: result.id });
         }
     });
-}
+};
 
 // method for fetching all the forms from database
 exports.fetchFormNameAndID = async ( req, res, next ) => {

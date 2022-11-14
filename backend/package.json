@@ -1,0 +1,21 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.10",
+    "node-fetch": "^2.6.1",
+    "pdf-parse": "^1.1.1",
+    "pdftojson": "^0.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

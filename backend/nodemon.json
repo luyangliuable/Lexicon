@@ -1,0 +1,7 @@
+{
+    "env": {
+        "MONGO_USER": "anmolsarraf",
+        "MONGO_PASSWORD": "LexiconMYMI2022",
+        "MONGO_DB": "lexicon-application"
+    }
+}

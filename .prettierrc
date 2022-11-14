@@ -1,0 +1,7 @@
+{
+  "arrowParens": "avoid",
+  "semi": false,
+  "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
+  "importOrderSeparation": true,
+  "experimentalBabelParserPluginsList" : ["jsx", "typescript"]
+}

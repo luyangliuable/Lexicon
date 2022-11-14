@@ -12,12 +12,13 @@ module.exports = {
       "60vh": "60vh",
       "70vh": "70vh",
       "80vh": "80vh",
+      "85vh": "85vh",
       "90vh": "90vh",
       "95vh": "95vh",
       "100vh": "100vh",
     },
     extend: {
-      backgroundImage: (theme) => ({
+      backgroundImage: theme => ({
         "time-savings": "url('/public/homepage/time.svg')",
       }),
       height: {
@@ -73,7 +74,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      fontWeight: ['hover']
+    },
   },
   plugins: [],
-};
+}

@@ -10,6 +10,7 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\""
   },
   "dependencies": {
+    "@apideck/file-picker": "^0.7.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
@@ -24,6 +25,7 @@
     "react-bootstrap": "^2.0.0-beta.6",
     "react-bootstrap-range-slider": "^3.0.3",
     "react-dom": "17.0.2",
+    "react-dropzone": "^14.2.3",
     "react-icons": "^4.2.0",
     "react-sidebar": "^3.0.2",
     "react-switch": "^6.0.0",

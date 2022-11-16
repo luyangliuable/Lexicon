@@ -3,15 +3,104 @@
 @tailwind utilities;
 
 .site-bg-dark-blue {
-  background-color: #296DA9;
+    background-color: #296DA9;
 }
 
 .site-text-dark-blue {
-  color: #296DA9;
+    color: #296DA9;
 }
 
 .site-border-radius {
-  -webkit-border-radius: 27px;
-  -moz-border-radius: 27px;
-  border-radius: 27px;
+    -webkit-border-radius: 27px;
+    -moz-border-radius: 27px;
+    border-radius: 27px;
+}
+
+.button {
+    background: #1e90ff;
+    width: 100px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: .5s background ease-in-out;
+}
+
+.button:hover {
+    background: #0050ee;
+}
+
+input[type="file"]{
+    background: "1e90ff"
+}
+
+.upload-box-root {
+  height: 30vw;
+  width: 100%;
+  background-color: #DDD;
+  /* border: 1px solid #000000; */
+  border-radius: max(10px, 1vw);
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.upload-vspacing-10 {
+  padding-top: 10px;
+  width: 100%;
+  display: inline-flex;
+}
+
+.upload-box-icon {
+  height: 128px;
+  width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.android-icon {
+    width: 100px;
+    height: 100px;
+}
+
+.upload-box-full-width {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  display: inline-flex;
+  align-content: center;
+  align-items: center;
+}
+
+.upload-box-center-bar {
+  height: 28px;
+  width: 370px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.upload-box-left {
+  align-self: flex-start;
+  float: left;
+  margin-left: 32px;
+}
+
+.upload-box-right {
+  align-self: flex-end;
+  float: right;
+  margin-right: 32px;
+}
+
+.upload-box-text-30 {
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  color: rgba(13, 13, 13, 0.5);
+}
+
+.upload-text-center {
+  text-align: center;
 }

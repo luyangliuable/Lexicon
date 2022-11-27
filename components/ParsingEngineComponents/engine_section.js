@@ -31,11 +31,14 @@ class EngineSection extends Component {
               <EngineUpload />
               {/* JSON Format Display Section */}
               <div className="w-screen mb-8">
-                <div
-                  id="json-doc-display"
-                  className="m-2 border-2 border-blue-900 rounded-lg bg-gray-100 p-2 min-h-5vh"
-                >
-                  {this.state.data}
+                {/* <div */}
+                {/*   id="json-doc-display" */}
+                {/*   className="m-2 border-2 border-blue-900 rounded-lg bg-gray-100 p-2 min-h-5vh" */}
+                {/* > */}
+                {/*   {this.state.data} */}
+                {/* </div> */}
+                <div className="button-holder-bottom">
+                  <button className="button float-right">Next</button>
                 </div>
               </div>
             </div>

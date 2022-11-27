@@ -37,8 +37,8 @@ const UploadBox = ({
     });
 
     return (
-            <div className="upload-box-root">
-            <div {...getRootProps()} disabled={objectState.buttonState}>
+        <div className="upload-box-root">
+          <div {...getRootProps()} disabled={objectState.buttonState}>
             <input {...getInputProps()} disabled={objectState.buttonState} />
 
             <div className="upload-box-full-width">
@@ -47,38 +47,38 @@ const UploadBox = ({
             <div className="upload-vspacing-10"> </div>
 
             <div className="upload-box-full-width">
-            <p className="upload-box-text-30">
-            {objectState.selectedFile
-             ? objectState.selectedFile.name
-             : "Drop files here"}
-        </p>
+              <p className="upload-box-text-30">
+                {objectState.selectedFile
+                 ? objectState.selectedFile.name
+                 : "Drop files here"}
+              </p>
             </div>
 
             <div className="upload-box-center-bar">
-            <div className="upload-box-line upload-box-left" />
-            <div className="upload-box-line upload-box-right" />
+              <div className="upload-box-line upload-box-left" />
+              <div className="upload-box-line upload-box-right" />
             </div>
 
             <div className="upload-box-full-width"
-        style={{
-            display: "flexbox",
-            flexDirection: "column",
-        }}
+                 style={{
+                     display: "flexbox",
+                     flexDirection: "column",
+                 }}
             >
-            <button
-        className="button btn btn-primary"
-        disabled={objectState.buttonState}
-        style={
-            objectState.buttonState
-                ? { pointerEvents: "none", width: "200px", padding: '15px', marginTop: '10px'}
-            : { width: "200px", padding: "15px", marginTop: '18px'}
-        }
-            >
-            <h3>Upload File</h3>
-            </button>
+              <button
+                className="button btn btn-primary"
+                disabled={objectState.buttonState}
+                style={
+                    objectState.buttonState
+                        ? { pointerEvents: "none", width: "200px", padding: '15px', marginTop: '10px'}
+                    : { width: "200px", padding: "15px", marginTop: '18px'}
+                }
+              >
+                <h3>Upload File</h3>
+              </button>
             </div>
-            </div>
-            </div>
+          </div>
+        </div>
     );
 };
 

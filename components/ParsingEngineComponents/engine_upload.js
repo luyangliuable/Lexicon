@@ -18,19 +18,7 @@ class EngineUpload extends Component {
     render() {
         return (
             <form style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-              <div style={{
-                  display: "flex",
-                  padding: "100px",
-                  background: "#EEE",
-                  width: "80vw",
-                  height: "32vw",
-                  borderRadius: "8px",
-                  boxShadow: "2px 2px 5px #888",
-                  alignItems: "center"
-              }}>
                 <UploadBox />
-                {/* <input type="submit" className="button" /> */}
-              </div>
             </form>
         );
     }

@@ -1,19 +1,15 @@
-import style from "./footer.module.css"
+import style from "./footer.module.css";
 
 function Footer() {
-  return (
-    <div>
-      <footer className="bg-light text-center text-2xl relative bottom-0 left-0 right-0 border-t-2 border-blue-900">
-        <div className="text-center p-3 bg-gray-100 text-blue-900 font-serif">
-          © 2021 Copyright:
-          <a className="text-blue-900 text-2xl font-serif">
-            {" "}
-            Lexicon.com.au ( Monash Health Venture )
-          </a>
-        </div>
-      </footer>
-    </div>
-  )
+    return (
+            <div className="footer">
+            {/* Why is the footer not at the bottom?*/}
+                © 2021 Copyright: 
+                    <a className="text-blue-900 text-2xl font-serif">
+                    {" "} Lexicon.com.au ( Monash Health Venture )
+                    </a>
+            </div>
+    );
 }
 
-export default Footer
+export default Footer;

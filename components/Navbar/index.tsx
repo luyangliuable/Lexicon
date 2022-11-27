@@ -8,7 +8,7 @@ import SiteContainer from "../utils/SiteContainer"
 import DesktopNavbarLink from "./DesktopNavbarLink"
 import NavbarLinksWrapper from "./NavbarLinksWrapper"
 import Search from "./Search"
-import NavbarOptions from "../Navbar/NavbarOptions/navbarOptions";
+import NavbarOptions from "../Navbar/NavbarOptions/navbarOptions.tsx";
 import Link from "next/link";
 
 interface iNavbar {

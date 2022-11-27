@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require('path');
 const pdf = require('pdf-parse');
+// const a = require("pdfparser.js");
+
 
 class ParsingEngine {
     constructor(pdflocation) {
@@ -70,7 +72,6 @@ exports.test = async (req, res, next) => {
         tmp = tmp.replace(/Last Reviewed Date:/gi, "<b>Last Reviewed Date:</b>");
         tmp = tmp.replace(/author\/s/gi, "<b>Author/s</b>");
         tmp = tmp.replace(/definitions/gi, "<b>Definitions</b>");
-        // tmp = tmp.replace(/CLINICAL GUIDELINE/gi, "<h3><b>Clinical Guideline</b></h3>");
         tmp = tmp.replace(//gi, " ");
         tmp = tmp.replace(/TARGET AUDIENCE and SETTING/gi, "<b>Target Audience and Setting</b>");
 

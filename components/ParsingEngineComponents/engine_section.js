@@ -37,9 +37,6 @@ class EngineSection extends Component {
                 {/* > */}
                 {/*   {this.state.data} */}
                 {/* </div> */}
-                <div className="button-holder-bottom">
-                  <button className="button float-right">Next</button>
-                </div>
               </div>
             </div>
         );

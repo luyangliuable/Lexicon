@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-    --default-spacing: 2px;
-    --align-spacing: 15vw;
+    --default-spacing: 4px;
+    --align-spacing: 0vw;
     --color-one: #A320DF;
     --color-two: #296DA9;
     --white-text: #FFF;
@@ -148,6 +148,7 @@ input[type="file"]{
 .button-holder-bottom {
     padding: 0 var(--align-spacing) 0 var(--align-spacing);
     margin: var(--default-spacing);
+    width: 100%;
 }
 
 

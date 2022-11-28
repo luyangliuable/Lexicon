@@ -1,7 +1,8 @@
 const fs = require("fs");
 const path = require('path');
 const pdf = require('pdf-parse');
-// const a = require("pdfparser.js");
+const multer  = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 
 class ParsingEngine {
@@ -26,9 +27,13 @@ class ParsingEngine {
 }
 
 
-
 exports.upload = async (req, res, next) => {
-    return res.status(200).send("Hello");
+
+    console.log(req.file);
+    console.log(req.body);
+
+
+    return res.status(200).json({result: "done", files: req.files});
 };
 
 

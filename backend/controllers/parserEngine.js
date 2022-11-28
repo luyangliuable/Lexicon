@@ -26,6 +26,12 @@ class ParsingEngine {
 }
 
 
+
+exports.upload = async (req, res, next) => {
+    return res.status(200).send("Hello");
+};
+
+
 exports.convert = async (req, res, next) => {
     let dataBuffer = fs.readFileSync("/Users/blackfish/lexicon-client-app/backend/testPdfs/stroke.pdf");
 
@@ -39,6 +45,7 @@ exports.convert = async (req, res, next) => {
 };
 
 
+
 exports.uploadGuide = async (req, res, next) => {
     const parsingEngine = new ParsingEngine(req.body.path);
     const rendered = parsingEngine.render();
@@ -47,6 +54,7 @@ exports.uploadGuide = async (req, res, next) => {
         return res.status(200).send(data);
     });
 };
+
 
 exports.render = async (req, res, next) => {
     const parsingEngine = new ParsingEngine(req.body.path);

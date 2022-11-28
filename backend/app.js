@@ -5,10 +5,12 @@ const cors = require("cors");
 const app = express();
 const PORT = 9000;
 const lexiconStudioRoutes = require("./routes/lexiconStudio");
+const parsingEngineRoutes = require("./routes/parsingEngine");
 
 app.use(bodyParser.json());
 app.use(cors());
 app.use("/", lexiconStudioRoutes);
+app.use("/parsingEngine/", parsingEngineRoutes);
 
 // Establishing connection with database
 var MONGO_URL = "mongodb://localhost:27017";

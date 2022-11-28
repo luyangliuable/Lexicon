@@ -8,7 +8,6 @@ const uploader = multer({ dest: 'uploads/' });
 Router.get(`/convert`, convert);
 Router.get(`/render`, render);
 Router.get(`/test`, test);
-// Router.post(`/upload`, upload);
 
 Router.post('/upload', uploader.single('pdfFile'), function (req, res, next) {
     // req.file is the `avatar` file

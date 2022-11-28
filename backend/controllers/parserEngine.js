@@ -1,31 +1,9 @@
+const ParsingEngine = require("../core/parser.js");
 const fs = require("fs");
 const path = require('path');
 const pdf = require('pdf-parse');
 const multer  = require('multer');
 const upload = multer({ dest: 'uploads/' });
-
-
-class ParsingEngine {
-    constructor(pdflocation) {
-        this.pdflocation = pdflocation;
-        this.rawdata = fs.readFileSync(pdflocation);
-
-        this.pdf = pdf(this.rawdata);
-    }
-
-    get pdfLocation() {
-        return this.pdflocation;
-    }
-
-    async render() {
-        const pdf = await this.pdf;
-        var text = pdf.text;
-        text = text.replace(/\n/g, "<br /> ");
-        console.log(text);
-        return text;
-    }
-}
-
 
 exports.upload = async (req, res, next) => {
 

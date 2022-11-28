@@ -29,7 +29,9 @@ const navbarOptions: React.FC = () => {
                 <Link href="/parsing_engine">
                     <div className="dropdown-item">Upload</div>
                 </Link>
+                <Link href="/parsing_engine_search">
                     <div className="dropdown-item">Search</div>
+                </Link>
                 </div>
             </div>
             <Link href="lexicon_studio"><div className="

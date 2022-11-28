@@ -8,10 +8,6 @@ Router.get("/lexiconStudio/fetchFormNameAndID", fetchFormNameAndID);
 Router.delete("/lexiconStudio/deleteForm/:formID", deleteForm);
 Router.get(`/lexiconStudio/fetchForm/:formID`, fetchForm);
 Router.get(`/`, main);
-Router.get(`/convert`, convert);
-Router.get(`/render`, render);
 
 
-
-Router.get(`/test`, test);
 module.exports = Router;

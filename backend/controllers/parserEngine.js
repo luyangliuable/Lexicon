@@ -1,7 +1,8 @@
 const fs = require("fs");
 const path = require('path');
 const pdf = require('pdf-parse');
-// const a = require("pdfparser.js");
+const multer  = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 
 class ParsingEngine {
@@ -26,6 +27,16 @@ class ParsingEngine {
 }
 
 
+exports.upload = async (req, res, next) => {
+
+    console.log(req.file);
+    console.log(req.body);
+
+
+    return res.status(200).json({result: "done", files: req.files});
+};
+
+
 exports.convert = async (req, res, next) => {
     let dataBuffer = fs.readFileSync("/Users/blackfish/lexicon-client-app/backend/testPdfs/stroke.pdf");
 
@@ -39,6 +50,7 @@ exports.convert = async (req, res, next) => {
 };
 
 
+
 exports.uploadGuide = async (req, res, next) => {
     const parsingEngine = new ParsingEngine(req.body.path);
     const rendered = parsingEngine.render();
@@ -47,6 +59,7 @@ exports.uploadGuide = async (req, res, next) => {
         return res.status(200).send(data);
     });
 };
+
 
 exports.render = async (req, res, next) => {
     const parsingEngine = new ParsingEngine(req.body.path);

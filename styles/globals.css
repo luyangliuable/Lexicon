@@ -8,7 +8,8 @@
     --color-one: #A320DF;
     --color-two: #296DA9;
     --white-text: #FFF;
-    --upload-box-width: 50vw;
+    --upload-box-width: 35vw;
+    --upload-box-height: 10vw;
 }
 
 .site-bg-dark-blue {
@@ -48,13 +49,13 @@ input[type="file"]{
 }
 
 .upload-box-root {
-    height: 20vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: var(--upload-box-height);
     width: var(--upload-box-width);
     border-radius: max(10px, 1vw);
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background: #A320DF;
-    background: rgba(163, 32, 223, 0.8);
     background: #1e1e1e;
     border: 10px solid #AAA;
     box-shadow: 2px 2px 4px #888;

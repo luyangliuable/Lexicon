@@ -1,12 +1,10 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-// import { getResultLink } from "./function/getResults";
 
 const UploadBox = (props) => {
     const [objectState, setObjectState] = useState({
         buttonState: false,
     });
-
 
 
     const onDrop = useCallback(acceptedFiles => {
@@ -23,76 +21,87 @@ const UploadBox = (props) => {
 
     }, []);
 
-    useEffect(() => {
-        console.log(objectState);
-    }, [objectState]);
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
 
+
     const upload = (files) => {
+        setObjectState(prev => {
+            return {
+                ...prev,
+                buttonState: true
+            };
+        });
+
+        console.log(objectState);
+
+
         fetch('http://localhost:9000/parsingEngine/upload', {
             method: 'POST',
             body: objectState.acceptedFile
         })
             .then(response => response.json())
-            .then(response => console.log(JSON.stringify(response)))
+            .then(response => {
+                console.log(objectState);
+                console.log(JSON.stringify(response));
+                setTimeout(() => {
+                    setObjectState(prev => {
+                        return {
+                            ...prev,
+                            buttonState: false
+                        };
+                    });
+                }, 1500);
+            })
             .catch(err => {
                 console.log(err);
+                setTimeout(() => {
+                    setObjectState(prev => {
+                        return {
+                            ...prev,
+                            buttonState: false
+                        };
+                    });
+                }, 1500);
             });
+
     };
 
     return (
         <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
-            <div className="upload-box-root" {...getRootProps()}>
+          <div className="upload-box-root" {...getRootProps()}>
             <input {...getInputProps()} id="actual-upload-button" style={{display: "none"}}/>
-            <div disabled={objectState.buttonState}>
 
-                <div className="upload-box-full-width">
-                </div>
+            <p className="upload-box-text-30">
+              {objectState.acceptedFileName
+               ? objectState.acceptedFileName
+               : "Drop files here"}
+            </p>
 
-                <div className="upload-vspacing-10"> </div>
+            <button
+              className="button"
+              disabled={objectState.buttonState}
+              onClick={(e) => {
+                  e.stopPropagation();
+                  document.getElementById('actual-upload-button').click();
+              }}
 
-                <div className="upload-box-full-width">
-                <p className="upload-box-text-30">
-                  {objectState.acceptedFileName
-                    ? objectState.acceptedFileName
-                    : "Drop files here"}
-                </p>
-                </div>
+              style={
+                  objectState.buttonState
+                      ? { pointerEvents: "none", background: "#888"}
+                  : {}
+              }
+            >
+              <h3>{objectState.buttonState ? "Uploading..." : "Upload File"}</h3>
+            </button>
+          </div>
 
-                <div className="upload-box-center-bar">
-                <div className="upload-box-line upload-box-left" />
-                <div className="upload-box-line upload-box-right" />
-                </div>
-
-                <div className="upload-box-full-width"
-                    style={{
-                        display: "flexbox",
-                        flexDirection: "column",
-                    }}
-                >
-                <button
-                    className="button"
-                    disabled={objectState.buttonState}
-                  onClick={(e) => {
-                      e.stopPropagation();
-                      document.getElementById('actual-upload-button').click();
-                  }}
-                    style={
-                        objectState.buttonState
-                            ? { pointerEvents: "none", padding: '15px', marginTop: '10px'}
-                        : { padding: "15px", marginTop: '18px'}
-                    }
-                >
-                    <h3>Upload File</h3>
-                </button>
-                </div>
-            </div>
-
-            </div>
-            <div className="button-holder-bottom">
-              <button className="button float-right" onClick={() => upload() }>Next</button>
-            </div>
+          <div className="button-holder-bottom">
+            <button className="button float-right" style={
+                objectState.buttonState ? {background: "#888", pointerEvents: "none"}
+                : {}
+            } disabled={objectState.buttonState} onClick={() => upload() }>Next</button>
+          </div>
         </div>
     );
 };

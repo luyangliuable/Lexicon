@@ -3,29 +3,8 @@ const path = require('path');
 const pdf = require('pdf-parse');
 const multer  = require('multer');
 const upload = multer({ dest: 'uploads/' });
-
-
-class ParsingEngine {
-    constructor(pdflocation) {
-        this.pdflocation = pdflocation;
-        this.rawdata = fs.readFileSync(pdflocation);
-
-        this.pdf = pdf(this.rawdata);
-    }
-
-    get pdfLocation() {
-        return this.pdflocation;
-    }
-
-    async render() {
-        const pdf = await this.pdf;
-        var text = pdf.text;
-        text = text.replace(/\n/g, "<br /> ");
-        console.log(text);
-        return text;
-    }
-}
-
+const ParsingEngine = require("../core/parser.js");
+const Guide = require('../models/guide');
 
 exports.upload = async (req, res, next) => {
 
@@ -70,10 +49,9 @@ exports.render = async (req, res, next) => {
     });
 };
 
+
 exports.test = async (req, res, next) => {
     let dataBuffer = fs.readFileSync("/Users/blackfish/lexicon-client-app/backend/testPdfs/stroke.pdf");
-
-
 
     pdf(dataBuffer).then(function(pdf){
         ///////////////////////////////////////////////////////////////////////////
@@ -90,4 +68,11 @@ exports.test = async (req, res, next) => {
 
         return res.status(200).send(tmp.replace(/\n/g, "</p><p>"));
     });
-}
+};
+
+
+exports.search = async (req, res, next) => {
+    console.log('/' + req.body.value + '.*/');
+    const result = await Guide.find({name: {$regex: req.body.value + '.*', $options: "i"}});
+    return res.status(200).send({result: result});
+};

@@ -15,6 +15,7 @@ app.use("/parsingEngine/", parsingEngineRoutes);
 // Establishing connection with database
 var MONGO_URL = "mongodb://localhost:27017";
 var old = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.jyksr.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
+
 mongoose.connect(MONGO_URL).then(
     () => {
         app.listen(PORT, () => {

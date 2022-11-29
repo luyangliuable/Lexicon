@@ -8,7 +8,7 @@
     --color-one: #A320DF;
     --color-two: #296DA9;
     --white-text: #FFF;
-    --upload-box-width: 70vw;
+    --upload-box-width: 50vw;
 }
 
 .site-bg-dark-blue {
@@ -27,7 +27,8 @@
 
 .button {
     background: #1e90ff;
-    width: 100px;
+    width: 5vw;
+    font-size: .55vw;
     height: 30px;
     display: flex;
     justify-content: center;
@@ -47,7 +48,7 @@ input[type="file"]{
 }
 
 .upload-box-root {
-    height: 30vw;
+    height: 20vw;
     width: var(--upload-box-width);
     border-radius: max(10px, 1vw);
     padding-top: 40px;
@@ -233,5 +234,3 @@ input[type="text"]:focus {
     align-items: center;
     justify-content: center;
 }
-
-

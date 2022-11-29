@@ -44,7 +44,7 @@ const UploadBox = (props) => {
     return (
         <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
             <div className="upload-box-root" {...getRootProps()}>
-            <input {...getInputProps()} style={{display: "none"}}/>
+            <input {...getInputProps()} id="actual-upload-button" style={{display: "none"}}/>
             <div disabled={objectState.buttonState}>
 
                 <div className="upload-box-full-width">
@@ -72,12 +72,16 @@ const UploadBox = (props) => {
                     }}
                 >
                 <button
-                    className="button btn btn-primary"
+                    className="button"
                     disabled={objectState.buttonState}
+                  onClick={(e) => {
+                      e.stopPropagation();
+                      document.getElementById('actual-upload-button').click();
+                  }}
                     style={
                         objectState.buttonState
-                            ? { pointerEvents: "none", width: "200px", padding: '15px', marginTop: '10px'}
-                        : { width: "200px", padding: "15px", marginTop: '18px'}
+                            ? { pointerEvents: "none", padding: '15px', marginTop: '10px'}
+                        : { padding: "15px", marginTop: '18px'}
                     }
                 >
                     <h3>Upload File</h3>

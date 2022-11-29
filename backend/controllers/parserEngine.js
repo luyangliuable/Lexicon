@@ -1,9 +1,10 @@
-const ParsingEngine = require("../core/parser.js");
 const fs = require("fs");
 const path = require('path');
 const pdf = require('pdf-parse');
 const multer  = require('multer');
 const upload = multer({ dest: 'uploads/' });
+const ParsingEngine = require("../core/parser.js");
+const Guide = require('../models/guide');
 
 exports.upload = async (req, res, next) => {
 
@@ -48,10 +49,9 @@ exports.render = async (req, res, next) => {
     });
 };
 
+
 exports.test = async (req, res, next) => {
     let dataBuffer = fs.readFileSync("/Users/blackfish/lexicon-client-app/backend/testPdfs/stroke.pdf");
-
-
 
     pdf(dataBuffer).then(function(pdf){
         ///////////////////////////////////////////////////////////////////////////
@@ -68,4 +68,11 @@ exports.test = async (req, res, next) => {
 
         return res.status(200).send(tmp.replace(/\n/g, "</p><p>"));
     });
-}
+};
+
+
+exports.search = async (req, res, next) => {
+    console.log('/' + req.body.value + '.*/');
+    const result = await Guide.find({name: {$regex: req.body.value + '.*', $options: "i"}});
+    return res.status(200).send({result: result});
+};

@@ -3,11 +3,12 @@
 @tailwind utilities;
 
 :root {
-    --default-spacing: 4px;
+    --default-spacing: 2vw;
     --align-spacing: 0vw;
     --color-one: #A320DF;
     --color-two: #296DA9;
     --white-text: #FFF;
+    --upload-box-width: 70vw;
 }
 
 .site-bg-dark-blue {
@@ -47,16 +48,16 @@ input[type="file"]{
 
 .upload-box-root {
     height: 30vw;
-    width: 70vw;
-    /* border: 1px solid #000000; */
+    width: var(--upload-box-width);
     border-radius: max(10px, 1vw);
     padding-top: 40px;
     padding-bottom: 40px;
     background: #A320DF;
     background: rgba(163, 32, 223, 0.8);
     background: #1e1e1e;
-    border: 10px solid black;
+    border: 10px solid #AAA;
     box-shadow: 2px 2px 4px #888;
+    margin: var(--default-spacing)
 }
 
 .upload-vspacing-10 {
@@ -148,7 +149,7 @@ input[type="file"]{
 .button-holder-bottom {
     padding: 0 var(--align-spacing) 0 var(--align-spacing);
     margin: var(--default-spacing);
-    width: 100%;
+    width: var(--upload-box-width);
 }
 
 
@@ -173,3 +174,64 @@ input[type="file"]{
     height: 40px;
     background: blue;
 }
+
+
+input[type="text"]:focus {
+    outline: none;
+    box-shadow: 1px 1px 4px #888;
+}
+
+
+.search-field-holder{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+.search-field {
+    padding: 12px 12px 12px 3vw;
+    border: 1px solid #888;
+    border-radius: 4px;
+    background: #FFF1;
+    width: 40vw;
+    user-select: none;
+    transition: box-shadow .4s ease-in-out;
+    cursor: pointer;
+}
+
+
+.search-field:focus {
+    outline: none;
+    box-shadow: 1px 1px 4px #888;
+}
+
+
+.search-result-item {
+    width: 40vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 4vw;
+    box-shadow: 1px 1px 1px #888;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+
+.search-result-item:hover {
+    background: #888;
+}
+
+
+.search-engine-holder {
+    position: absolute;
+    height: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+

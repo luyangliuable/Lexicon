@@ -15,7 +15,8 @@
     "node-fetch": "^2.6.1",
     "parcel": "^2.8.0",
     "pdf-parse": "^1.1.1",
-    "pdftojson": "^0.0.3"
+    "pdftojson": "^0.0.3",
+    "react-icons": "^4.6.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

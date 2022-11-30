@@ -192,9 +192,9 @@ input[type="text"]:focus {
 
 
 .search-field {
-    padding: 12px 12px 12px 3vw;
+    padding: .6vw .6vw .6vw 3vw;
     border: 1px solid #888;
-    border-radius: 4px;
+    border-radius: 1vw;
     background: #FFF1;
     width: 40vw;
     user-select: none;
@@ -205,7 +205,7 @@ input[type="text"]:focus {
 
 .search-field:focus {
     outline: none;
-    box-shadow: 1px 1px 4px #888
+    box-shadow: 1px 1px 2.5px #888
 }
 
 
@@ -216,6 +216,8 @@ input[type="text"]:focus {
     justify-content: center;
     height: min( 4vw, 38px );
     box-shadow: 1px 1px 1px #888;
+    border: .5px solid black;
+    border-top: none;
     border-radius: 2px;
     cursor: pointer;
     transition: background .3s ease-in-out

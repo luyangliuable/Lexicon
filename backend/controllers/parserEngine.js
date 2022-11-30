@@ -73,6 +73,12 @@ exports.test = async (req, res, next) => {
 
 exports.search = async (req, res, next) => {
     console.log('/' + req.body.value + '.*/');
-    const result = await Guide.find({name: {$regex: req.body.value + '.*', $options: "i"}});
-    return res.status(200).send({result: result});
+
+    if ( req.body.value != "") {
+        const allResults = await Guide.find({name: {$regex: req.body.value + '.*', $options: "i"}});
+        const result = allResults.slice(0, 3);
+        return res.status(200).send({result: result});
+    } else {
+        return res.status(200).send({result: []});
+    }
 };

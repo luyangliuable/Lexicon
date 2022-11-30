@@ -10,6 +10,11 @@ const guideSchema = new Schema({
         type: String,
         required: false
     },
+    tags: {
+        type: Array,
+        default: [],
+        required: false
+    },
     encoding: {
         type: String,
         required: false

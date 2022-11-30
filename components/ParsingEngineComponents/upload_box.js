@@ -33,8 +33,10 @@ const UploadBox = (props) => {
             };
         });
 
-        console.log(objectState);
+        // console.log(objectState);
 
+        objectState.acceptedFile.delete("tags");
+        objectState.acceptedFile.append("tags", document.getElementById("guide-tags").value);
 
         fetch('http://localhost:9000/parsingEngine/upload', {
             method: 'POST',
@@ -42,8 +44,6 @@ const UploadBox = (props) => {
         })
             .then(response => response.json())
             .then(response => {
-                console.log(objectState);
-                console.log(JSON.stringify(response));
                 setTimeout(() => {
                     setObjectState(prev => {
                         return {
@@ -95,6 +95,8 @@ const UploadBox = (props) => {
               <h3>{objectState.buttonState ? "Uploading..." : "Upload File"}</h3>
             </button>
           </div>
+
+          <textarea id="guide-tags" placeholder="Enter Guide Tags Separated By Spaces Or Comma"/>
 
           <div className="button-holder-bottom">
             <button className="button float-right" style={

@@ -8,7 +8,8 @@
     --color-one: #A320DF;
     --color-two: #296DA9;
     --white-text: #FFF;
-    --upload-box-width: 70vw;
+    --upload-box-width: max(40vw, 800px);
+    --upload-box-height: max(16vw, 300px);
 }
 
 .site-bg-dark-blue {
@@ -27,7 +28,8 @@
 
 .button {
     background: #1e90ff;
-    width: 100px;
+    width: 7.5vw;
+    font-size: .85vw;
     height: 30px;
     display: flex;
     justify-content: center;
@@ -47,13 +49,13 @@ input[type="file"]{
 }
 
 .upload-box-root {
-    height: 30vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: var(--upload-box-height);
     width: var(--upload-box-width);
     border-radius: max(10px, 1vw);
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background: #A320DF;
-    background: rgba(163, 32, 223, 0.8);
     background: #1e1e1e;
     border: 10px solid #AAA;
     box-shadow: 2px 2px 4px #888;
@@ -160,10 +162,10 @@ input[type="file"]{
 
 .footer {
     position: absolute;
-    top: 90%;
+    top: 93%;
     left: 0;
     width: 100%;
-    height: 10%;
+    height: 7%;
     background: #E1E1E1;
     display: flex;
     align-items: center;
@@ -185,25 +187,25 @@ input[type="text"]:focus {
 .search-field-holder{
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-start
 }
 
 
 .search-field {
-    padding: 12px 12px 12px 3vw;
+    padding: .6vw .6vw .6vw 3vw;
     border: 1px solid #888;
-    border-radius: 4px;
+    border-radius: 1vw;
     background: #FFF1;
     width: 40vw;
     user-select: none;
     transition: box-shadow .4s ease-in-out;
-    cursor: pointer;
+    cursor: pointer
 }
 
 
 .search-field:focus {
     outline: none;
-    box-shadow: 1px 1px 4px #888;
+    box-shadow: 1px 1px 2.5px #888
 }
 
 
@@ -212,11 +214,13 @@ input[type="text"]:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 4vw;
+    height: min( 4vw, 38px );
     box-shadow: 1px 1px 1px #888;
+    border: .5px solid black;
+    border-top: none;
     border-radius: 2px;
     cursor: pointer;
-    transition: background .3s ease-in-out;
+    transition: background .3s ease-in-out
 }
 
 .search-result-item:hover {
@@ -231,7 +235,24 @@ input[type="text"]:focus {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center
+}
+
+
+#guide-tags {
+    width: var(--upload-box-width);
+    resize: none;
+    height: 7vw;
+    border-radius: .4vw;
+    -webkit-border-radius: .4vw;
+    border: 1px solid black;
+    padding: .5vw;
+    transition: box-shadow .25s ease-in-out
+}
+
+#guide-tags:focus {
+    outline: none;
+    box-shadow: 1px 1px 4px #888;
 }
 
 

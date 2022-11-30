@@ -17,11 +17,19 @@ Router.post('/upload', uploader.single('pdfFile'), function (req, res, next) {
     const pdfName = parsingEngine.getPDFName();
 
     pdfName.then(data => {
-        console.log(req.file);
+        console.log();
+        const tags = [];
+        for (var item of req.body.tags.split(/[, ]/)) {
+            if (item != "") {
+                tags.push(item);
+            }
+        }
+        console.log(tags);
 
         const new_form = new Guide({
             ...req.file,
             name: data,
+            tags: tags
         });
 
         new_form.save((err, result) => {

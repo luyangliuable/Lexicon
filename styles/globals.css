@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+    --header-apparent-height: 12%;
     --default-spacing: 2vw;
     --align-spacing: 0vw;
     --color-one: #A320DF;
@@ -308,6 +309,7 @@ input[type="text"]:focus {
     justify-content: center;
     padding: 0px 2vw 0px 2vw;
     width: 50%;
+    top: var(--header-apparent-height);
     left: 0;
     height: 40vw;
 }

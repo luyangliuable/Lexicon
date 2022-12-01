@@ -76,7 +76,8 @@ exports.search = async (req, res, next) => {
 
     if ( req.body.value != "") {
         // Find any entries with similar name or matches at least one tag
-        const allResults = await Guide.find({$or: [{name: {$regex: req.body.value + '.*', $options: "i"}}, {tags: {$in: [req.body.value]}}]});
+        // const allResults = await Guide.find({$or: [{name: {$regex: req.body.value + '.*', $options: "i"}}, {tags: {$in: [req.body.value]}}]});
+        const allResults = await Guide.find({$or: [{name: {$regex: req.body.value + '.*', $options: "i"}}, {tags: {$regex: req.body.value + '.*' , $options: "i"}}]});
         const result = allResults.slice(0, 3);
         return res.status(200).send({result: result});
     } else {

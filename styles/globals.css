@@ -44,6 +44,40 @@
     background: #0050ee;
 }
 
+
+.landing-page-button {
+    margin: 1vw 0vw 1vw;
+    background: var(--color-one);
+    color: white;
+    padding: 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 14vw;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1vw;
+    transition: box-shadow .5s ease-in-out, opacity .5s ease-in-out, text-shadow .5s ease-in-out
+}
+
+.landing-page-button:hover {
+    box-shadow: 1px 1px 2px #888;
+    text-shadow: 0 0 1px #fff;
+    opacity: .8;
+}
+
+.disable-text-highlight {
+    user-select: none;
+    -webkit-user-select: none; /*Safari*/
+    -moz-user-select: none; /*Firefox*/
+}
+
+
+.landing-page-button:focus {
+    box-shadow: inset 1px 1px 0px #888;
+}
+
 input[type="file"]{
     background: "1e90ff"
 }
@@ -220,11 +254,11 @@ input[type="text"]:focus {
     border-top: none;
     border-radius: 2px;
     cursor: pointer;
-    transition: background .3s ease-in-out
+    transition: background .2s ease-in-out
 }
 
 .search-result-item:hover {
-    background: #888;
+    background: #DDD;
 }
 
 
@@ -256,3 +290,46 @@ input[type="text"]:focus {
 }
 
 
+.hero {
+    height: 40vw;
+    width: 48vw;
+    padding: 4vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.hero-content {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 2vw 0px 2vw;
+    width: 50%;
+    left: 0;
+    height: 40vw;
+}
+
+.accordion-button-circle {
+    background: #888;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+
+.accordion-button-circle:hover {
+    opacity: .5;
+}
+
+.accordion-button-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    left: 0;
+}

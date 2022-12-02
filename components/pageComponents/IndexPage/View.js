@@ -8,27 +8,30 @@ import { iView } from "./types";
 const View= () => {
     const [ objectState, setObjectState ] = useState({
         scrolled: 0,
+        navbarHeight: 1000,
         heroComputedHeight: 1000,
         slideComputedHeight: [ 1000, 1000, 1000, 1000 ],
         slideOpacity: [0, 0],
-        slideLeft: [0, 0]
+        slideLeft: [0, 0],
+        detached: false
     });
 
 
-    const computeOpacity = (prev, scrollAmount, whichSlide) => {
+    const computeOpacity = (prev, scrollAmount, whichSlide, offset) => {
         const speed = 250;
-        const offset = .85;
+        // const offset = .85;
         return prev.slideComputedHeight[whichSlide]*offset < scrollAmount ? ( scrollAmount - prev.slideComputedHeight[whichSlide]*offset) / speed : 0;
     };
 
-    const computeLeft = (prev, scrollAmount, whichSlide) => {
+    const computeLeft = (prev, scrollAmount, whichSlide, offset) => {
         const startingLeft = 100;
-        const offset = .85;
+        // const offset = .85;
         return prev.slideComputedHeight[whichSlide]*offset < scrollAmount &&  startingLeft - ( scrollAmount - prev.slideComputedHeight[whichSlide]*offset) >= 0  ? `${ startingLeft -( scrollAmount - prev.slideComputedHeight[whichSlide]*offset) }px` : '0px';
     };
 
 
     useEffect(function(e){
+
         window.addEventListener('scroll', function() {
             var scrollAmount = window.scrollY;
 
@@ -43,23 +46,48 @@ const View= () => {
                 };
             });
 
+            const navBarHeight = document.getElementsByClassName('navbar')[0].getBoundingClientRect().height;
+
             setObjectState(prev => {
                 return {
                     ...prev,
+                    navbarHeight: document.getElementsByClassName('navbar')[0].getBoundingClientRect().height,
                     slideOpacity: [
-                        computeOpacity(prev, scrollAmount, 0),
-                        computeOpacity(prev, scrollAmount, 1),
-                        computeOpacity(prev, scrollAmount, 2),
-                        computeOpacity(prev, scrollAmount, 3),
+                        computeOpacity(prev, scrollAmount, 0, .5),
+                        computeOpacity(prev, scrollAmount, 1, .7),
+                        computeOpacity(prev, scrollAmount, 2, .8),
+                        computeOpacity(prev, scrollAmount, 3, .85),
                     ],
                     slideLeft: [
-                        computeLeft(prev, scrollAmount, 0),
-                        computeLeft(prev, scrollAmount, 1),
-                        computeLeft(prev, scrollAmount, 2),
-                        computeLeft(prev, scrollAmount, 3)
+                        computeLeft(prev, scrollAmount, 0, .5),
+                        computeLeft(prev, scrollAmount, 1, .7),
+                        computeLeft(prev, scrollAmount, 2, .8),
+                        computeLeft(prev, scrollAmount, 3, .85)
                     ]
                 };
             });
+
+
+            if (scrollAmount > navBarHeight && objectState.detached != true) {
+                document.getElementsByClassName('navbar')[0].classList.add("detached");
+
+                setObjectState(prev => {
+                    return {
+                        ...prev,
+                        detached: true
+                    };
+                });
+
+            } else if (scrollAmount <= navBarHeight)  {
+                document.getElementsByClassName('navbar')[0].classList.remove("detached");
+
+                setObjectState(prev => {
+                    return {
+                        ...prev,
+                        detached: false
+                    };
+                });
+            }
 
         }, false);
 
@@ -80,7 +108,10 @@ const View= () => {
 
     return (
         <>
-          <div className="wallpaper" style={{top: `${ objectState.scrolled/50 }px`}}></div>
+          <div className="wallpaper" style={{
+              top: `${ objectState.scrolled/50 }px`,
+              filter: `blur(${ Math.min( objectState.scrolled/200, 3 ) }px)`
+          }}></div>
           <HeroSection style={{opacity: 1-objectState.scrolled/292}} scrolled={objectState.scrolled} />
 
           <div className="landing-page-slide-section">

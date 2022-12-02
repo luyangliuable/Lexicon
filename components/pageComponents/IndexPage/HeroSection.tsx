@@ -93,6 +93,7 @@ const HeroSection = (props) => {
                         </div>
                     </div>
                 </div>
+                <div className="landing-page-hero-image" style={{filter: `grayscale(${ props.scrolled/2 }%)`, opacity: heroState.opacity}}></div>
             </div>
             <div className="accordion-button-holder">
                 <div className="accordion-button-circle" onClick={() => accordionClick(0)}></div>

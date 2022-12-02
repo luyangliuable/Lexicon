@@ -311,11 +311,10 @@ input[type="text"]:focus {
 .hero {
     height: 75vh;
     width: 100vw;
-    padding: 4vw;
+    left: 0;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
     background: #FFF;
 }
 
@@ -326,6 +325,17 @@ input[type="text"]:focus {
     align-items: center;
     justify-content: center;
     padding: 0px 2vw 0px 2vw;
+}
+
+.landing-page-hero-image {
+    width: 50vw;
+    height: 60vh;
+    image-rendering: pixelated;
+    background-image: url("../public/homepage/medical-forms.jpeg");
+    background-size:100% 100%;
+    border-radius: 1vw;
+    /* -webkit-filter: grayscale(100%); */
+    /* filter: grayscale(100%); */
 }
 
 .accordion-button-circle {
@@ -357,6 +367,7 @@ input[type="text"]:focus {
 
 .wallpaper {
     background-image: url("./background.jpeg");
+    image-rendering: pixelated;
     position: fixed;
     top: 0;
     left: 0;
@@ -364,14 +375,12 @@ input[type="text"]:focus {
     height: 500%;
     z-index: -10;
     opacity: .8;
-    filter: blur(.5px)
 }
 
 .navbar {
     border-bottom: .05px solid #E1E1E1;
-    box-shadow: .5px .5px 2px #E1E1E1;
+    /* box-shadow: .5px .5px 2px #E1E1E1; */
 }
-
 
 .circle-search-button {
     display: flex;
@@ -413,3 +422,22 @@ input[type="text"]:focus {
     width: 38vw;
     height: 80vh;
 }
+
+
+
+.detached {
+    position: fixed;
+    width: 100%;
+    background: rgba(0, 0, 0, .55);
+    color: white;
+    z-index: 10;
+    animation: mymove 1s ease-in-out;
+    backdrop-filter: blur(3px);
+}
+
+@keyframes mymove {
+    from {background: rgba(250,250,250,1);}
+    to {background: rgba(0, 0, 0, .55);}
+}
+
+

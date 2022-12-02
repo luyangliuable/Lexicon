@@ -16,11 +16,15 @@ const View= () => {
 
 
     const computeOpacity = (prev, scrollAmount, whichSlide) => {
-        return prev.slideComputedHeight[whichSlide]*.65 < scrollAmount ? ( scrollAmount - prev.slideComputedHeight[whichSlide]*.65) / 250 : 0;
+        const speed = 250;
+        const offset = .85;
+        return prev.slideComputedHeight[whichSlide]*offset < scrollAmount ? ( scrollAmount - prev.slideComputedHeight[whichSlide]*offset) / speed : 0;
     };
 
     const computeLeft = (prev, scrollAmount, whichSlide) => {
-        return prev.slideComputedHeight[whichSlide]*.65 < scrollAmount &&  100 - ( scrollAmount - prev.slideComputedHeight[whichSlide]*.65) >= 0  ? `${ 100 -( scrollAmount - prev.slideComputedHeight[whichSlide]*.65) }px` : '0px';
+        const startingLeft = 100;
+        const offset = .85;
+        return prev.slideComputedHeight[whichSlide]*offset < scrollAmount &&  startingLeft - ( scrollAmount - prev.slideComputedHeight[whichSlide]*offset) >= 0  ? `${ startingLeft -( scrollAmount - prev.slideComputedHeight[whichSlide]*offset) }px` : '0px';
     };
 
 
@@ -42,8 +46,18 @@ const View= () => {
             setObjectState(prev => {
                 return {
                     ...prev,
-                    slideOpacity: [ computeOpacity(prev, scrollAmount,0), computeOpacity(prev, scrollAmount, 1)],
-                    slideLeft: [computeLeft(prev, scrollAmount, 0) , computeLeft(prev, scrollAmount, 1)]
+                    slideOpacity: [
+                        computeOpacity(prev, scrollAmount, 0),
+                        computeOpacity(prev, scrollAmount, 1),
+                        computeOpacity(prev, scrollAmount, 2),
+                        computeOpacity(prev, scrollAmount, 3),
+                    ],
+                    slideLeft: [
+                        computeLeft(prev, scrollAmount, 0),
+                        computeLeft(prev, scrollAmount, 1),
+                        computeLeft(prev, scrollAmount, 2),
+                        computeLeft(prev, scrollAmount, 3)
+                    ]
                 };
             });
 
@@ -53,7 +67,12 @@ const View= () => {
             return {
                 ...prev,
                 heroComputedHeight: document.getElementsByClassName('hero')[0].offsetHeight,
-                slideComputedHeight: [document.getElementById(`image-${ 1 }`).getBoundingClientRect().y, document.getElementById(`image-${ 2 }`).getBoundingClientRect().y]
+                slideComputedHeight: [
+                    document.getElementById(`image-${ 1 }`).getBoundingClientRect().top,
+                    document.getElementById(`image-${ 2 }`).getBoundingClientRect().top,
+                    document.getElementById(`image-${ 3 }`).getBoundingClientRect().top,
+                    document.getElementById(`image-${ 4 }`).getBoundingClientRect().top
+                ]
             };
         });
 
@@ -94,10 +113,42 @@ const View= () => {
             </div>
           </div>
 
+
+          <div className="landing-page-slide-section">
+            <div className="w-full h-full bg-cover bg-no-repeat bg-center landing-page-slide-section-image" id="image-3"
+                 style={{
+                     backgroundImage: "url('homepage/doctors.jpg')",
+                     marginLeft: objectState.slideLeft[2],
+                     opacity: objectState.slideOpacity[2]
+                 }}
+            />
+
+            <div className="slide-section-text">
+              <p>Validated information</p>
+              <h2 style={{fontWeight: 100}}>For Medical Professional</h2>
+            </div>
+          </div>
+
+          <div className="landing-page-slide-section">
+            <div className="w-full h-full bg-cover bg-no-repeat bg-center landing-page-slide-section-image" id="image-4"
+                 style={{
+                     backgroundImage: "url('homepage/med-info.jpg')",
+                     marginLeft: objectState.slideLeft[3],
+                     opacity: objectState.slideOpacity[3]
+                 }}
+            />
+
+            <div className="slide-section-text">
+              <p>Swift and easy access to</p>
+              <h2 style={{fontWeight: 100}}>HEALTH INFORMATION</h2>
+            </div>
+          </div>
+
           <PanelSection />
           <WhyUseLexiconSection />
           <Footer />
         </>
+
     );
 };
 

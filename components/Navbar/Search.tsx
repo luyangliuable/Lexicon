@@ -22,10 +22,10 @@ const Search: React.FC<iSearch> = () => {
       />
 
       <CircleButton
-        className="text-blue-800 text-xl text-white ml-3"
+        className="circle-search-button"
         onClick={() => {}}
         tooltip={"Search"}
-        Icon={<FaSearch />}
+        Icon={<FaSearch style={{color: "#FFF"}} />}
         enable={true}
       />
     </div>

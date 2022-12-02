@@ -18,10 +18,10 @@ const DesktopNavbarLink: React.FC<iDesktopNavbarLink> = ({
             <Link href={link.href}>
                 <p
                     className={` rounded-full ${
-            selected
-              ? "bg-blue-900 px-3 leading-none py-1 text-white"
-              : "text-blue-900 font-medium"
-          }`}
+                selected
+                ? "bg-blue-900 px-3 leading-none py-1 text-white"
+                : "text-blue-900 font-medium"
+            }`}
                 >
                     {link.title}
                 </p>

@@ -43,7 +43,8 @@ const navbarOptions: React.FC = () => {
                 p-1
                 mx-2
                 ">Studio</div></Link>
-        </div>);
+        </div>
+    );
 }
 
 export default navbarOptions;

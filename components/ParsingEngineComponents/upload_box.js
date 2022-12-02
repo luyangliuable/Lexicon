@@ -33,8 +33,6 @@ const UploadBox = (props) => {
             };
         });
 
-        // console.log(objectState);
-
         objectState.acceptedFile.delete("tags");
         objectState.acceptedFile.append("tags", document.getElementById("guide-tags").value);
 
@@ -92,7 +90,7 @@ const UploadBox = (props) => {
                   : {}
               }
             >
-              <h3>{objectState.buttonState ? "Uploading..." : "Upload File"}</h3>
+              {objectState.buttonState ? "Uploading..." : "Upload File"}
             </button>
           </div>
 

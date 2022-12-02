@@ -19,6 +19,7 @@ const Search: React.FC<iSearch> = () => {
         disable={false}
         name={"Search"}
         rounded={true}
+        className="navbar-text-input"
       />
 
       <CircleButton

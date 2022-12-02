@@ -6,6 +6,7 @@
     --align-spacing: 0vw;
     --color-one: #A320DF;
     --color-two: #296da9;
+    --color-three: #D441FF;
     --white-text: #FFF;
     --upload-box-width: max(40vw, 800px);
     --upload-box-height: max(16vw, 300px);
@@ -32,6 +33,7 @@ body {
 }
 
 .button {
+    border: None;
     background: #1e90ff;
     width: 7.5vw;
     font-size: .85vw;
@@ -42,15 +44,22 @@ body {
     border-radius: 4px;
     color: white;
     cursor: pointer;
-    transition: .5s background ease-in-out;
+    transition: .5s background ease-in-out
 }
 
 .button:hover {
-    background: #0050ee;
+    border: None;
+    background: #0050ee
+}
+
+.button:active {
+    border: None;
+    opacity: .5
 }
 
 
 .landing-page-button {
+    border: None;
     margin: 1vw 0vw 1vw;
     background: var(--color-one);
     color: white;
@@ -67,10 +76,17 @@ body {
 }
 
 .landing-page-button:hover {
-    box-shadow: 1px 1px 2px #888;
-    text-shadow: 0 0 1px #fff;
+    box-shadow: .05vw .05vh .1vw #888;
+    text-shadow: 0 0 .1vw #fff;
     opacity: .8;
 }
+
+.landing-page-button:focus {
+    box-shadow: 0 0 0 #888;
+    text-shadow: 0 0 0 #fff;
+    opacity: .4;
+}
+
 
 .disable-text-highlight {
     user-select: none;
@@ -79,9 +95,6 @@ body {
 }
 
 
-.landing-page-button:focus {
-    box-shadow: inset 1px 1px 0px #888;
-}
 
 input[type="file"]{
     background: "1e90ff"
@@ -297,27 +310,33 @@ input[type="text"]:focus {
 
 
 .hero {
-    height: 40vw;
+    height: 75vh;
     width: 100vw;
-    padding: 4vw;
+    left: 0;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     background: #FFF;
 }
 
 .hero-content {
     display: flex;
-    position: absolute;
+    width: 40vw;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 0px 2vw 0px 2vw;
-    width: 50%;
-    top: var(--header-apparent-height);
-    left: 0;
-    height: 40vw;
+}
+
+.landing-page-hero-image {
+    width: 50vw;
+    height: 60vh;
+    image-rendering: pixelated;
+    background-image: url("../public/homepage/medical-forms.jpeg");
+    background-size:100% 100%;
+    border-radius: 1vw;
+    /* -webkit-filter: grayscale(100%); */
+    /* filter: grayscale(100%); */
 }
 
 .accordion-button-circle {
@@ -335,6 +354,7 @@ input[type="text"]:focus {
 }
 
 .accordion-button-holder {
+    height: 2vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -347,34 +367,35 @@ input[type="text"]:focus {
 }
 
 .wallpaper {
-    background-image: url("./background.jpeg");
+    /* background-image: url("./background.jpeg"); */
+    background: #1e1e1e;
+    image-rendering: pixelated;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 500%;
     z-index: -10;
-    opacity: .2;
+    opacity: .8;
 }
 
 .navbar {
     border-bottom: .05px solid #E1E1E1;
-    box-shadow: .5px .5px 2px #E1E1E1;
+    justify-content: center;
 }
-
 
 .circle-search-button {
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50px;
+    border: .4px solid #FFF;
     width: 40px;
     height: 35px;
-    border: none;
-    margin-left: 5px;
-    background: var(--color-one);
-    transition: box-shadow .5s ease-in-out, opacity .5s ease-in-out, text-shadow .5s ease-in-out
-
+    background: var(--color-three);
+    transition: box-shadow .5s ease-in-out, opacity .5s ease-in-out, text-shadow .5s ease-in-out;
+    position: absolute;
+    right: 1vw;
 }
 
 .circle-search-button:hover {
@@ -383,9 +404,86 @@ input[type="text"]:focus {
     opacity: .8;
 }
 
-.landing-page-slide-section {
-    background: #FFF;
-    border-bottom: .1px solid #EEE;
-    height: 40vw;
-    margin-top: 10vw;
+.navbar-text-input {
+    top: 2.25vw;
+    width: 15vw;
+    right: 5vw;
+    position: absolute;
+    transition: width .4s ease-in-out,
+                right .4s ease-in-out,
+                box-shadow .4s ease-in-out,
 }
+
+.navbar-text-input:focus {
+    width: 45vw;
+    border-radius: .25vw;
+    right: 5.2vw;
+}
+
+.landing-page-slide-section {
+    display: flex;
+    justify-content: space-between;
+    background: #888;
+    align-items: center;
+    background: #FFF;
+    border-top: .1px solid #888;
+    border-bottom: .1px solid #888;
+    height: 80vh;
+    margin-top: 8vh;
+}
+
+.slide-section-text {
+    margin-right: 10vw;
+}
+
+.landing-page-slide-section-image {
+    width: 38vw;
+    height: 80vh;
+}
+
+
+
+.detached {
+    position: fixed;
+    width: 100%;
+    background: rgba(0, 0, 0, .55);
+    color: white;
+    z-index: 10;
+    animation: mymove 1s ease-in-out;
+    backdrop-filter: blur(3px);
+}
+
+@keyframes mymove {
+    from {background: rgba(250,250,250,1);}
+    to {background: rgba(0, 0, 0, .55);}
+}
+
+
+
+.logo {
+    background: linear-gradient(
+        90deg,
+        #00bfff 0%,
+        #897ed3 50%,
+        #00bfff 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: animateBg 6s linear infinite;
+    -webkit-text-stroke-width: .1px;
+    -webkit-text-stroke-color: #1E1E1E;
+}
+
+
+@keyframes animateBg {
+    0% {
+        background-position: 110% 0%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+

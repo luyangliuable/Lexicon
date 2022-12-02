@@ -2,21 +2,7 @@ import React, {useEffect, useState} from "react"
 
 import DualPanelSectionWrapper from "../../DualPanelSectionWrapper"
 
-const HeroSection = () => {
-
-    const getScrollLocation = () => {
-        console.log("Scroll");
-    };
-
-
-    useEffect(() => {
-        // Client-side-only code
-        window.onscroll = (e) => {
-            var scrolled = window.scrollY;
-            console.log(scrolled);
-        };
-    })
-
+const HeroSection = (props) => {
     const [ heroState, setHeroState ] = useState({
         opacity: 0,
         marginTop: 5,
@@ -67,14 +53,17 @@ const HeroSection = () => {
             whichContent = ( whichContent + 1 ) % 2;
 
             accordionClick(whichContent);
-        }, 5000);
+        }, 7500);
     }, [])
-
 
     return (
         <>
-            <div className="hero">
-                <div className="hero-holder search-engine" style={{display: heroState.contentDisplay[0] ? true : "None"}}>
+            <div className="hero" >
+                <div style={{ ...props.style }}>
+                <div className="hero-holder search-engine" style={{
+                    marginLeft: `${ props.scrolled }%`,
+                    display: heroState.contentDisplay[0] ? "unset" : "none"
+                }}>
                     <div className="hero-content" style={{opacity: heroState.opacity, marginTop: `${heroState.marginTop}%`}}>
                         <h1 className="text-center md:text-left text-blue-900 font-bold text-5xl mb-6 ">
                             Australia's first medical search engine
@@ -103,6 +92,7 @@ const HeroSection = () => {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
             <div className="accordion-button-holder">
                 <div className="accordion-button-circle" onClick={() => accordionClick(0)}></div>

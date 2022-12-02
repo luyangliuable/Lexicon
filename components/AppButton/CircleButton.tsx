@@ -11,12 +11,7 @@ const CircleButton: React.FC<{
   return (
     <button
       onClick={onClick}
-      className={`
-      p-2 block rounded-full flex items-center 
-      outline-none justify-center 
-      transition duration-100
-      ${className} 
-    `}
+      className={`${className}`}
       title={tooltip}
     >
       {Icon}

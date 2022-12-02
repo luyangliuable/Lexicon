@@ -38,7 +38,8 @@ const Navbar: React.FC<iNavbar> = ({ pageId }) => {
             </div>
           </SiteContainer>
         </div>
-        <SiteContainer className="flex items-center justify-between py-4 text-blue-900">
+
+        <SiteContainer className="flex items-center justify-between py-4 text-blue-900 navbar">
           {/* Lexicon Logo */}
           <div className="w-1/6">
             <Link href="/"><LexiconLogo size={100} /></Link>
@@ -68,7 +69,6 @@ const Navbar: React.FC<iNavbar> = ({ pageId }) => {
         tabWidth={"256px"}
         mobileWidth={"256px"}
       >
-        <div>dsadsada</div>
       </SidebarWrapper>
     </>
   )

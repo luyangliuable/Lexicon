@@ -32,6 +32,7 @@ body {
 }
 
 .button {
+    border: None;
     background: #1e90ff;
     width: 7.5vw;
     font-size: .85vw;
@@ -42,15 +43,22 @@ body {
     border-radius: 4px;
     color: white;
     cursor: pointer;
-    transition: .5s background ease-in-out;
+    transition: .5s background ease-in-out
 }
 
 .button:hover {
-    background: #0050ee;
+    border: None;
+    background: #0050ee
+}
+
+.button:active {
+    border: None;
+    opacity: .5
 }
 
 
 .landing-page-button {
+    border: None;
     margin: 1vw 0vw 1vw;
     background: var(--color-one);
     color: white;
@@ -67,10 +75,17 @@ body {
 }
 
 .landing-page-button:hover {
-    box-shadow: 1px 1px 2px #888;
-    text-shadow: 0 0 1px #fff;
+    box-shadow: .05vw .05vh .1vw #888;
+    text-shadow: 0 0 .1vw #fff;
     opacity: .8;
 }
+
+.landing-page-button:focus {
+    box-shadow: 0 0 0 #888;
+    text-shadow: 0 0 0 #fff;
+    opacity: .4;
+}
+
 
 .disable-text-highlight {
     user-select: none;
@@ -79,9 +94,6 @@ body {
 }
 
 
-.landing-page-button:focus {
-    box-shadow: inset 1px 1px 0px #888;
-}
 
 input[type="file"]{
     background: "1e90ff"
@@ -297,27 +309,23 @@ input[type="text"]:focus {
 
 
 .hero {
-    height: 40vw;
+    height: 75vh;
     width: 100vw;
     padding: 4vw;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+    align-items: flex-start;
+    justify-content: center;
     background: #FFF;
 }
 
 .hero-content {
     display: flex;
-    position: absolute;
+    width: 40vw;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 0px 2vw 0px 2vw;
-    width: 50%;
-    top: var(--header-apparent-height);
-    left: 0;
-    height: 40vw;
 }
 
 .accordion-button-circle {
@@ -335,6 +343,7 @@ input[type="text"]:focus {
 }
 
 .accordion-button-holder {
+    height: 2vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -352,9 +361,10 @@ input[type="text"]:focus {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 500%;
     z-index: -10;
-    opacity: .2;
+    opacity: .8;
+    filter: blur(.5px)
 }
 
 .navbar {
@@ -384,8 +394,22 @@ input[type="text"]:focus {
 }
 
 .landing-page-slide-section {
+    display: flex;
+    justify-content: space-between;
+    background: #888;
+    align-items: center;
     background: #FFF;
-    border-bottom: .1px solid #EEE;
-    height: 40vw;
-    margin-top: 10vw;
+    border-top: .1px solid #888;
+    border-bottom: .1px solid #888;
+    height: 80vh;
+    margin-top: 8vh;
+}
+
+.slide-section-text {
+    margin-right: 10vw;
+}
+
+.landing-page-slide-section-image {
+    width: 38vw;
+    height: 80vh;
 }

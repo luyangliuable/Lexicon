@@ -6,6 +6,7 @@
     --align-spacing: 0vw;
     --color-one: #A320DF;
     --color-two: #296da9;
+    --color-three: #D441FF;
     --white-text: #FFF;
     --upload-box-width: max(40vw, 800px);
     --upload-box-height: max(16vw, 300px);
@@ -366,7 +367,8 @@ input[type="text"]:focus {
 }
 
 .wallpaper {
-    background-image: url("./background.jpeg");
+    /* background-image: url("./background.jpeg"); */
+    background: #1e1e1e;
     image-rendering: pixelated;
     position: fixed;
     top: 0;
@@ -379,7 +381,7 @@ input[type="text"]:focus {
 
 .navbar {
     border-bottom: .05px solid #E1E1E1;
-    /* box-shadow: .5px .5px 2px #E1E1E1; */
+    justify-content: center;
 }
 
 .circle-search-button {
@@ -387,19 +389,35 @@ input[type="text"]:focus {
     justify-content: center;
     align-items: center;
     border-radius: 50px;
+    border: .4px solid #FFF;
     width: 40px;
     height: 35px;
-    border: none;
-    margin-left: 5px;
-    background: var(--color-one);
-    transition: box-shadow .5s ease-in-out, opacity .5s ease-in-out, text-shadow .5s ease-in-out
-
+    background: var(--color-three);
+    transition: box-shadow .5s ease-in-out, opacity .5s ease-in-out, text-shadow .5s ease-in-out;
+    position: absolute;
+    right: 1vw;
 }
 
 .circle-search-button:hover {
     box-shadow: 1px 1px 2px #888;
     text-shadow: 0 0 1px #fff;
     opacity: .8;
+}
+
+.navbar-text-input {
+    top: 2.25vw;
+    width: 15vw;
+    right: 5vw;
+    position: absolute;
+    transition: width .4s ease-in-out,
+                right .4s ease-in-out,
+                box-shadow .4s ease-in-out,
+}
+
+.navbar-text-input:focus {
+    width: 45vw;
+    border-radius: .25vw;
+    right: 5.2vw;
 }
 
 .landing-page-slide-section {
@@ -440,4 +458,32 @@ input[type="text"]:focus {
     to {background: rgba(0, 0, 0, .55);}
 }
 
+
+
+.logo {
+    background: linear-gradient(
+        90deg,
+        #00bfff 0%,
+        #897ed3 50%,
+        #00bfff 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: animateBg 6s linear infinite;
+    -webkit-text-stroke-width: .1px;
+    -webkit-text-stroke-color: #1E1E1E;
+}
+
+
+@keyframes animateBg {
+    0% {
+        background-position: 110% 0%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
 

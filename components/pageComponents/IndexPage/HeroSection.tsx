@@ -53,7 +53,7 @@ const HeroSection = (props) => {
             whichContent = ( whichContent + 1 ) % 2;
 
             accordionClick(whichContent);
-        }, 7500);
+        }, 100000);
     }, [])
 
     return (
@@ -96,8 +96,8 @@ const HeroSection = (props) => {
                 <div className="landing-page-hero-image" style={{filter: `grayscale(${ props.scrolled/2 }%)`, opacity: heroState.opacity}}></div>
             </div>
             <div className="accordion-button-holder">
-                <div className="accordion-button-circle" onClick={() => accordionClick(0)}></div>
-                <div className="accordion-button-circle" onClick={() => accordionClick(1)}></div>
+                <div className="accordion-button-circle" onClick={() => accordionClick(0)} style={{background: heroState.contentDisplay[0] ? "#888" : "#E8E8E8"}}></div>
+                <div className="accordion-button-circle" onClick={() => accordionClick(1)} style={{background: heroState.contentDisplay[1] ? "#888" : "#E8E8E8"}}></div>
             </div>
         </>
     )

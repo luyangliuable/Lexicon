@@ -5,6 +5,7 @@ import WhyUseLexiconSection from "./WhyUseLexiconSection";
 import Footer from "./Footer/index";
 import { iView } from "./types";
 
+
 const View= () => {
     const [ objectState, setObjectState ] = useState({
         scrolled: 0,

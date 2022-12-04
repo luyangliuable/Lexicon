@@ -20,6 +20,7 @@ const Navbar: React.FC<iNavbar> = ({ pageId }) => {
 
   return (
     <>
+        {/* <div className="sticky top-0 left-0 bg-white border-b z-40" style={{background: 'red', position: "absolute", width: "100vw"}}> */}
       <nav className="top-0 left-0 bg-white border-b z-40 navbar-container">
         <div className="bg-gray-200 hidden">
           <SiteContainer className="flex item-center justify-end py-2">
@@ -61,6 +62,7 @@ const Navbar: React.FC<iNavbar> = ({ pageId }) => {
           </div>
         </SiteContainer>
       </nav>
+      {/* </div> */}
 
       <SidebarWrapper
         sidebarOpen={sidebarOpen}

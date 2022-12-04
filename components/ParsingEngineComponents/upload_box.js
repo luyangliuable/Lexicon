@@ -1,5 +1,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
+import { AiOutlineFilePdf } from "react-icons/ai";
+
 
 const UploadBox = (props) => {
     const [objectState, setObjectState] = useState({
@@ -75,7 +77,7 @@ const UploadBox = (props) => {
                ? objectState.acceptedFileName
                : "Drop files here"}
             </p>
-
+            <AiOutlineFilePdf style={{width: "50px", height: "50px", margin: "-15px"}}/>
             <button
               className="button"
               disabled={objectState.buttonState}

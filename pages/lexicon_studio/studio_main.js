@@ -10,7 +10,7 @@ import ReferenceCard from "../../components/StudioComponents/referenceCard/refer
 import NumericalInputCard from "../../components/StudioComponents/numericalInputCard/numericalInput";
 import SelectInputCard from "../../components/StudioComponents/selectInputCard/selectInputCard";
 import { v4 as uuidv4 } from 'uuid';
-import BivalentInputCard from "../../components/StudioComponents/bivalentInputCard/bivalentInputCard";
+import BivalentInputCard from "../../components/StudioComponents/bivalentInputCard/bivalentinputcard";
 import SliderInputCard from "../../components/StudioComponents/sliderInputCard/sliderInputCard";
 import PointInputCard from "../../components/StudioComponents/pointInputCard/pointInputCard";
 import DescriptionCardPreviewMode from "../../components/StudioComponents/descriptionCard/descriptionCardPreviewMode";
@@ -247,7 +247,8 @@ class studioMain extends Component {
                 componentElement.previewModeDisplay = true;
                 componentElement.outputDescription = '';
                 componentElement.editMode = false;
-                componentElement.totalScore = 0;
+                componentElement.totalScore = 100;
+                componentElement.formula = "1+1";
                 this.setState({ outputsList: [...this.state.outputsList, componentElement] });
                 break;
             }
@@ -255,7 +256,20 @@ class studioMain extends Component {
         }
     }
 
-    // method for capturing the state changes in the card components
+
+    capturePreviewFieldStateChange(stateObject) {
+        switch(stateObject.type) {
+            case "input":
+            console.log("Input changed");
+            break;
+        default:
+            console.warn("Unknow Preview Field change case.");
+            break;
+        }
+    }
+
+
+    // METHOD for capturing the state changes in the card components
     captureCardComponentStateChange(stateObject) {
         switch (stateObject.type) {
         case "meta":
@@ -665,7 +679,7 @@ class studioMain extends Component {
             case "SelectInput":
                 return (cardItem.previewModeDisplay ? (<SelectInputCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></SelectInputCardPreviewMode>) : (<></>));
             case "NumericalInput":
-                return (cardItem.previewModeDisplay ? (<NumericalInputCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></NumericalInputCardPreviewMode>) : (<></>));
+                return (cardItem.previewModeDisplay ? (<NumericalInputCardPreviewMode cardElement={cardItem} stateChangeMethod={this.capturePreviewFieldStateChange} elementIndex={index} key={cardItem.uuid}></NumericalInputCardPreviewMode>) : (<></>));
             case "BivalentInput":
                 return (cardItem.previewModeDisplay ? (<BivalentInputCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></BivalentInputCardPreviewMode>) : (<></>));
             case "SliderInput":
@@ -847,201 +861,201 @@ class studioMain extends Component {
     render() {
         return (<>
 
-                  {/* View Selected Saved Form Dialog Box */}
-                  <Modal
-                    show={this.state.viewSavedFormsDialogBox['display']}
-                    onHide = { () => {
-                        this.setState(prevState => {
-                            prevState.viewSavedFormsDialogBox['display'] = false;
-                            return { viewSavedFormsDialogBox: prevState.viewSavedFormsDialogBox };
-                        });
-                    } }
-                    backdrop="static"
-                    keyboard={false}>
+          {/* View Selected Saved Form Dialog Box */}
+          <Modal
+            show={this.state.viewSavedFormsDialogBox['display']}
+            onHide = { () => {
+                this.setState(prevState => {
+                    prevState.viewSavedFormsDialogBox['display'] = false;
+                    return { viewSavedFormsDialogBox: prevState.viewSavedFormsDialogBox };
+                });
+            } }
+            backdrop="static"
+            keyboard={false}>
 
-                    <Modal.Header closeButton>
-                      <Modal.Title>{this.state.viewSavedFormsDialogBox['selectedFormDetails']['name']}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <div>Please select from the following options that would you like to perform on the selcted form: </div>
-                      <div className="text-center border-2 border-blue-900 rounded my-1.5 font-semibold hover:bg-blue-900 hover:text-white cursor-pointer" onClick={this.fetchSavedForm}>View / Edit</div>
-                      <div className="text-center border-2 border-red-500 rounded my-1.5 font-semibold hover:bg-red-500 hover:text-white cursor-pointer" onClick={this.deleteSavedFormRequest}>Delete</div>
-                    </Modal.Body>
-                  </Modal>
-                  {/* View Selected Saved Form Dialog Box */}
+            <Modal.Header closeButton>
+              <Modal.Title>{this.state.viewSavedFormsDialogBox['selectedFormDetails']['name']}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div>Please select from the following options that would you like to perform on the selcted form: </div>
+              <div className="text-center border-2 border-blue-900 rounded my-1.5 font-semibold hover:bg-blue-900 hover:text-white cursor-pointer" onClick={this.fetchSavedForm}>View / Edit</div>
+              <div className="text-center border-2 border-red-500 rounded my-1.5 font-semibold hover:bg-red-500 hover:text-white cursor-pointer" onClick={this.deleteSavedFormRequest}>Delete</div>
+            </Modal.Body>
+          </Modal>
+          {/* View Selected Saved Form Dialog Box */}
 
-                  {/* Save Form Dialog Box */}
-                  <Modal
-                    show={this.state.saveFormDialogBoxOptions['display']}
-                    onHide = { () => {
-                        this.setState(prevState => {
-                            prevState.saveFormDialogBoxOptions['display'] = false;
-                            return { saveFormDialogBoxOptions: prevState.saveFormDialogBoxOptions };
-                        });
-                    } }
-                    backdrop="static"
-                    keyboard={false}>
+          {/* Save Form Dialog Box */}
+          <Modal
+            show={this.state.saveFormDialogBoxOptions['display']}
+            onHide = { () => {
+                this.setState(prevState => {
+                    prevState.saveFormDialogBoxOptions['display'] = false;
+                    return { saveFormDialogBoxOptions: prevState.saveFormDialogBoxOptions };
+                });
+            } }
+            backdrop="static"
+            keyboard={false}>
 
-                    <Modal.Header closeButton>
-                      <Modal.Title>From Details Confirmation</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <div>Please provide a name for the form:</div>
-                      <div>
-                        <input
-                          className="w-full border-2 border-black	rounded p-1 px-2 mt-1.5"
-                          placeholder="Form Name"
-                          value = {this.state.saveFormDialogBoxOptions['formName']}
-                          onChange={(e)=>{
-                              this.setState(prevState=>{
-                                  let saveFormDialogBoxOptionsCopy = prevState.saveFormDialogBoxOptions;
-                                  saveFormDialogBoxOptionsCopy['formName'] = e.target.value;
-                                  return { saveFormDialogBoxOptions: saveFormDialogBoxOptionsCopy };
-                              });
-                          }
-                                   }/>
-                      </div>
-                      {this.state.saveFormDialogBoxOptions['name_requirement_warning'] && (
-                          <div className="text-sm mt-2 text-red-500">
-                            Please provide a name for the form.
-                          </div>)}
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="primary" onClick={()=>{this.handleSaveFormOptionConfirmation('CANCEL');}}>
-                        Close
-                      </Button>
-                      <Button variant="success" onClick={()=>{this.handleSaveFormOptionConfirmation('SAVE');}}>
-                        Save
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
-                  {/* Save Form Dialog Box */}
+            <Modal.Header closeButton>
+              <Modal.Title>From Details Confirmation</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div>Please provide a name for the form:</div>
+              <div>
+                <input
+                  className="w-full border-2 border-black	rounded p-1 px-2 mt-1.5"
+                  placeholder="Form Name"
+                  value = {this.state.saveFormDialogBoxOptions['formName']}
+                  onChange={(e)=>{
+                      this.setState(prevState=>{
+                          let saveFormDialogBoxOptionsCopy = prevState.saveFormDialogBoxOptions;
+                          saveFormDialogBoxOptionsCopy['formName'] = e.target.value;
+                          return { saveFormDialogBoxOptions: saveFormDialogBoxOptionsCopy };
+                      });
+                  }
+                           }/>
+              </div>
+              {this.state.saveFormDialogBoxOptions['name_requirement_warning'] && (
+                  <div className="text-sm mt-2 text-red-500">
+                    Please provide a name for the form.
+                  </div>)}
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="primary" onClick={()=>{this.handleSaveFormOptionConfirmation('CANCEL');}}>
+                Close
+              </Button>
+              <Button variant="success" onClick={()=>{this.handleSaveFormOptionConfirmation('SAVE');}}>
+                Save
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          {/* Save Form Dialog Box */}
 
-                  {/* Card Selection Confirmation Toast message */}
-                  <ToastContainer position='bottom-end' className="m-4">
-                    <Toast onClose={() => this.setState({displayCardAdditionToast: false})} show={this.state.displayCardAdditionToast} delay={5000} autohide>
-                      <Toast.Header>
-                        <strong className="me-auto text-blue-900">Alert</strong>
-                      </Toast.Header>
-                      <Toast.Body className="text-blue-900">The selected card has been added to dashboard !</Toast.Body>
-                    </Toast>
-                  </ToastContainer>
-                  {/* Card Selection Confirmation Toast message */}
+          {/* Card Selection Confirmation Toast message */}
+          <ToastContainer position='bottom-end' className="m-4">
+            <Toast onClose={() => this.setState({displayCardAdditionToast: false})} show={this.state.displayCardAdditionToast} delay={5000} autohide>
+              <Toast.Header>
+                <strong className="me-auto text-blue-900">Alert</strong>
+              </Toast.Header>
+              <Toast.Body className="text-blue-900">The selected card has been added to dashboard !</Toast.Body>
+            </Toast>
+          </ToastContainer>
+          {/* Card Selection Confirmation Toast message */}
 
-                  {/* Card Delete Confirmation */}
-                  <Modal show={this.state.cardDeleteModalDisplay} onHide={this.handleModalClose} backdrop="static" keyboard={false}>
-                    <Modal.Header closeButton>
-                      <Modal.Title className="text-blue-900">Confirm Delete</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body className="text-blue-900">Are you sure you want to delete the selected card ?</Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="primary" onClick={this.handleModalClose}>
-                        Close
-                      </Button>
-                      <Button variant="danger" onClick={this.handleCardDelete}>
-                        Delete
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
-                  {/* Card Delete Confirmation */}
+          {/* Card Delete Confirmation */}
+          <Modal show={this.state.cardDeleteModalDisplay} onHide={this.handleModalClose} backdrop="static" keyboard={false}>
+            <Modal.Header closeButton>
+              <Modal.Title className="text-blue-900">Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="text-blue-900">Are you sure you want to delete the selected card ?</Modal.Body>
+            <Modal.Footer>
+              <Button variant="primary" onClick={this.handleModalClose}>
+                Close
+              </Button>
+              <Button variant="danger" onClick={this.handleCardDelete}>
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          {/* Card Delete Confirmation */}
 
-                  <div className="w-100vw min-h-screen">
-                    {/* side bar menu for card components */}
-                    <Offcanvas show={this.state.showSideBarMenu} onHide={()=>this.toggleSideBarMenu("CREATE-CARD-OPTION")}>
-                      <Offcanvas.Header closeButton>
-                        <div className="text-4xl text-blue-900">Components</div>
-                      </Offcanvas.Header>
-                      <Offcanvas.Body className="divide-y divide-gray-300">
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('meta', 'DescriptionComponent'); }}>Description Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('meta', 'ReferenceComponent'); }}>Reference Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('input', 'SelectInput'); }}>Select Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('input', 'NumericalInput'); }}>Numerical Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('input', 'BivalentInput'); }} >Bivalent Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('input', 'SliderInput'); }}>Slider Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('input', 'PointInput'); }}>Point Input Card</div>
-                        {/* <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('output', 'NumericalOutputComponent') }}>Numerical Output Card</div> */}
-                      </Offcanvas.Body>
-                    </Offcanvas>
-                    {/* side bar menu for card components */}
+          <div className="w-100vw min-h-screen">
+            {/* side bar menu for card components */}
+            <Offcanvas show={this.state.showSideBarMenu} onHide={()=>this.toggleSideBarMenu("CREATE-CARD-OPTION")}>
+              <Offcanvas.Header closeButton>
+                <div className="text-4xl text-blue-900">Components</div>
+              </Offcanvas.Header>
+              <Offcanvas.Body className="divide-y divide-gray-300">
+                <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('meta', 'DescriptionComponent'); }}>Description Card</div>
+                <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('meta', 'ReferenceComponent'); }}>Reference Card</div>
+                <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('input', 'SelectInput'); }}>Select Input Card</div>
+                <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('input', 'NumericalInput'); }}>Numerical Input Card</div>
+                <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('input', 'BivalentInput'); }} >Bivalent Input Card</div>
+                <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('input', 'SliderInput'); }}>Slider Input Card</div>
+                <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('input', 'PointInput'); }}>Point Input Card</div>
+                <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => { this.sideBarOptionSelected('output', 'NumericalOutputComponent'); }}>Numerical Output Card</div>
+              </Offcanvas.Body>
+            </Offcanvas>
+            {/* side bar menu for card components */}
 
-                    {/* side bar menu for viewing saved forms menu */}
-                    <Offcanvas show={this.state.viewSavedFormsMenu} onHide={()=>this.toggleSideBarMenu("VIEW-SAVED-FORMS-OPTION")}>
-                      <Offcanvas.Header closeButton>
-                        <div className="text-4xl text-blue-900">Saved Forms</div>
-                      </Offcanvas.Header>
-                      <Offcanvas.Body className="divide-y divide-gray-300">
-                        {this.state.savedFormsList.length > 0 ?
-                         (<>{this.state.savedFormsList.map((form, id) => {
-                             return (
-                                 <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" id={id} onClick={() => { this.handleViewSavedFormSelectionRequest(form._id, form.name); }}>{form.name}</div>
-                             );
-                         })}</>)
-                         :(<div className="text-lg text-blue-900">No saved forms found !</div>)}
-                      </Offcanvas.Body>
-                    </Offcanvas>
-                    {/* side bar menu for viewing saved forms menu */}
+            {/* side bar menu for viewing saved forms menu */}
+            <Offcanvas show={this.state.viewSavedFormsMenu} onHide={()=>this.toggleSideBarMenu("VIEW-SAVED-FORMS-OPTION")}>
+              <Offcanvas.Header closeButton>
+                <div className="text-4xl text-blue-900">Saved Forms</div>
+              </Offcanvas.Header>
+              <Offcanvas.Body className="divide-y divide-gray-300">
+                {this.state.savedFormsList.length > 0 ?
+                 (<>{this.state.savedFormsList.map((form, id) => {
+                     return (
+                         <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" id={id} onClick={() => { this.handleViewSavedFormSelectionRequest(form._id, form.name); }}>{form.name}</div>
+                     );
+                 })}</>)
+                 :(<div className="text-lg text-blue-900">No saved forms found !</div>)}
+              </Offcanvas.Body>
+            </Offcanvas>
+            {/* side bar menu for viewing saved forms menu */}
 
-                    {/* studio navbar */}
-                    <div className="w-screen p-1 flex justify-between items-center">
-                      <div className="text-3xl text-blue-900 m-1 inline-block font-semibold">Lexicon Studio</div>
-                      <div className="flex items-center">
-                        {!this.state.previewMode && (
-                            <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={()=>this.toggleSideBarMenu("CREATE-CARD-OPTION")}>
-                              <FontAwesomeIcon icon={faPlusCircle} className="mr-1.5" />Create
-                            </div>
-                        )}
-                        <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={this.togglePreviewMode}>
-                          {this.state.previewMode ? (<><FontAwesomeIcon icon={faEyeSlash} className="mr-1.5" />Disable Preview Mode</>) : (<><FontAwesomeIcon icon={faEye} className="mr-1.5" />Enable Preview Mode</>)}
-                        </div>
-                        <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={this.handleSaveFormOption}>
-                          <FontAwesomeIcon icon={faFileExport} className="mr-1.5" />Save Form
-                        </div>
-                        <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={()=>this.toggleSideBarMenu("VIEW-SAVED-FORMS-OPTION")}>
-                          <FontAwesomeIcon icon={faBook} className="mr-1.5" />View Saved Forms
-                        </div>
-                      </div>
+            {/* studio navbar */}
+            <div className="w-screen p-1 flex justify-between items-center">
+              <div className="text-3xl text-blue-900 m-1 inline-block font-semibold">Lexicon Studio</div>
+              <div className="flex items-center">
+                {!this.state.previewMode && (
+                    <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={()=>this.toggleSideBarMenu("CREATE-CARD-OPTION")}>
+                      <FontAwesomeIcon icon={faPlusCircle} className="mr-1.5" />Create
                     </div>
-                    {/* studio navbar */}
-                    {/* card display section */}
-                    <div className="flex flex-column items-center mt-4">
-                      {/* meta column */}
-                      <div className="w-1/2 mx-2">
-                        <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
-                          <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Meta
-                        </div>
-                        {this.state.metaList.map((item, index) => (this.conditionalCardRender(item, index)))}
-                      </div>
-                      {/* meta column */}
-                      {/* inputs column */}
-                      <div className="w-1/2 mx-2">
-                        <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
-                          <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Inputs
-                        </div>
-                        {this.state.inputsList.map((item, index) => (this.conditionalCardRender(item, index)))}
-                        {/* points card total score */}
-                        {/* {(this.state.displayTotalInputScore && this.state.previewMode) ?
-                           (<>
-                           <div className="flex justify-between p-1 mb-2 text-xl border-2 px-2 rounded-lg border-blue-900">
-                           <div className="text-blue-900 font-normal">Result:</div>
-                           <div className="text-blue-900">{this.state.totalInputScore}</div>
-                           </div>
-                           </>)
-                           : (<></>)} */}
-                        {/* points card total score */}
-                      </div>
-                      {/* input column */}
-                      {/* outputs column */}
-                      <div className="w-1/2 mx-2">
-                        <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
-                          <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Outputs
-                        </div>
-                        {this.state.outputsList.map((item, index) => (this.conditionalCardRender(item, index)))}
-                      </div>
-                      {/* outputs column */}
-                    </div>
-                    {/* card display section */}
-                  </div>
-                </>
+                )}
+                <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={this.togglePreviewMode}>
+                  {this.state.previewMode ? (<><FontAwesomeIcon icon={faEyeSlash} className="mr-1.5" />Disable Preview Mode</>) : (<><FontAwesomeIcon icon={faEye} className="mr-1.5" />Enable Preview Mode</>)}
+                </div>
+                <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={this.handleSaveFormOption}>
+                  <FontAwesomeIcon icon={faFileExport} className="mr-1.5" />Save Form
+                </div>
+                <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={()=>this.toggleSideBarMenu("VIEW-SAVED-FORMS-OPTION")}>
+                  <FontAwesomeIcon icon={faBook} className="mr-1.5" />View Saved Forms
+                </div>
+              </div>
+            </div>
+            {/* studio navbar */}
+            {/* card display section */}
+            <div className="flex flex-column items-center mt-4">
+              {/* meta column */}
+              <div className="w-1/2 mx-2">
+                <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
+                  <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Meta
+                </div>
+                {this.state.metaList.map((item, index) => (this.conditionalCardRender(item, index)))}
+              </div>
+              {/* meta column */}
+              {/* inputs column */}
+              <div className="w-1/2 mx-2">
+                <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
+                  <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Inputs
+                </div>
+                {this.state.inputsList.map((item, index) => (this.conditionalCardRender(item, index)))}
+                {/* points card total score */}
+                {/* {(this.state.displayTotalInputScore && this.state.previewMode) ?
+                   (<>
+                   <div className="flex justify-between p-1 mb-2 text-xl border-2 px-2 rounded-lg border-blue-900">
+                   <div className="text-blue-900 font-normal">Result:</div>
+                   <div className="text-blue-900">{this.state.totalInputScore}</div>
+                   </div>
+                   </>)
+                   : (<></>)} */}
+                {/* points card total score */}
+              </div>
+              {/* input column */}
+              {/* outputs column */}
+              <div className="w-1/2 mx-2">
+                <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
+                  <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Outputs
+                </div>
+                {this.state.outputsList.map((item, index) => (this.conditionalCardRender(item, index)))}
+              </div>
+              {/* outputs column */}
+            </div>
+            {/* card display section */}
+          </div>
+        </>
                );
     }
 }

@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 function NumericalOutputCardPreviewMode(props) {
   return (
@@ -17,12 +17,12 @@ function NumericalOutputCardPreviewMode(props) {
         {/* card result area */}
         <div className="flex text-blue-900 font-semibold border-1 py-0.5 px-2 rounded justify-between border-blue-900">
           <div>Result:</div>
-          <div>{props.cardElement.totalScore}</div>
+          <div>{ JSON.stringify( eval( props.cardElement.formula ) ) }</div>
         </div>
         {/* card result area */}
       </div>
     </>
-  )
+  );
 }
 
-export default NumericalOutputCardPreviewMode
+export default NumericalOutputCardPreviewMode;

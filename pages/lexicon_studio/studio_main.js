@@ -1003,9 +1003,9 @@ class studioMain extends Component {
                     </div>
                     {/* studio navbar */}
                     {/* card display section */}
-                    <div className="flex flex-row">
+                    <div className="flex flex-column items-center mt-4">
                       {/* meta column */}
-                      <div className="w-1/3 mx-2">
+                      <div className="w-1/2 mx-2">
                         <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
                           <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Meta
                         </div>
@@ -1013,7 +1013,7 @@ class studioMain extends Component {
                       </div>
                       {/* meta column */}
                       {/* inputs column */}
-                      <div className="w-1/3 mx-2">
+                      <div className="w-1/2 mx-2">
                         <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
                           <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Inputs
                         </div>
@@ -1031,7 +1031,7 @@ class studioMain extends Component {
                       </div>
                       {/* input column */}
                       {/* outputs column */}
-                      <div className="w-1/3 mx-2">
+                      <div className="w-1/2 mx-2">
                         <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
                           <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Outputs
                         </div>

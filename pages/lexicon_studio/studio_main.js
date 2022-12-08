@@ -32,6 +32,7 @@ class studioMain extends Component {
             inputsList: [],
             outputsList: [],
             previewMode: false,
+            formulaValues: {},
             cardDeleteConfirmation: false,
             cardDeleteModalDisplay: false,
             objectToBeDeleted: null,
@@ -65,6 +66,12 @@ class studioMain extends Component {
         this.handleViewSavedFormSelectionRequest = this.handleViewSavedFormSelectionRequest.bind(this);
         this.deleteSavedFormRequest = this.deleteSavedFormRequest.bind(this);
         this.fetchSavedForm = this.fetchSavedForm.bind(this);
+        this.capturePreviewFieldStateChange = this.capturePreviewFieldStateChange.bind(this);
+    }
+
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log(this.state.inputsList);
     }
 
     // method for updating the total score for input cards
@@ -248,6 +255,7 @@ class studioMain extends Component {
                 componentElement.outputDescription = '';
                 componentElement.editMode = false;
                 componentElement.totalScore = 100;
+                componentElement.parentState = this.state;
                 componentElement.formula = "1+1";
                 this.setState({ outputsList: [...this.state.outputsList, componentElement] });
                 break;
@@ -256,11 +264,16 @@ class studioMain extends Component {
         }
     }
 
-
     capturePreviewFieldStateChange(stateObject) {
         switch(stateObject.type) {
             case "input":
+            const stateObjectToBeUpdatedIndex_m = this.state.inputsList.findIndex(item => item.uuid == stateObject.uuid);
+            const updatingCardObject = this.state.inputsList[stateObjectToBeUpdatedIndex_m];
+            const updatingCardName = updatingCardObject.questionText;
+            console.log(updatingCardName);
             console.log("Input changed");
+            this.state.formulaValues[updatingCardName] = stateObject.value;
+            console.warn(this.state.formulaValues);
             break;
         default:
             console.warn("Unknow Preview Field change case.");

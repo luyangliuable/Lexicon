@@ -12,7 +12,8 @@ function NumericalOutputCard(props) {
         outputDescription: props.cardElement.outputDescription,
         editMode: props.cardElement.editMode,
         totalScore: props.cardElement.totalScore,
-        formula: props.cardElement.formula
+        formula: props.cardElement.formula ? props.cardElement.formula : ""
+
     };
     const [state, updateNumericalOutputCard] = useReducer(
         handleNumericalOutputCardChanges,
@@ -20,108 +21,107 @@ function NumericalOutputCard(props) {
     );
 
     useEffect(() => {
-        console.log(state);
-        // console.log(props.cardElement);
-    } , []);
+        console.log(props.cardElement.parentState.inputsList);
+    } , [props]);
 
-function handleNumericalOutputCardChanges(state, action) {
-    switch (action.type) {
-    case "HEADING":
-        const updatedState_h = {
-            type: state.type,
-            name: state.name,
-            uuid: state.uuid,
-            outputHeading: action.value,
-            previewModeDisplay: state.previewModeDisplay,
-            outputDescription: state.outputDescription,
-            editMode: state.editMode,
-            totalScore: state.totalScore,
-        };
-        return updatedState_h;
-    case "PREVIEW_MODE":
-        const updatedState_p = {
-            type: state.type,
-            name: state.name,
-            uuid: state.uuid,
-            outputHeading: state.outputHeading,
-            previewModeDisplay: !state.previewModeDisplay,
-            outputDescription: state.outputDescription,
-            editMode: state.editMode,
-            totalScore: state.totalScore,
-        };
-        return updatedState_p;
-    case "DESCRIPTION":
-        const updatedState_d = {
-            type: state.type,
-            name: state.name,
-            uuid: state.uuid,
-            outputHeading: state.outputHeading,
-            previewModeDisplay: state.previewModeDisplay,
-            outputDescription: action.value,
-            editMode: state.editMode,
-            totalScore: state.totalScore,
-        };
-        return updatedState_d;
-    case "EDIT":
-        const updatedState_e = {
-            type: state.type,
-            name: state.name,
-            uuid: state.uuid,
-            outputHeading: state.outputHeading,
-            previewModeDisplay: state.previewModeDisplay,
-            outputDescription: state.outputDescription,
-            editMode: !state.editMode,
-            totalScore: state.totalScore,
-        };
-        return updatedState_e;
-    case "CLEAR":
-        const updatedState_clear = {
-            type: state.type,
-            name: state.name,
-            uuid: state.uuid,
-            outputHeading: "",
-            previewModeDisplay: state.previewModeDisplay,
-            outputDescription: "",
-            editMode: state.editMode,
-        };
-        return updatedState_clear;
+    function handleNumericalOutputCardChanges(state, action) {
+        switch (action.type) {
+        case "HEADING":
+            const updatedState_h = {
+                type: state.type,
+                name: state.name,
+                uuid: state.uuid,
+                outputHeading: action.value,
+                previewModeDisplay: state.previewModeDisplay,
+                outputDescription: state.outputDescription,
+                editMode: state.editMode,
+                totalScore: state.totalScore,
+            };
+            return updatedState_h;
+        case "PREVIEW_MODE":
+            const updatedState_p = {
+                type: state.type,
+                name: state.name,
+                uuid: state.uuid,
+                outputHeading: state.outputHeading,
+                previewModeDisplay: !state.previewModeDisplay,
+                outputDescription: state.outputDescription,
+                editMode: state.editMode,
+                totalScore: state.totalScore,
+            };
+            return updatedState_p;
+        case "DESCRIPTION":
+            const updatedState_d = {
+                type: state.type,
+                name: state.name,
+                uuid: state.uuid,
+                outputHeading: state.outputHeading,
+                previewModeDisplay: state.previewModeDisplay,
+                outputDescription: action.value,
+                editMode: state.editMode,
+                totalScore: state.totalScore,
+            };
+            return updatedState_d;
+        case "EDIT":
+            const updatedState_e = {
+                type: state.type,
+                name: state.name,
+                uuid: state.uuid,
+                outputHeading: state.outputHeading,
+                previewModeDisplay: state.previewModeDisplay,
+                outputDescription: state.outputDescription,
+                editMode: !state.editMode,
+                totalScore: state.totalScore,
+            };
+            return updatedState_e;
+        case "CLEAR":
+            const updatedState_clear = {
+                type: state.type,
+                name: state.name,
+                uuid: state.uuid,
+                outputHeading: "",
+                previewModeDisplay: state.previewModeDisplay,
+                outputDescription: "",
+                editMode: state.editMode,
+            };
+            return updatedState_clear;
+        }
     }
-}
 
-// function for handling the display of the preview button
-function handlePreviewButtonDisplay(state) {
-    return state.editMode ? (
-        <>
-          {state.previewModeDisplay ? (
-              <FontAwesomeIcon
-                icon={faEye}
-                onClick={() => updateNumericalOutputCard({ type: "PREVIEW_MODE" })}
-                className="text-xl my-1 cursor-pointer text-blue-900"
-                title="Preview mode enabled"
-              ></FontAwesomeIcon>
-          ) : (
-              <FontAwesomeIcon
-                icon={faEyeSlash}
-                onClick={() => updateNumericalOutputCard({ type: "PREVIEW_MODE" })}
-                className="text-xl my-1 cursor-pointer text-blue-900"
-                title="Preview mode disabled"
-              ></FontAwesomeIcon>
-          )}
-        </>
-    ) : (
-        <>
-          {
-              state.previewModeDisplay ? (
-              <FontAwesomeIcon
-                icon={faEye}
-                className="text-xl my-1 cursor-pointer text-blue-900 cursor-not-allowed"
-              ></FontAwesomeIcon>
-          ) : (
+    // function for handling the display of the preview button
+    function handlePreviewButtonDisplay(state) {
+        return state.editMode ? (
+            <>
+              {state.previewModeDisplay ? (
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    onClick={() => updateNumericalOutputCard({ type: "PREVIEW_MODE" })}
+                    className="text-xl my-1 cursor-pointer text-blue-900"
+                    title="Preview mode enabled"
+                  ></FontAwesomeIcon>
+              ) : (
                   <FontAwesomeIcon
                     icon={faEyeSlash}
-                    className="text-xl my-1 cursor-pointer text-blue-900 cursor-not-allowed"
+                    onClick={() => updateNumericalOutputCard({ type: "PREVIEW_MODE" })}
+                    className="text-xl my-1 cursor-pointer text-blue-900"
+                    title="Preview mode disabled"
                   ></FontAwesomeIcon>
               )}
+            </>
+        ) : (
+            <>
+              {
+                  state.previewModeDisplay ? (
+                      <FontAwesomeIcon
+                        icon={faEye}
+                        className="text-xl my-1 cursor-pointer text-blue-900 cursor-not-allowed"
+                      ></FontAwesomeIcon>
+                  ) : (
+                      <FontAwesomeIcon
+                        icon={faEyeSlash}
+                        className="text-xl my-1 cursor-pointer text-blue-900 cursor-not-allowed"
+                      ></FontAwesomeIcon>
+                  )}
             </>
         );
     }
@@ -129,6 +129,14 @@ function handlePreviewButtonDisplay(state) {
     // function for sending the changes of the reference card to the parent component
     function saveChanges(state) {
         props.stateChangeMethod(state);
+    }
+
+    function addValueToEquation(value) {
+        // state.formula += "value";
+        const formulaField = document.getElementById("formula");
+        formulaField.value += `[${value}]`;
+        state.formula=formulaField.value;
+        console.log(state.formula);
     }
 
     return (
@@ -144,41 +152,41 @@ function handlePreviewButtonDisplay(state) {
               <div className="w-1/2 flex justify-around">
                 {
                     state.editMode ? (
-                    <>
-                      <div
-                        className="inline-block w-5/12 text-center border-2 my-1 border-blue-900 rounded hover:bg-blue-900 hover:text-white cursor-pointer"
-                        onClick={() => {
-                            updateNumericalOutputCard({ type: "CLEAR" });
-                        }}
-                      >
-                        Clear
-                      </div>
-                      <div
-                        className="inline-block w-5/12 text-center border-2 border-blue-900 my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer"
-                        onClick={() => {
-                            updateNumericalOutputCard({ type: "EDIT" }),
-                            saveChanges(state);
-                        }}
-                      >
-                        Done
-                      </div>
-                    </>
-                ) : (
-                    <>
-                      <div
-                        className="inline-block w-5/12 text-center border-2 border-blue-900 my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer"
-                        onClick={() => updateNumericalOutputCard({ type: "EDIT" })}
-                      >
-                        Edit
-                      </div>
-                      <div
-                        className="inline-block w-5/12 text-center border-2 border-red-500 my-1 rounded hover:bg-red-500 hover:text-white cursor-pointer"
-                        onClick={() => props.deleteMethod(state)}
-                      >
-                        Delete
-                      </div>
-                    </>
-                )}
+                        <>
+                          <div
+                            className="inline-block w-5/12 text-center border-2 my-1 border-blue-900 rounded hover:bg-blue-900 hover:text-white cursor-pointer"
+                            onClick={() => {
+                                updateNumericalOutputCard({ type: "CLEAR" });
+                            }}
+                          >
+                            Clear
+                          </div>
+                          <div
+                            className="inline-block w-5/12 text-center border-2 border-blue-900 my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer"
+                            onClick={() => {
+                                updateNumericalOutputCard({ type: "EDIT" }),
+                                saveChanges(state);
+                            }}
+                          >
+                            Done
+                          </div>
+                        </>
+                    ) : (
+                        <>
+                          <div
+                            className="inline-block w-5/12 text-center border-2 border-blue-900 my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer"
+                            onClick={() => updateNumericalOutputCard({ type: "EDIT" })}
+                          >
+                            Edit
+                          </div>
+                          <div
+                            className="inline-block w-5/12 text-center border-2 border-red-500 my-1 rounded hover:bg-red-500 hover:text-white cursor-pointer"
+                            onClick={() => props.deleteMethod(state)}
+                          >
+                            Delete
+                          </div>
+                        </>
+                    )}
               </div>
               {/* Edit / Delete Buttons */}
             </div>
@@ -224,17 +232,36 @@ function handlePreviewButtonDisplay(state) {
                   })
               }
             ></textarea>
+
+            {/* { */}
+            {/*     props.parentState.cardElement.avalaibleVariables && props.parentState.cardElement.avalaibleVariables.map((item) => { */}
+            {/*         return ( */}
+            {/*             <div onClick={(e) => addValueToEquation(item.questionText)} className="inline-block w-5/12 bg-gray-100 text-center border-2 border-blue-900 my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer"> */}
+            {/*         { item.questionText } */}
+            {/*         </div> */}
+            {/*         ); */}
+            {/*     }) */}
+            {/* } */}
+
             <textarea
+              id="formula"
               className={
                   state.editMode
                       ? "h-20 w-full border p-1.5 border-gray-300 rounded"
                       : "h-20 w-full border p-1.5 border-gray-300 rounded cursor-not-allowed bg-gray-100"
               }
+              onChange={(e) => {
+                  state.formula=e.target.value;
+                  console.log(state.formula);
+              }}
               placeholder="Equation"
               readOnly={!state.editMode}
-              value={state.formula}
+              /* value={state.formula} */
             ></textarea>
             {/* card textarea row */}
+            {
+                JSON.stringify(props)
+            }
           </div>
         </>
     );

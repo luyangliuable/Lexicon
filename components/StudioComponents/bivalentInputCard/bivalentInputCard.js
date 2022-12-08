@@ -119,7 +119,7 @@ function BivalentInputCard(props) {
                 <div
                   className="inline-block w-5/12 text-center border-2 my-1 border-blue-900 rounded hover:bg-blue-900 hover:text-white cursor-pointer"
                   onClick={() => {
-                    updateBivalentInputCard({ type: "CLEAR" })
+                      updateBivalentInputCard({ type: "CLEAR" });
                   }}
                 >
                   Clear
@@ -127,8 +127,8 @@ function BivalentInputCard(props) {
                 <div
                   className="inline-block w-5/12 text-center border-2 border-blue-900 my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer"
                   onClick={() => {
-                    updateBivalentInputCard({ type: "EDIT" })
-                    saveChanges(state)
+                      updateBivalentInputCard({ type: "EDIT" });
+                      saveChanges(state);
                   }}
                 >
                   Done

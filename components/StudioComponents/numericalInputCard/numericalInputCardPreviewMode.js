@@ -31,10 +31,13 @@ function NumericalInputCardPreviewMode(props) {
                   min={props.cardElement.minInput}
                   max={props.cardElement.maxInput}
                   onChange={(e) => {
-                      console.log(e.target.value);
+                      /* console.log(e.target.value); */
 
                       const res = {
-                          type: "input"
+                          type: "input",
+                          valueType: "number",
+                          value: e.target.value,
+                          uuid: props.cardElement.uuid
                       };
 
                       props.stateChangeMethod(res);

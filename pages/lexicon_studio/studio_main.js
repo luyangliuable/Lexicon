@@ -71,7 +71,11 @@ class studioMain extends Component {
 
 
     componentDidUpdate(prevProps, prevState) {
-        console.log(this.state.inputsList);
+
+        // For some reason when the props (new inputs are added) the child elements does not update its state with new props.
+        for (let output of this.state.outputsList) {
+            output.availableVariables = this.state.inputsList;
+        }
     }
 
     // method for updating the total score for input cards
@@ -255,7 +259,7 @@ class studioMain extends Component {
                 componentElement.outputDescription = '';
                 componentElement.editMode = false;
                 componentElement.totalScore = 100;
-                componentElement.parentState = this.state;
+                componentElement.availableVariables = this.state.inputsList;
                 componentElement.formula = "1+1";
                 this.setState({ outputsList: [...this.state.outputsList, componentElement] });
                 break;

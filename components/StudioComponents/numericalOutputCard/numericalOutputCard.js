@@ -21,7 +21,7 @@ function NumericalOutputCard(props) {
     );
 
     useEffect(() => {
-        console.log(props.cardElement.parentState.inputsList);
+        console.log(props.cardElement.availableVariables);
     } , [props]);
 
     function handleNumericalOutputCardChanges(state, action) {
@@ -233,15 +233,15 @@ function NumericalOutputCard(props) {
               }
             ></textarea>
 
-            {/* { */}
-            {/*     props.parentState.cardElement.avalaibleVariables && props.parentState.cardElement.avalaibleVariables.map((item) => { */}
-            {/*         return ( */}
-            {/*             <div onClick={(e) => addValueToEquation(item.questionText)} className="inline-block w-5/12 bg-gray-100 text-center border-2 border-blue-900 my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer"> */}
-            {/*         { item.questionText } */}
-            {/*         </div> */}
-            {/*         ); */}
-            {/*     }) */}
-            {/* } */}
+            {
+                props.cardElement.availableVariables && props.cardElement.availableVariables.map((item) => {
+                    return (
+                        <div onClick={(e) => addValueToEquation(item.questionText)} className="inline-block w-5/12 bg-gray-100 text-center border-2 border-blue-900 my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer">
+                    { item.questionText }
+                    </div>
+                    );
+                })
+            }
 
             <textarea
               id="formula"
@@ -259,9 +259,6 @@ function NumericalOutputCard(props) {
               /* value={state.formula} */
             ></textarea>
             {/* card textarea row */}
-            {
-                JSON.stringify(props)
-            }
           </div>
         </>
     );

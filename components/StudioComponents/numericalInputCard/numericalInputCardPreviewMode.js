@@ -30,8 +30,8 @@ function NumericalInputCardPreviewMode(props) {
                   type="number"
                   min={props.cardElement.minInput}
                   max={props.cardElement.maxInput}
+                  value={props.cardElement.value}
                   onChange={(e) => {
-                      /* console.log(e.target.value); */
 
                       const res = {
                           type: "input",

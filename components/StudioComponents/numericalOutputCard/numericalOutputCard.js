@@ -12,7 +12,7 @@ function NumericalOutputCard(props) {
         outputDescription: props.cardElement.outputDescription,
         editMode: props.cardElement.editMode,
         totalScore: props.cardElement.totalScore,
-        formula: props.cardElement.formula ? props.cardElement.formula : ""
+        formula: props.cardElement.formula ? props.cardElement.formula : ''
 
     };
     const [state, updateNumericalOutputCard] = useReducer(
@@ -21,7 +21,6 @@ function NumericalOutputCard(props) {
     );
 
     useEffect(() => {
-        console.log(props.cardElement.availableVariables);
     } , [props]);
 
     function handleNumericalOutputCardChanges(state, action) {
@@ -136,7 +135,6 @@ function NumericalOutputCard(props) {
         const formulaField = document.getElementById("formula");
         formulaField.value += `[${value}]`;
         state.formula=formulaField.value;
-        console.log(state.formula);
     }
 
     return (
@@ -252,11 +250,10 @@ function NumericalOutputCard(props) {
               }
               onChange={(e) => {
                   state.formula=e.target.value;
-                  console.log(state.formula);
               }}
               placeholder="Equation"
               readOnly={!state.editMode}
-              /* value={state.formula} */
+              value={state.formula}
             ></textarea>
             {/* card textarea row */}
           </div>

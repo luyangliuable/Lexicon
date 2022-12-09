@@ -228,6 +228,7 @@ class studioMain extends Component {
                 // Numerical Input Card
             case 'NumericalInput':
                 componentElement.questionText = '';
+                componentElement.value = 0;
                 componentElement.previewModeDisplay = true;
                 componentElement.minInput = Number.NaN;
                 componentElement.maxInput = Number.NaN;
@@ -258,9 +259,9 @@ class studioMain extends Component {
                 componentElement.previewModeDisplay = true;
                 componentElement.outputDescription = '';
                 componentElement.editMode = false;
-                componentElement.totalScore = 100;
+                componentElement.totalScore = 0;
                 componentElement.availableVariables = this.state.inputsList;
-                componentElement.formula = "1+1";
+                componentElement.formula =  '';
                 this.setState({ outputsList: [...this.state.outputsList, componentElement] });
                 break;
             }
@@ -274,10 +275,13 @@ class studioMain extends Component {
             const stateObjectToBeUpdatedIndex_m = this.state.inputsList.findIndex(item => item.uuid == stateObject.uuid);
             const updatingCardObject = this.state.inputsList[stateObjectToBeUpdatedIndex_m];
             const updatingCardName = updatingCardObject.questionText;
-            console.log(updatingCardName);
-            console.log("Input changed");
             this.state.formulaValues[updatingCardName] = stateObject.value;
-            console.warn(this.state.formulaValues);
+
+            this.setState(prevState => {
+                let inputsListLocalCopy = prevState.inputsList;
+                inputsListLocalCopy[stateObjectToBeUpdatedIndex_m].value = stateObject.value;
+                return { inputsList: inputsListLocalCopy };
+            });
             break;
         default:
             console.warn("Unknow Preview Field change case.");
@@ -382,6 +386,8 @@ class studioMain extends Component {
                     outputListLocalCopy[stateObjectToBeUpdatedIndex_o].outputDescription = stateObject.outputDescription;
                     outputListLocalCopy[stateObjectToBeUpdatedIndex_o].previewModeDisplay = stateObject.previewModeDisplay;
                     outputListLocalCopy[stateObjectToBeUpdatedIndex_o].totalScore = stateObject.totalScore;
+                    outputListLocalCopy[stateObjectToBeUpdatedIndex_o].formula = stateObject.formula;
+                    outputListLocalCopy[stateObjectToBeUpdatedIndex_o].availableVariables = stateObject.availableVariables;
                     return { outputsList: outputListLocalCopy };
                 });
                 break;
@@ -843,7 +849,7 @@ class studioMain extends Component {
                 });
                 alert('The form has been deleted successfully !');
             }
-        }).catch(err => {console.log(err);});
+        }).catch(err => {console.warn(err);});
     }
 
     // method for handling the fetching a saved form request
@@ -868,7 +874,7 @@ class studioMain extends Component {
                         viewSavedFormsMenu: false
                     });
                 }
-            }).catch(err => console.log(err));
+            }).catch(err => console.warn(err));
 
         } else {
             alert('Please enable preview mode to view a saved form !');

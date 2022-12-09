@@ -1,6 +1,6 @@
-import Footer from "../../components/Footer/Footer"
-import NavBar from "../../components/Navbar/index"
-import StudioMain from "./studio_main"
+import Footer from "../../components/Footer/Footer";
+import NavBar from "../../components/Navbar/index";
+import StudioMain from "./studio_main";
 
 export default function index() {
   return (
@@ -11,5 +11,5 @@ export default function index() {
       </div>
       {/* <Footer></Footer> */}
     </div>
-  )
+  );
 }

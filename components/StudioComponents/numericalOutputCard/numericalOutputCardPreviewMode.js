@@ -52,6 +52,9 @@ function NumericalOutputCardPreviewMode(props) {
             formula = formula.replace(/\[.*?\]/, matches[i]);
         }
 
+        // Replace symbols with other symbols
+        formula = formula.replace(/\^/g, '**'); // Power
+
         return formula;
     };
 

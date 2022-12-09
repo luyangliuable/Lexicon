@@ -126,16 +126,21 @@ function NumericalOutputCard(props) {
     }
 
     // function for sending the changes of the reference card to the parent component
-    function saveChanges(state) {
+    const saveChanges = (state) => {
         props.stateChangeMethod(state);
-    }
+    };
 
-    function addValueToEquation(value) {
-        // state.formula += "value";
+    const addValueToFormula = (value) => {
         const formulaField = document.getElementById("formula");
-        formulaField.value += `[${value}]`;
+        formulaField.value += `${value}`;
         state.formula=formulaField.value;
-    }
+    };
+
+    const clearFormula = (value) => {
+        const formulaField = document.getElementById("formula");
+        formulaField.value = '';
+        state.formula=formulaField.value;
+    };
 
     return (
         <>
@@ -232,14 +237,30 @@ function NumericalOutputCard(props) {
             ></textarea>
 
             {
+                state.editMode ? ([
+                        <p>Math operators</p>,
+                        <button onClick={(e) => addValueToFormula('+')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>+</button>,
+                        <button onClick={(e) => addValueToFormula('-')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>-</button>,
+                        <button onClick={(e) => addValueToFormula('^')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>^</button>,
+                        <button onClick={(e) => addValueToFormula('Maths.sqrt(')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>sqrt</button>,
+                        <button onClick={(e) => clearFormula()} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>clear</button>
+                ]) : ""
+            }
+
+
+            {
+                props.cardElement.availableVariables && (<p>Variables</p>)
+            }
+            {
                 props.cardElement.availableVariables && props.cardElement.availableVariables.map((item) => {
                     return (
-                        <div onClick={(e) => addValueToEquation(item.questionText)} className="inline-block w-5/12 bg-gray-100 text-center border-2 border-blue-900 my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer">
-                    { item.questionText }
-                    </div>
+                        <div onClick={(e) => addValueToFormula(`[${ item.questionText }]`)} className="inline-block w-5/12 bg-gray-100 text-center border-2 border-blue-900 my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer">
+                          { item.questionText }
+                        </div>
                     );
                 })
             }
+
 
             <textarea
               id="formula"

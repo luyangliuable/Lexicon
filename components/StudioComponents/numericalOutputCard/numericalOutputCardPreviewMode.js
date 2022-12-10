@@ -11,6 +11,7 @@ function NumericalOutputCardPreviewMode(props) {
          *
          * Returns: An array of matches containing variable names from formula.
          */
+
         return formula.match(/(?<=\[).+?(?=\])/g);
     };
 
@@ -27,7 +28,7 @@ function NumericalOutputCardPreviewMode(props) {
          */
         const matches = [];
 
-        variables.forEach(( item, index ) => {
+        variables && variables.forEach(( item, index ) => {
             for (var value of cardVariables) {
                 if ( value.questionText == item ) {
                     matches.push(value.value);
@@ -48,9 +49,13 @@ function NumericalOutputCardPreviewMode(props) {
          *
          * Returns: New formula without variables
          */
+
         for (let i = 0; i < matches.length; i++) {
-            formula = formula.replace(/\[.*?\]/, matches[i]);
+            formula = formula.replace(/\[.*?\]/, JSON.stringify( matches[i] ));
         }
+
+        // Remove " symbol
+        formula = formula.replace(/"/g, '');
 
         // Replace symbols with other symbols
         formula = formula.replace(/\^/g, '**'); // Power
@@ -70,17 +75,17 @@ function NumericalOutputCardPreviewMode(props) {
         try {
             const variables = matchVariablesFromFormula(formula);
 
-            // const matches = [];
-            // const matches = variables.filter(( item, index ) => {
-            //     for (var value of props.cardElement.availableVariables) {
-            //         if ( value.questionText == item ) {
-            //             return true;
-            //         }
-            //     }
-            // });
-
             const matches = getValueOfVariables(variables, props.cardElement.availableVariables);
             formula = replaceVariableWithValues(matches, formula);
+
+            console.log(formula );
+            const sqrt = Math.sqrt;
+            const sum = (valueArray) => {
+                return valueArray.reduce((accumulator, currentValue) => {
+                    console.log(accumulator);
+                    return accumulator + currentValue;
+                }, 0);
+            };
 
             return eval( formula );
         } catch (e) {

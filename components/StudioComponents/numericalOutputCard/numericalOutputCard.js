@@ -242,7 +242,7 @@ function NumericalOutputCard(props) {
                         <button onClick={(e) => addValueToFormula('+')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>+</button>,
                         <button onClick={(e) => addValueToFormula('-')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>-</button>,
                         <button onClick={(e) => addValueToFormula('^')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>^</button>,
-                        <button onClick={(e) => addValueToFormula('Maths.sqrt(')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>sqrt</button>,
+                        <button onClick={(e) => addValueToFormula('sqrt(')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>sqrt</button>,
                         <button onClick={(e) => clearFormula()} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>clear</button>
                 ]) : ""
             }

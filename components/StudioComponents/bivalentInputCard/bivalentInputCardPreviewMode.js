@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useReducer, useEffect } from "react";
 
 function BivalentInputCardPreviewMode(props) {
 
@@ -10,28 +10,56 @@ function BivalentInputCardPreviewMode(props) {
         switch (callingButton) {
         case "YES":
             switch (response) {
-            case null:
-                return notSelected;
             case true:
                 return selected;
+                break;
             case false:
                 return notSelected;
+                break;
+            default:
+                return notSelected;
+                break;
             }
         case "NO":
             switch (response) {
-            case null:
-                return notSelected;
             case true:
                 return notSelected;
+                break;
             case false:
                 return selected;
+                break;
+            default:
+                return notSelected;
+                break;
             }
         }
     };
 
-    function noButtonStyling(response) {}
 
-    const [response, recordResponse] = useState(null);
+    function noButtonStyling(response) {}
+    // const [response, recordResponse] = useState(null);
+
+
+    const reducer = (state, action) => {
+
+        const res = {
+            type: "input",
+            valueType: "number",
+            value: action.selection,
+            uuid: props.cardElement.uuid
+        };
+
+        props.stateChangeMethod(res);
+
+        // props.cardElement.value = action.selection;
+        return action.selection;
+    };
+
+    const [response, recordResponse] = useReducer(reducer, {selection: null});
+
+    useEffect(() => {
+        // console.log(response);
+    }, [response]);
 
     return (
         <>
@@ -44,15 +72,17 @@ function BivalentInputCardPreviewMode(props) {
             {/* response row */}
             <div className="w-full flex justify-around h-8 my-2.5">
               <div
-                className={responseButtonStyling(response, "YES")}
-                onClick={() => recordResponse(true)}
+                className={
+                    responseButtonStyling(response, "YES")
+                }
+                onClick={() => recordResponse({selection: true })}
               >
                 {" "}
                 Yes{" "}
               </div>
               <div
                 className={responseButtonStyling(response, "NO")}
-                onClick={() => recordResponse(false)}
+                onClick={() => recordResponse({selection: false })}
               >
                 {" "}
                 No{" "}

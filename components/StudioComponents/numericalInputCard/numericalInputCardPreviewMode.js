@@ -2,12 +2,10 @@ import React, { useState, useEffect } from "react";
 import { DropdownButton, Dropdown } from "react-bootstrap";
 
 function NumericalInputCardPreviewMode(props) {
-    const [dropDownMenuOptionSelected, setdropDownMenuOptionSelected] =
-          useState("");
+    const [dropDownMenuOptionSelected, setdropDownMenuOptionSelected] = useState("");
 
     useEffect(() => {
         console.log(JSON.stringify( props ));
-        // console.log(prop.stateChangeMethod);
     });
 
     return (

@@ -6,104 +6,123 @@ import Footer from "./Footer/index";
 import { iView } from "./types";
 
 
-const View= () => {
+const View = () => {
+    const INITNUMBER = Math.NaN;
+    const NUMBEROFSLIDES = 4;
+
     const [ objectState, setObjectState ] = useState({
-        scrolled: 0,
-        navbarHeight: 1000,
-        heroComputedHeight: 1000,
-        slideComputedHeight: [ 1000, 1000, 1000, 1000 ],
-        slideOpacity: [0, 0],
-        slideLeft: [0, 0],
+        scrolled: INITNUMBER,
+        navbarHeight: INITNUMBER,
+        heroComputedHeight: INITNUMBER,
+        slideComputedHeight: Array(NUMBEROFSLIDES).fill(INITNUMBER),
+        slideOpacity: Array(NUMBEROFSLIDES).fill(0),
+        slideLeft: Array(NUMBEROFSLIDES).fill(0),
+        slideOffsets: [.5, .7, .8, .85], // This is optional so ignore for now.
         detached: false
     });
 
 
     const computeOpacity = (prev, scrollAmount, whichSlide, offset) => {
+        /*
+         * Computes the opacity of each slide element on landing page based on scroll position.
+         * Parameters:
+         *  prev ({string: any}): previous state
+         *  scrolledAmount (number): scrolled amount
+         *  whichSlide (number): which slide element to compute
+         *  offset (number): abitrary offset
+         *
+         *  Returns (number): The slide opacity based on scroll amount in page.
+         */
         const speed = 250;
-        // const offset = .85;
-        return prev.slideComputedHeight[whichSlide]*offset < scrollAmount ? ( scrollAmount - prev.slideComputedHeight[whichSlide]*offset) / speed : 0;
+        const reachedElementInPage = prev.slideComputedHeight[whichSlide]*offset < scrollAmount;
+        const slideRenderOpacity = ( scrollAmount - prev.slideComputedHeight[whichSlide]*offset) / speed;
+        return reachedElementInPage ? slideRenderOpacity : 0;
     };
 
     const computeLeft = (prev, scrollAmount, whichSlide, offset) => {
+        /*
+         * Computes the left of each slide element on landing page based on scroll position.
+         * Parameters:
+         *  prev ({string: any}): previous state
+         *  scrolledAmount (number): scrolled amount
+         *  whichSlide (number): which slide element to compute
+         *  offset (number): abitrary offset
+         *
+         *  Returns (number): The slide left based on scroll amount in page.
+         */
         const startingLeft = 100;
-        // const offset = .85;
-        return prev.slideComputedHeight[whichSlide]*offset < scrollAmount &&  startingLeft - ( scrollAmount - prev.slideComputedHeight[whichSlide]*offset) >= 0  ? `${ startingLeft -( scrollAmount - prev.slideComputedHeight[whichSlide]*offset) }px` : '0px';
+
+        const reachedElementInPage = prev.slideComputedHeight[whichSlide]*offset  < scrollAmount;
+        const scrolledAnimationFinished = startingLeft - ( scrollAmount - prev.slideComputedHeight[whichSlide]*offset) >= 0;
+        const slideRenderLeftAmount =  startingLeft - ( scrollAmount - prev.slideComputedHeight[whichSlide]*offset);
+
+        return ( reachedElementInPage && scrolledAnimationFinished ) ? `${slideRenderLeftAmount}px` : '0px';
     };
 
 
-    useEffect(function(e){
-
-        window.addEventListener('scroll', function() {
-            var scrollAmount = window.scrollY;
-
-            var newState = {};
-
-            newState.scrolled = scrollAmount;
-
-            setObjectState(prev => {
-                return {
-                    ...prev,
-                    scrolled: scrollAmount
-                };
-            });
-
-            const navBarHeight = document.getElementsByClassName('navbar')[0].getBoundingClientRect().height;
-
-            setObjectState(prev => {
-                return {
-                    ...prev,
-                    navbarHeight: document.getElementsByClassName('navbar')[0].getBoundingClientRect().height,
-                    slideOpacity: [
-                        computeOpacity(prev, scrollAmount, 0, .5),
-                        computeOpacity(prev, scrollAmount, 1, .7),
-                        computeOpacity(prev, scrollAmount, 2, .8),
-                        computeOpacity(prev, scrollAmount, 3, .85),
-                    ],
-                    slideLeft: [
-                        computeLeft(prev, scrollAmount, 0, .5),
-                        computeLeft(prev, scrollAmount, 1, .7),
-                        computeLeft(prev, scrollAmount, 2, .8),
-                        computeLeft(prev, scrollAmount, 3, .85)
-                    ]
-                };
-            });
+    const updateScrollAmount = (scrollAmount) => {
+        /*
+         * Update scroll amount to state based on scroll
+         *
+         * Parameters:
+         *  scrolledAmount (number): scrolled amount
+         */
+        setObjectState(prev => {
+            return {
+                ...prev,
+                scrolled: scrollAmount
+            };
+        });
+    };
 
 
-            if (scrollAmount > navBarHeight && objectState.detached != true) {
-                document.getElementsByClassName('navbar')[0].classList.add("detached");
+    const computeSlideStyleBasedOnScrollAmount = (scrollAmount) => {
+        /*
+         * compute the slide element on landing page based on the scroll amount.
+         *
+         * Parameters:
+         *  scrolledAmount (number): scrolled amount
+         */
+        setObjectState(prev => {
+            return {
+                ...prev,
+                navbarHeight: document.getElementsByClassName('navbar')[0].getBoundingClientRect().height,
+                slideOpacity: Array(NUMBEROFSLIDES).fill(0).map((_, index) => {
+                    return computeOpacity(prev, scrollAmount, index, objectState.slideOffsets[index]);
+                }),
+                slideLeft: Array(NUMBEROFSLIDES).fill(0).map((_, index) => {
+                    return computeLeft(prev, scrollAmount, index, objectState.slideOffsets[index]);
+                })
+            };
+        });
+    };
 
-                setObjectState(prev => {
-                    return {
-                        ...prev,
-                        detached: true
-                    };
-                });
-
-            } else if (scrollAmount <= navBarHeight)  {
-                document.getElementsByClassName('navbar')[0].classList.remove("detached");
-
-                setObjectState(prev => {
-                    return {
-                        ...prev,
-                        detached: false
-                    };
-                });
-            }
-
-        }, false);
-
+    const computePageElementHeights = () => {
+        /*
+         * Compute the page element heights at the begining.
+         */
         setObjectState(prev => {
             return {
                 ...prev,
                 heroComputedHeight: document.getElementsByClassName('hero')[0].offsetHeight,
-                slideComputedHeight: [
-                    document.getElementById(`image-${ 1 }`).getBoundingClientRect().top,
-                    document.getElementById(`image-${ 2 }`).getBoundingClientRect().top,
-                    document.getElementById(`image-${ 3 }`).getBoundingClientRect().top,
-                    document.getElementById(`image-${ 4 }`).getBoundingClientRect().top
-                ]
+                slideComputedHeight: Array(NUMBEROFSLIDES).fill(0).map((_, index) => {
+                    return document.getElementById(`image-${ index + 1 }`).getBoundingClientRect().top;
+                }),
             };
         });
+    };
+
+    useEffect(function(e){
+
+        window.addEventListener('scroll', function() {
+            const scrollAmount = window.scrollY;
+            const newState = {};
+
+            updateScrollAmount(scrollAmount);
+            computeSlideStyleBasedOnScrollAmount(scrollAmount);
+        }, false);
+
+        computePageElementHeights();
 
     }, []);
 

@@ -201,6 +201,7 @@ class studioMain extends Component {
                 componentElement.questionText = '';
                 componentElement.previewModeDisplay = true;
                 componentElement.editMode = false;
+                componentElement.value = Number.NaN;
                 this.setState({ inputsList: [...this.state.inputsList, componentElement], displayCardAdditionToast: true });
                 break;
 
@@ -208,6 +209,7 @@ class studioMain extends Component {
             case 'SliderInput':
                 componentElement.questionText = '';
                 componentElement.minInput = Number.NaN;
+                componentElement.value = Number.NaN;
                 componentElement.stepInterval = 0;
                 componentElement.maxInput = Number.NaN;
                 componentElement.previewModeDisplay = true;
@@ -222,13 +224,14 @@ class studioMain extends Component {
                 componentElement.maxSelectionVal = 1;
                 componentElement.optionsObject = {};
                 componentElement.editMode = false;
+                componentElement.value = Number.NaN;
                 this.setState({ inputsList: [...this.state.inputsList, componentElement], displayCardAdditionToast: true });
                 break;
 
                 // Numerical Input Card
             case 'NumericalInput':
                 componentElement.questionText = '';
-                componentElement.value = 0;
+                componentElement.value = Number.NaN;
                 componentElement.previewModeDisplay = true;
                 componentElement.minInput = Number.NaN;
                 componentElement.maxInput = Number.NaN;
@@ -282,6 +285,8 @@ class studioMain extends Component {
                 inputsListLocalCopy[stateObjectToBeUpdatedIndex_m].value = stateObject.value;
                 return { inputsList: inputsListLocalCopy };
             });
+
+            console.log(this.state.inputsList);
             break;
         default:
             console.warn("Unknow Preview Field change case.");
@@ -700,15 +705,15 @@ class studioMain extends Component {
         case true:
             switch (cardItem.name) {
             case "SelectInput":
-                return (cardItem.previewModeDisplay ? (<SelectInputCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></SelectInputCardPreviewMode>) : (<></>));
+                return (cardItem.previewModeDisplay ? (<SelectInputCardPreviewMode cardElement={cardItem} stateChangeMethod={this.capturePreviewFieldStateChange} elementIndex={index} key={cardItem.uuid}></SelectInputCardPreviewMode>) : (<></>));
             case "NumericalInput":
                 return (cardItem.previewModeDisplay ? (<NumericalInputCardPreviewMode cardElement={cardItem} stateChangeMethod={this.capturePreviewFieldStateChange} elementIndex={index} key={cardItem.uuid}></NumericalInputCardPreviewMode>) : (<></>));
             case "BivalentInput":
-                return (cardItem.previewModeDisplay ? (<BivalentInputCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></BivalentInputCardPreviewMode>) : (<></>));
+                return (cardItem.previewModeDisplay ? (<BivalentInputCardPreviewMode cardElement={cardItem} stateChangeMethod={this.capturePreviewFieldStateChange} elementIndex={index} key={cardItem.uuid}></BivalentInputCardPreviewMode>) : (<></>));
             case "SliderInput":
-                return (cardItem.previewModeDisplay ? (<SliderInputCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></SliderInputCardPreviewMode>) : (<></>));
+                return (cardItem.previewModeDisplay ? (<SliderInputCardPreviewMode cardElement={cardItem} stateChangeMethod={this.capturePreviewFieldStateChange} elementIndex={index} key={cardItem.uuid}></SliderInputCardPreviewMode>) : (<></>));
             case "PointInput":
-                { !this.state.displayTotalInputScore ? this.setState({ displayTotalInputScore: true }) : null };
+                { !this.state.displayTotalInputScore ? this.setState({ displayTotalInputScore: true }) : nll };
                 return (cardItem.previewModeDisplay ? (<PointInputCardPreviewMode inputCardtotalScoreUpdateMethod={this.updateNumericalOutputCardTotalScore} cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></PointInputCardPreviewMode>) : (<></>));
             case "DescriptionComponent":
                 return (cardItem.previewModeDisplay ? (<DescriptionCardPreviewMode cardElement={cardItem} elementIndex={index} key={cardItem.uuid}></DescriptionCardPreviewMode>) : (<></>));
@@ -1043,7 +1048,7 @@ class studioMain extends Component {
             <div className="flex flex-column items-center mt-4">
               {/* meta column */}
               <div className="w-1/2 mx-2">
-                <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
+                <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
                   <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Meta
                 </div>
                 {this.state.metaList.map((item, index) => (this.conditionalCardRender(item, index)))}
@@ -1051,7 +1056,7 @@ class studioMain extends Component {
               {/* meta column */}
               {/* inputs column */}
               <div className="w-1/2 mx-2">
-                <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
+                <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
                   <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Inputs
                 </div>
                 {this.state.inputsList.map((item, index) => (this.conditionalCardRender(item, index)))}
@@ -1069,7 +1074,7 @@ class studioMain extends Component {
               {/* input column */}
               {/* outputs column */}
               <div className="w-1/2 mx-2">
-                <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
+                <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
                   <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Outputs
                 </div>
                 {this.state.outputsList.map((item, index) => (this.conditionalCardRender(item, index)))}

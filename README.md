@@ -1,5 +1,41 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [About](#about)
+- [Screenshots](#screenshots)
+    - [Landing Page](#landing-page)
+    - [Studio](#studio)
+    - [Search Engine](#search-engine)
+- [Getting Started](#getting-started)
+- [Learn More](#learn-more)
+- [Deploy on Vercel](#deploy-on-vercel)
+
+<!-- markdown-toc end -->
+
+## About
+Lexicon is Australia's first medical search engine. This platform enables clinicians to take more efficient and effective decisions by allowing them a quick and an easy access to medical tools and documents.
+
+Lexicon also allows clinicians to create their own medical calculators and share it with others.
+
+
+## Screenshots
+
+
+### Landing Page
+![landing page](./screenshots/landing-page.png)
+
+
+### Studio
+![landing page](./screenshots/studio1.png)
+![landing page](./screenshots/studio2.png)
+![landing page](./screenshots/studio3.png)
+
+
+### Search Engine
+![landing page](./screenshots/search-engine-1.png)
+
 ## Getting Started
 
 First, run the development server:

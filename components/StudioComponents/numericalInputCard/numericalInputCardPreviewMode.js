@@ -2,17 +2,15 @@ import React, { useState, useEffect } from "react";
 import { DropdownButton, Dropdown } from "react-bootstrap";
 
 function NumericalInputCardPreviewMode(props) {
-    const [dropDownMenuOptionSelected, setdropDownMenuOptionSelected] =
-          useState("");
+    const [dropDownMenuOptionSelected, setdropDownMenuOptionSelected] = useState("");
 
     useEffect(() => {
         console.log(JSON.stringify( props ));
-        // console.log(prop.stateChangeMethod);
     });
 
     return (
         <>
-          <div className="w-full border shadow-md p-2 hover:shadow-xl mb-2">
+          <div className="transition ease-in-out duration-500 w-full none:shadow hover:shadow-md border	px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
             {/* question row */}
             <div className="inline-block font-semibold text-xl w-full text-blue-900 break-all">
               {props.cardElement.questionText}

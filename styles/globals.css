@@ -1,7 +1,9 @@
 @tailwind utilities;
 
 :root {
-    --header-apparent-height: 9px;
+    --detached-header-background-col0or: rgba(140, 140, 140, .35);
+    --header-height: 65px;
+    --header-apparent-height: 65px;
     --default-spacing: 2vw;
     --align-spacing: 0vw;
     --color-one: #A320DF;
@@ -382,7 +384,12 @@ input[type="text"]:focus {
 
 .navbar {
     border-bottom: .05px solid #E1E1E1;
+    height: var(--header-height);
     justify-content: center;
+}
+
+.navbar-container {
+    height: var(--header-height);
 }
 
 .circle-search-button {
@@ -391,8 +398,8 @@ input[type="text"]:focus {
     align-items: center;
     border-radius: 60px;
     border: .1px solid #FFF;
-    width: 40px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     background: var(--color-three);
     transition: box-shadow .5s ease-in-out, opacity .5s ease-in-out, text-shadow .5s ease-in-out;
     position: absolute;
@@ -406,9 +413,13 @@ input[type="text"]:focus {
 }
 
 .navbar-text-input {
-    top: 28px;
+    top: calc(var(--header-height)/3.2);
+    height: calc(var(--header-height)/2.7);
+    border-radius: .4vw;
     width: 15vw;
-    right: 5vw;
+    font-size: 14px;
+    /* right: max( 4vw, 200px ); */
+    right: 50px;
     position: absolute;
     transition: width .4s ease-in-out,
                 right .4s ease-in-out,
@@ -417,6 +428,7 @@ input[type="text"]:focus {
 
 .navbar-text-input:focus {
     width: 45vw;
+    box-shadow: .5px .5px 2px #888 !important;
     border-radius: .25vw;
     right: 5.2vw;
 }
@@ -447,16 +459,22 @@ input[type="text"]:focus {
 .detached {
     position: fixed;
     width: 100%;
-    background: rgba(0, 0, 0, .55);
-    color: white;
+    background: var(--detached-header-background-color);
+    color: #444;
     z-index: 10;
     animation: mymove 1s ease-in-out;
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(18px);
 }
 
 @keyframes mymove {
-    from {background: rgba(250,250,250,1);}
-    to {background: rgba(0, 0, 0, .55);}
+    from {
+        color: #1e90ff;
+        background: rgba(250,250,250,1);
+    }
+    to {
+        background: var(--detached-header-background-color);
+        color: #444;
+    }
 }
 
 
@@ -476,6 +494,7 @@ input[type="text"]:focus {
     animation: animateBg 3s linear infinite;
     -webkit-text-stroke-width: .1px;
     -webkit-text-stroke-color: #1E1E1E;
+    font-size: 24px;
 }
 
 

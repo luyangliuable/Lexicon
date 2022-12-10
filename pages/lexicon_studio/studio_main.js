@@ -1048,7 +1048,7 @@ class studioMain extends Component {
             <div className="flex flex-column items-center mt-4">
               {/* meta column */}
               <div className="w-1/2 mx-2">
-                <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
+                <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
                   <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Meta
                 </div>
                 {this.state.metaList.map((item, index) => (this.conditionalCardRender(item, index)))}
@@ -1056,7 +1056,7 @@ class studioMain extends Component {
               {/* meta column */}
               {/* inputs column */}
               <div className="w-1/2 mx-2">
-                <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
+                <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
                   <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Inputs
                 </div>
                 {this.state.inputsList.map((item, index) => (this.conditionalCardRender(item, index)))}
@@ -1074,7 +1074,7 @@ class studioMain extends Component {
               {/* input column */}
               {/* outputs column */}
               <div className="w-1/2 mx-2">
-                <div className="w-full mb-2 shadow-md border px-2 rounded-md text-blue-900 text-lg h-9 pt-1">
+                <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
                   <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Outputs
                 </div>
                 {this.state.outputsList.map((item, index) => (this.conditionalCardRender(item, index)))}

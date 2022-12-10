@@ -144,7 +144,7 @@ function NumericalOutputCard(props) {
 
     return (
         <>
-          <div className="w-full border shadow-md p-2 hover:shadow-xl mb-2">
+          <div className="transition ease-in-out duration-500 w-full none:shadow hover:shadow-md border	px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
             {/* card first row */}
             <div className="flex flex-row h-9 my-2">
               <div className="w-1/2 text-lg text-blue-900">

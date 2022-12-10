@@ -18,7 +18,6 @@ const Search: React.FC<iSearch> = () => {
         error={false}
         disable={false}
         name={"Search"}
-        rounded={true}
         className="navbar-text-input"
       />
 
@@ -26,7 +25,7 @@ const Search: React.FC<iSearch> = () => {
         className="circle-search-button"
         onClick={() => {}}
         tooltip={"Search"}
-        Icon={<FaSearch style={{color: "#FFF"}} />}
+        Icon={<FaSearch style={{color: "#FFF", width: '13px', height: 'auto'}} />}
         enable={true}
       />
     </div>

@@ -17,7 +17,7 @@ const navbarOptions: React.FC = () => {
         <div className="flex justify-start">
             <div onMouseOver={() => show()} onMouseLeave={() => hide() }>
                 <Link href="/parsing_engine"><div className="
-                    text-lg
+                    text-md
                     cursor-pointer
                     border-b-2
                     border-transparent
@@ -35,7 +35,7 @@ const navbarOptions: React.FC = () => {
                 </div>
             </div>
             <Link href="lexicon_studio"><div className="
-                text-lg
+                text-md
                 cursor-pointer
                 border-b-2
                 border-transparent

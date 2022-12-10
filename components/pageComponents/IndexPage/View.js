@@ -76,14 +76,6 @@ const View = () => {
     };
 
 
-    const getNavbarHeight = () => {
-        /*
-         * Get the height of the navbar
-         */
-        const navBarHeight = document.getElementsByClassName('navbar')[0].getBoundingClientRect().height;
-        return navBarHeight;
-    };
-
     const computeSlideStyleBasedOnScrollAmount = (scrollAmount) => {
         /*
          * compute the slide element on landing page based on the scroll amount.
@@ -103,37 +95,6 @@ const View = () => {
                 })
             };
         });
-    };
-
-    const checkNavBarIsDetached = (scrollAmount) => {
-        /*
-         * Check if the navigation bar should be detached after scrolling past it.
-         *
-         * Parameters:
-         *  scrolledAmount (number): scrolled amount
-         */
-        const navBarHeight = getNavbarHeight();
-
-        if (scrollAmount > navBarHeight && objectState.detached != true) {
-            document.getElementsByClassName('navbar')[0].classList.add("detached");
-
-            setObjectState(prev => {
-                return {
-                    ...prev,
-                    detached: true
-                };
-            });
-
-        } else if (scrollAmount <= navBarHeight)  {
-            document.getElementsByClassName('navbar')[0].classList.remove("detached");
-
-            setObjectState(prev => {
-                return {
-                    ...prev,
-                    detached: false
-                };
-            });
-        }
     };
 
     const computePageElementHeights = () => {
@@ -159,7 +120,6 @@ const View = () => {
 
             updateScrollAmount(scrollAmount);
             computeSlideStyleBasedOnScrollAmount(scrollAmount);
-            checkNavBarIsDetached(scrollAmount);
         }, false);
 
         computePageElementHeights();

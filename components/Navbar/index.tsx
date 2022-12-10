@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { FaBars } from "react-icons/fa";
-
+import NavbarOptions from "../Navbar/NavbarOptions/navbarOptions.tsx";
+import Search from "./Search"
+import DesktopNavbarLink from "./DesktopNavbarLink"
 import { WhiteAppButton } from "../AppButton/buttons"
 import LexiconLogo from "../Logos/LexiconLogo"
-import SidebarWrapper from "../utils/SidebarWrapper"
-import SiteContainer from "../utils/SiteContainer"
-import DesktopNavbarLink from "./DesktopNavbarLink"
 import NavbarLinksWrapper from "./NavbarLinksWrapper"
-import Search from "./Search"
-import NavbarOptions from "../Navbar/NavbarOptions/navbarOptions.tsx";
+import SiteContainer from "../utils/SiteContainer";
 import Link from "next/link";
+import SidebarWrapper from "../utils/SidebarWrapper"
+import { FaBars } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
 
 interface iNavbar {
     pageId: string
@@ -17,6 +16,75 @@ interface iNavbar {
 
 const Navbar: React.FC<iNavbar> = ({ pageId }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
+    const [objectState, setObjectState] = useState({
+        scrolled: 0,
+        detached: false
+    })
+
+    const updateScrollAmount = (scrollAmount: number) => {
+        /*
+         * Update scroll amount to state based on scroll
+         *
+         * Parameters:
+         *  scrolledAmount (number): scrolled amount
+         */
+        setObjectState(prev => {
+            return {
+                ...prev,
+                scrolled: scrollAmount
+            };
+        });
+    };
+
+
+    const getNavbarHeight = () => {
+        /*
+         * Get the height of the navbar
+         */
+        const navBarHeight = document.getElementsByClassName('navbar')[0].getBoundingClientRect().height;
+        return navBarHeight;
+    };
+
+    const checkNavBarIsDetached = (scrollAmount) => {
+        /*
+         * Check if the navigation bar should be detached after scrolling past it.
+         *
+         * Parameters:
+         *  scrolledAmount (number): scrolled amount
+         */
+        const navBarHeight = getNavbarHeight();
+
+        if (scrollAmount > navBarHeight && objectState.detached != true) {
+            document.getElementsByClassName('navbar')[0].classList.add("detached");
+
+            setObjectState(prev => {
+                return {
+                    ...prev,
+                    detached: true
+                };
+            });
+
+        } else if (scrollAmount <= navBarHeight)  {
+            document.getElementsByClassName('navbar')[0].classList.remove("detached");
+
+            setObjectState(prev => {
+                return {
+                    ...prev,
+                    detached: false
+                };
+            });
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', function() {
+            const scrollAmount = window.scrollY;
+            const newState = {};
+
+            updateScrollAmount(scrollAmount);
+            checkNavBarIsDetached(scrollAmount);
+        }, false);
+    }, []);
 
     return (
         <>

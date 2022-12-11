@@ -324,7 +324,7 @@ function NumericalInputCard(props) {
             </div>
           ) : (
             <>
-              {Object.keys(state.unitsObject).length > 0 ? (
+              {props.cardElement.unitsObject && Object.keys(state.unitsObject).length > 0 ? (
                 <>
                   <div className="text-blue-900 text-sm p-1">
                     Unit(s) Added:{" "}
@@ -341,9 +341,9 @@ function NumericalInputCard(props) {
             </>
           )}
           {/*input row section */}
-          {Object.keys(state.unitsObject).length > 0 ? (
+          {props.cardElement.unitsObject && Object.keys(state.unitsObject).length > 0 ? (
             <div className="w-full p-1">
-              {Object.keys(state.unitsObject).map((item, index) => {
+              {props.cardElement.unitsObject && Object.keys(state.unitsObject).map((item, index) => {
                 return (
                   <UnitElement
                     editModeVal={state.editMode}

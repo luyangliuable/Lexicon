@@ -4,8 +4,9 @@ import React from 'react';
 const navbarOptions: React.FC = () => {
 
     function show() {
-        var element = document.getElementsByClassName('dropdown');
-        element[0].style.display = "block";
+        /* var element = document.getElementsByClassName('dropdown');
+         * element[0].style.display = "block"; */
+        console.warn("Show dropdown is disabled");
     }
 
     function hide() {
@@ -15,7 +16,7 @@ const navbarOptions: React.FC = () => {
 
     return (
         <div className="flex justify-start">
-            <div onMouseOver={() => show()} onMouseLeave={() => hide() }>
+            <div onMouseOver={() => show()} onMouseLeave={() => hide() } className="navbar-option">
                 <Link href="/parsing_engine"><div className="
                     text-md
                     cursor-pointer
@@ -25,16 +26,17 @@ const navbarOptions: React.FC = () => {
                     p-1
                     mx-2
                     ">Parsing Engine</div></Link>
-            <div className="dropdown">
-                <Link href="/parsing_engine">
-                    <div className="dropdown-item">Upload</div>
-                </Link>
-                <Link href="/parsing_engine_search">
-                    <div className="dropdown-item">Search</div>
-                </Link>
+                <div className="dropdown" >
+                    <Link href="/parsing_engine">
+                        <div className="dropdown-item">Upload</div>
+                    </Link>
+                    <Link href="/parsing_engine_search">
+                        <div className="dropdown-item">Search</div>
+                    </Link>
                 </div>
             </div>
             <Link href="lexicon_studio"><div className="
+                navbar-option
                 text-md
                 cursor-pointer
                 border-b-2

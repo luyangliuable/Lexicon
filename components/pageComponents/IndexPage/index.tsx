@@ -1,6 +1,6 @@
-import React from "react"
+import React from "react";
 
-import View from "./View.js"
+import View from "./View.tsx";
 
 const IndexPage = () => {
   return <View />

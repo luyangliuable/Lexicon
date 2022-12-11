@@ -69,6 +69,11 @@ class studioMain extends Component {
         this.capturePreviewFieldStateChange = this.capturePreviewFieldStateChange.bind(this);
     }
 
+    componentDidMount() {
+        document.getElementsByClassName("navbar-option")[1].style.background = "#00bfff";
+        document.getElementsByClassName("navbar-option")[1].style.color = "#FFF";
+
+    }
 
     componentDidUpdate(prevProps, prevState) {
 

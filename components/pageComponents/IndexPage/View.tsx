@@ -6,8 +6,8 @@ import Footer from "./Footer/index";
 import { iView } from "./types";
 
 
-const View = () => {
-    const INITNUMBER = Math.NaN;
+const View = () : React.FC => {
+    const INITNUMBER = null;
     const NUMBEROFSLIDES = 4;
 
     const [ objectState, setObjectState ] = useState({
@@ -21,8 +21,18 @@ const View = () => {
         detached: false
     });
 
+    type state = {
+        scrolled: number,
+        navbarHeight: number,
+        heroComputedHeight: number,
+        slideComputedHeight: number,
+        slideOpacity: number,
+        slideLeft: number,
+        slideOffsets: Array<number>, // This is optional so ignore for now.
+        detached: number | boolean
+    }
 
-    const computeOpacity = (prev, scrollAmount, whichSlide, offset) => {
+    const computeOpacity: any = (prev: state, scrollAmount: number, whichSlide: number, offset: number) => {
         /*
          * Computes the opacity of each slide element on landing page based on scroll position.
          * Parameters:
@@ -39,7 +49,7 @@ const View = () => {
         return reachedElementInPage ? slideRenderOpacity : 0;
     };
 
-    const computeLeft = (prev, scrollAmount, whichSlide, offset) => {
+    const computeLeft = (prev: state, scrollAmount: number, whichSlide: number, offset: number) : string => {
         /*
          * Computes the left of each slide element on landing page based on scroll position.
          * Parameters:
@@ -56,11 +66,13 @@ const View = () => {
         const scrolledAnimationFinished = startingLeft - ( scrollAmount - prev.slideComputedHeight[whichSlide]*offset) >= 0;
         const slideRenderLeftAmount =  startingLeft - ( scrollAmount - prev.slideComputedHeight[whichSlide]*offset);
 
-        return ( reachedElementInPage && scrolledAnimationFinished ) ? `${slideRenderLeftAmount}px` : '0px';
+        const result: string = ( reachedElementInPage && scrolledAnimationFinished ) ? `${slideRenderLeftAmount}px` : '0px';
+
+        return result;
     };
 
 
-    const updateScrollAmount = (scrollAmount) => {
+    const updateScrollAmount = (scrollAmount: number) : void => {
         /*
          * Update scroll amount to state based on scroll
          *
@@ -75,8 +87,7 @@ const View = () => {
         });
     };
 
-
-    const computeSlideStyleBasedOnScrollAmount = (scrollAmount) => {
+    const computeSlideStyleBasedOnScrollAmount = (scrollAmount: number) : void => {
         /*
          * compute the slide element on landing page based on the scroll amount.
          *
@@ -97,7 +108,7 @@ const View = () => {
         });
     };
 
-    const computePageElementHeights = () => {
+    const computePageElementHeights = () : void => {
         /*
          * Compute the page element heights at the begining.
          */
@@ -112,7 +123,7 @@ const View = () => {
         });
     };
 
-    useEffect(function(e){
+    useEffect((e) => {
 
         window.addEventListener('scroll', function() {
             const scrollAmount = window.scrollY;
@@ -128,76 +139,76 @@ const View = () => {
 
     return (
         <>
-          <div className="wallpaper" style={{
-              top: `${ objectState.scrolled/50 }px`,
-              filter: `blur(${ Math.min( objectState.scrolled/200, 3 ) }px)`
-          }}></div>
-          <HeroSection style={{opacity: 1-objectState.scrolled/292}} scrolled={objectState.scrolled} />
+            <div className="wallpaper" style={{
+                top: `${ objectState.scrolled/50 }px`,
+                filter: `blur(${ Math.min( objectState.scrolled/200, 3 ) }px)`
+            }}></div>
+            <HeroSection style={{opacity: 1-objectState.scrolled/292}} scrolled={objectState.scrolled} />
 
-          <div className="landing-page-slide-section">
-            <div className="w-full h-full bg-cover bg-no-repeat bg-center landing-page-slide-section-image" id="image-1"
-                 style={{
-                     backgroundImage: "url('homepage/research.jpg')",
-                     marginLeft: objectState.slideLeft[0],
-                     opacity: objectState.slideOpacity[0]
-                 }}
-            />
+            <div className="landing-page-slide-section">
+                <div className="w-full h-full bg-cover bg-no-repeat bg-center landing-page-slide-section-image" id="image-1"
+                     style={{
+                         backgroundImage: "url('homepage/research.jpg')",
+                         marginLeft: objectState.slideLeft[0],
+                         opacity: objectState.slideOpacity[0]
+                     }}
+                />
 
-            <div className="slide-section-text">
-              <p>A repository for</p>
-              <h2 style={{fontWeight: 100}}>RESEARCH RELATED INFORMATION</h2>
+                <div className="slide-section-text">
+                    <p>A repository for</p>
+                    <h2 style={{fontWeight: 100}}>RESEARCH RELATED INFORMATION</h2>
+                </div>
             </div>
-          </div>
 
-          <div className="landing-page-slide-section">
-            <div className="w-full h-full bg-cover bg-no-repeat bg-center landing-page-slide-section-image" id="image-2"
-                 style={{
-                     backgroundImage: "url('homepage/data-privacy.jpg')",
-                     marginLeft: objectState.slideLeft[1],
-                     opacity: objectState.slideOpacity[1]
-                 }}
-            />
+            <div className="landing-page-slide-section">
+                <div className="w-full h-full bg-cover bg-no-repeat bg-center landing-page-slide-section-image" id="image-2"
+                     style={{
+                         backgroundImage: "url('homepage/data-privacy.jpg')",
+                         marginLeft: objectState.slideLeft[1],
+                         opacity: objectState.slideOpacity[1]
+                     }}
+                />
 
-            <div className="slide-section-text">
-              <p>We ensure your</p>
-              <h2 style={{fontWeight: 100}}>DATA PRIVACY</h2>
+                <div className="slide-section-text">
+                    <p>We ensure your</p>
+                    <h2 style={{fontWeight: 100}}>DATA PRIVACY</h2>
+                </div>
             </div>
-          </div>
 
 
-          <div className="landing-page-slide-section">
-            <div className="w-full h-full bg-cover bg-no-repeat bg-center landing-page-slide-section-image" id="image-3"
-                 style={{
-                     backgroundImage: "url('homepage/doctors.jpg')",
-                     marginLeft: objectState.slideLeft[2],
-                     opacity: objectState.slideOpacity[2]
-                 }}
-            />
+            <div className="landing-page-slide-section">
+                <div className="w-full h-full bg-cover bg-no-repeat bg-center landing-page-slide-section-image" id="image-3"
+                     style={{
+                         backgroundImage: "url('homepage/doctors.jpg')",
+                         marginLeft: objectState.slideLeft[2],
+                         opacity: objectState.slideOpacity[2]
+                     }}
+                />
 
-            <div className="slide-section-text">
-              <p>Validated information</p>
-              <h2 style={{fontWeight: 100}}>For Medical Professional</h2>
+                <div className="slide-section-text">
+                    <p>Validated information</p>
+                    <h2 style={{fontWeight: 100}}>For Medical Professional</h2>
+                </div>
             </div>
-          </div>
 
-          <div className="landing-page-slide-section">
-            <div className="w-full h-full bg-cover bg-no-repeat bg-center landing-page-slide-section-image" id="image-4"
-                 style={{
-                     backgroundImage: "url('homepage/med-info.jpg')",
-                     marginLeft: objectState.slideLeft[3],
-                     opacity: objectState.slideOpacity[3]
-                 }}
-            />
+            <div className="landing-page-slide-section">
+                <div className="w-full h-full bg-cover bg-no-repeat bg-center landing-page-slide-section-image" id="image-4"
+                     style={{
+                         backgroundImage: "url('homepage/med-info.jpg')",
+                         marginLeft: objectState.slideLeft[3],
+                         opacity: objectState.slideOpacity[3]
+                     }}
+                />
 
-            <div className="slide-section-text">
-              <p>Swift and easy access to</p>
-              <h2 style={{fontWeight: 100}}>HEALTH INFORMATION</h2>
+                <div className="slide-section-text">
+                    <p>Swift and easy access to</p>
+                    <h2 style={{fontWeight: 100}}>HEALTH INFORMATION</h2>
+                </div>
             </div>
-          </div>
 
-          <PanelSection />
-          <WhyUseLexiconSection />
-          <Footer />
+            <PanelSection />
+            <WhyUseLexiconSection />
+            <Footer />
         </>
 
     );

@@ -61,7 +61,7 @@ export const fetchForm = (formID) => {
             method: 'GET',
             headers: {
                 Accept: "application/json",
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
             }
         }).then( response => {
             return response.json();

@@ -11,6 +11,7 @@ Router.get(`/convert`, convert);
 Router.get(`/render`, render);
 Router.get(`/test`, test);
 
+// Router.post(`/render`, render);
 Router.post(`/search`, search);
 Router.post('/upload', uploader.single('pdfFile'), function (req, res, next) {
     const parsingEngine = new ParsingEngine(req.file.path);

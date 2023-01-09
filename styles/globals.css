@@ -9,6 +9,7 @@
     --color-one: #A320DF;
     --color-two: #296da9;
     --color-three: #D441FF;
+    --color-biege: #F5F5DC;
     --white-text: #FFF;
     --upload-box-width: max(40vw, 800px);
     --upload-box-height: max(16vw, 300px);
@@ -241,38 +242,15 @@ input[type="text"]:focus {
 }
 
 
-.search-field-holder{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start
-}
-
-
-.search-field {
-    padding: .6vw .6vw .6vw 3vw;
-    border: 1px solid #888;
-    border-radius: 1vw;
-    background: #FFF1;
-    width: 40vw;
-    user-select: none;
-    transition: box-shadow .4s ease-in-out;
-    cursor: pointer
-}
-
-
-.search-field:focus {
-    outline: none;
-    box-shadow: 1px 1px 2.5px #888
-}
-
-
 .search-result-item {
     width: 40vw;
+    background: #FFF;
+    font-size: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     height: min( 4vw, 38px );
-    box-shadow: 1px 1px 1px #888;
+    box-shadow: 2px 2px 5px var(--color-biege);
     border: .5px solid black;
     border-top: none;
     border-radius: 2px;
@@ -405,8 +383,6 @@ input[type="text"]:focus {
     height: 30px;
     background: var(--color-three);
     transition: box-shadow .5s ease-in-out, opacity .5s ease-in-out, text-shadow .5s ease-in-out;
-    position: absolute;
-    right: 1vw;
 }
 
 .circle-search-button:hover {
@@ -415,25 +391,33 @@ input[type="text"]:focus {
     opacity: .8;
 }
 
-.navbar-text-input {
+
+.search-result-container {
+    align-items: flex-start;
+    justify-content: flex-end;
     top: calc(var(--header-height)/3.2);
-    height: calc(var(--header-height)/2.5);
-    border-radius: .4vw;
-    width: 15vw;
-    font-size: 14px;
+    height: 10vh;
+    width: 50vw;
     right: max( 3.5vw, 55px );
-    /* right: 50px; */
     position: absolute;
+    display: flex;
+    z-index: 2;
+}
+
+.navbar-text-input {
+    border-radius: .4vw;
+    width: 20vw;
+    font-size: 14px;
+    margin-right: 1vw;
     transition: width .4s ease-in-out,
                 right .4s ease-in-out,
                 box-shadow .4s ease-in-out,
 }
 
 .navbar-text-input:focus {
-    width: 45vw;
     box-shadow: .5px .5px 4px #888 !important;
     border-radius: .25vw;
-    right: max( 3.5vw, 55px )
+    width: 40vw;
 }
 
 .landing-page-slide-section {

@@ -116,11 +116,11 @@ const Navbar: React.FC<iNavbar> = ({ pageId }) => {
                         </div>
                     </Link>
                     {/* Navigation Bar Menu Options */}
-                    <div className="w-4/6 hidden md:block">
+                    <div className="w-3/6 hidden md:block">
                         <NavbarOptions></NavbarOptions>
                     </div>
                     {/* Search Bar */}
-                    <div className="w-1/6 hidden md:block">
+                    <div className="w-2/6 hidden md:block">
                         <Search />
                     </div>
                     <div className="block md:hidden">

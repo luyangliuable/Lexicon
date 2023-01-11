@@ -7,11 +7,6 @@ const ParsingEngine = require("../core/parser.js");
 const Guide = require('../models/guide');
 
 exports.upload = async (req, res, next) => {
-
-    console.log(req.file);
-    console.log(req.body);
-
-
     return res.status(200).json({result: "done", files: req.files});
 };
 
@@ -38,16 +33,6 @@ exports.uploadGuide = async (req, res, next) => {
         return res.status(200).send(data);
     });
 };
-
-
-// exports.render = async (req, res, next) => {
-//     const parsingEngine = new ParsingEngine(req.body.path);
-//     const rendered = parsingEngine.render();
-
-//     rendered.then(data => {
-//         return res.status(200).send(data);
-//     });
-// };
 
 
 exports.test = async (req, res, next) => {

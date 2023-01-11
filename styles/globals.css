@@ -114,9 +114,8 @@ input[type="file"]{
     height: var(--upload-box-height);
     width: var(--upload-box-width);
     border-radius: max(10px, 1vw);
-    background: transparent;
+    background: #eeeeff;
     border: 1px solid var(--color-two);
-    /* box-shadow: 2px 2px 4px #888; */
     margin: var(--default-spacing)
 }
 

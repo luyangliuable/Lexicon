@@ -1033,39 +1033,57 @@ class studioMain extends Component<{}, studioMainState> {
                         <div className="text-4xl text-blue-900">Components</div>
                     </Offcanvas.Header>
 
-                    <Offcanvas.Body className="divide-y divide-gray-300">
+                    <Offcanvas.Body className="divide-y divide-gray-300" style={{background: "#EEE"}}>
                         {/* TODO make these cards click through*/}
-                        <div className="" onClick={() => {
+
+                        <h3>Meta Cards</h3>
+                        <div className="demo-cards" onClick={() => {
                             this.sideBarOptionSelected('meta', 'DescriptionComponent', null);
                         }}>
                             <DecriptionCardComponent cardElement={{}} />
                         </div>
 
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => {
+                        <div className="demo-cards" onClick={() => {
                             this.sideBarOptionSelected('meta', 'ReferenceComponent',null);
                         }}>
                             <ReferenceCard cardElement={{}} />
                         </div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => {
+
+
+                        <h3>Input Cards</h3>
+                        <div className="demo-cards" onClick={() => {
                             this.sideBarOptionSelected('input', 'SelectInput',null);
                         }}>
                             <SelectInputCard cardElement={{}} />
                         </div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => {
+                        <div className="demo-cards" onClick={() => {
                             this.sideBarOptionSelected('input', 'NumericalInput',null);
-                        }}>Numerical Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => {
+                        }}>
+                            <NumericalInputCard cardElement={{}} />
+                        </div>
+                        <div className="demo-cards" onClick={() => {
                             this.sideBarOptionSelected('input', 'BivalentInput',null);
-                        }} >Bivalent Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => {
+                        }} >
+                            <BivalentInputCard className="demo-cards" cardElement={{}} />
+                        </div>
+                        <div className="demo-cards" onClick={() => {
                             this.sideBarOptionSelected('input', 'SliderInput',null);
-                        }}>Slider Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => {
+                        }}>
+                            <SliderInputCard cardElement={{}} />
+                        </div>
+
+                        {/* <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => {
                             this.sideBarOptionSelected('input', 'PointInput',null);
-                        }}>Point Input Card</div>
-                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => {
+                            }}>
+                            <PointInputCard className="demo-cards" cardElement={{}} />
+                            </div> */}
+
+                        <h3>Output Cards</h3>
+                        <div className="demo-cards" onClick={() => {
                             this.sideBarOptionSelected('output', 'NumericalOutputComponent',null);
-                        }}>Numerical Output Card</div>
+                        }}>
+                            <NumericalOutputCard cardElement={{}}/>
+                        </div>
                     </Offcanvas.Body>
                 </Offcanvas>
                 {/* side bar menu for card components */}

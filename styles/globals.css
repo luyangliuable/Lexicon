@@ -502,3 +502,10 @@ input[type="text"]:focus {
     background: #EFEFEF;
     border-radius: 4px;
 }
+
+.demo-cards {
+    background: #FFF;
+    transform: scale(80%);
+    -webkit-transform: scale(80%);
+    -moz-transform: scale(80%);
+}

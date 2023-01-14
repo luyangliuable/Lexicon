@@ -1,6 +1,6 @@
 
 // Method for handling create new form in Lexicon studio
-export const createForm = ( formName, metaCardList, inputsCardList, outputsCardList ) => {
+export const createForm: any = ( formName: string, metaCardList: any[], inputsCardList: any[], outputsCardList: any[] ) => {
     const formDetails = {
         FORM_NAME: formName,
         META_CARD_LIST: metaCardList,
@@ -37,10 +37,10 @@ export const fetchFormNameAndID = () => {
             console.log(error);
         })
     );
-}
+};
 
 // Method for deleting a specific form
-export const deleteForm = (formID) => {
+export const deleteForm: any = (formID: string) => {
     return(
         fetch(`http://localhost:9000/lexiconStudio/deleteForm/${formID}`, {
             method: 'DELETE',
@@ -51,11 +51,11 @@ export const deleteForm = (formID) => {
         }).then(response => {
             return response.json();
         }).catch( error => console.log(error) )
-    )
-}
+    );
+};
 
 // Method for fetching a specific form using formID
-export const fetchForm = (formID) => {
+export const fetchForm: any = (formID: string) => {
     return(
         fetch(`http://localhost:9000/lexiconStudio/fetchForm/${formID}`, {
             method: 'GET',
@@ -67,4 +67,4 @@ export const fetchForm = (formID) => {
             return response.json();
         }).catch( error => console.log(error))
     );
-}
+};

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const formSchema = new Schema({
     name: {
         type: String,
-        required: false
+        required: true
     },
     metaCardList: {
         type: Array,

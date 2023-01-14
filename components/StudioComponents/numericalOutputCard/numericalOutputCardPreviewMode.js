@@ -109,7 +109,11 @@ function NumericalOutputCardPreviewMode(props) {
             {/* card result area */}
             <div className="flex text-blue-900 font-semibold border-1 py-0.5 px-2 rounded justify-between border-blue-900">
               <div>Result:</div>
-              <div>{ JSON.stringify(evalutateFormula(props.cardElement.formula)) }</div>
+              <div>
+                {
+                    evalutateFormula(props.cardElement.formula) ? evalutateFormula(props.cardElement.formula) : ""
+                }
+              </div>
             </div>
             {/* card result area */}
           </div>

@@ -1,5 +1,4 @@
 import React from "react"
-
 import { InternalLinks } from "../../urls"
 import { NavbarLinkType } from "./types"
 

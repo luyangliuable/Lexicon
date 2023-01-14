@@ -1,34 +1,36 @@
 import React, { Component } from "react";
-import EngineUpload from './engine_upload';
+import UploadBox from './upload_box';
 
 import monash_health_json_doc from "../../public/parsing_engine/JSON_doc/alteplase_for_acute_ischaemic_stroke.json";
-import { adjacency_list_transform, represent } from "./parsing_engine";
+import { adjacency_list_transform, represent } from "./parsing_engine.tsx";
 
-class EngineSection extends Component {
+interface EngineSectionInterface {
+    data: number
+}
+
+class EngineSection extends Component<EngineSectionInterface> {
     constructor(props) {
         super(props);
+
         this.state = {
             data: "",
         };
     }
 
     componentDidMount() {
-        // this.setState({
-        //     data: represent(adjacency_list_transform(monash_health_json_doc)),
-        // });
+        this.setState({
+            data: represent(adjacency_list_transform(monash_health_json_doc)),
+        });
     }
 
     render() {
         return (
-            <div>
+            <div style={{height: "90vh", display: "flex", alignItems: "center"}}>
               {/* Section Heading Block */}
               <div className="w-screen">
                 {/* Heading */}
-                <div className="text-3xl text-blue-900 m-1 inline-block font-semibold">
-                  Parsing Engine
-                </div>
               </div>
-              <EngineUpload />
+              <UploadBox />
               {/* JSON Format Display Section */}
               <div className="w-screen mb-8">
                 {/* <div */}

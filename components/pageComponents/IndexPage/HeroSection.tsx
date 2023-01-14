@@ -6,7 +6,7 @@ const HeroSection = (props) => {
     const [ heroState, setHeroState ] = useState({
         opacity: 0,
         marginTop: 5,
-        contentDisplay: [false, true]
+        contentDisplay: [true, false]
     });
 
     const animateHero = (newState) => {

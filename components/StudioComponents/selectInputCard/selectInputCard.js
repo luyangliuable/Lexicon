@@ -13,7 +13,7 @@ function SelectInputCard(props) {
         questionText: props.cardElement.questionText,
         previewModeDisplay: props.cardElement.previewModeDisplay,
         maxSelectionVal: props.cardElement.maxSelectionVal,
-        optionsObject: props.cardElement.optionsObject,
+        optionsObject: props.cardElement.optionsObject ? props.cardElement.optionsObject : [], // If the options object is undefined, make it an empty array
         editMode: props.cardElement.editMode,
     };
     const [state, updateOptionsObject] = useReducer(
@@ -123,7 +123,7 @@ function SelectInputCard(props) {
                 editMode: state.editMode,
             };
         };
-    }
+    };
 
     function optionElementTextFunction(optionElementUUID, textContent) {
         updateOptionsObject({
@@ -310,7 +310,7 @@ function SelectInputCard(props) {
                         readOnly={!state.editMode}
                         type="number"
                         onKeyDown={event => {
-                            event.preventDefault()
+                            event.preventDefault();
                         }}
                         placeholder="Enter value ..."
                         min="1"
@@ -355,4 +355,4 @@ function SelectInputCard(props) {
     );
 }
 
-export default SelectInputCard
+export default SelectInputCard;

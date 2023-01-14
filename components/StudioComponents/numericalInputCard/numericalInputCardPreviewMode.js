@@ -43,7 +43,7 @@ function NumericalInputCardPreviewMode(props) {
                 ></input>
               </div>
             </div>
-            {Object.keys(props.cardElement.unitsObject).length > 0 ? (
+            {props.cardElement.unitsObject && Object.keys(props.cardElement.unitsObject).length > 0 ? (
                 <>
                   <div className="my-1.5 flex flex-row justify-between px-1">
                     <div className="w-3/5">
@@ -63,7 +63,7 @@ function NumericalInputCardPreviewMode(props) {
                                 ]
                         }
                       >
-                        {Object.keys(props.cardElement.unitsObject).map(
+                        {props.cardElement.unitsObject && Object.keys(props.cardElement.unitsObject).map(
                             (keyName, index) => (
                                 <Dropdown.Item
                                   as="button"

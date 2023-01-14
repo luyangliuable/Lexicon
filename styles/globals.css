@@ -1,7 +1,7 @@
 @tailwind utilities;
 
 :root {
-    --detached-header-background-col0or: rgba(140, 140, 140, .35);
+    --detached-header-background-color: rgba(150, 150, 150, .45);
     --header-height: 65px;
     --header-apparent-height: 65px;
     --default-spacing: 2vw;
@@ -9,6 +9,7 @@
     --color-one: #A320DF;
     --color-two: #296da9;
     --color-three: #D441FF;
+    --color-biege: #F5F5DC;
     --white-text: #FFF;
     --upload-box-width: max(40vw, 800px);
     --upload-box-height: max(16vw, 300px);
@@ -17,7 +18,9 @@
 body {
     background: #FFF;
     /* background-image: url("./background.jpeg"); */
+    /* background-image: url("../public/homepage/medical-forms.jpeg"); */
 }
+
 
 
 .site-bg-dark-blue {
@@ -111,9 +114,8 @@ input[type="file"]{
     height: var(--upload-box-height);
     width: var(--upload-box-width);
     border-radius: max(10px, 1vw);
-    background: transparent;
+    background: #eeeeff;
     border: 1px solid var(--color-two);
-    /* box-shadow: 2px 2px 4px #888; */
     margin: var(--default-spacing)
 }
 
@@ -239,38 +241,15 @@ input[type="text"]:focus {
 }
 
 
-.search-field-holder{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start
-}
-
-
-.search-field {
-    padding: .6vw .6vw .6vw 3vw;
-    border: 1px solid #888;
-    border-radius: 1vw;
-    background: #FFF1;
-    width: 40vw;
-    user-select: none;
-    transition: box-shadow .4s ease-in-out;
-    cursor: pointer
-}
-
-
-.search-field:focus {
-    outline: none;
-    box-shadow: 1px 1px 2.5px #888
-}
-
-
 .search-result-item {
     width: 40vw;
+    background: #FFF;
+    font-size: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     height: min( 4vw, 38px );
-    box-shadow: 1px 1px 1px #888;
+    box-shadow: 2px 2px 5px var(--color-biege);
     border: .5px solid black;
     border-top: none;
     border-radius: 2px;
@@ -371,19 +350,20 @@ input[type="text"]:focus {
 
 .wallpaper {
     /* background-image: url("./background.jpeg"); */
+    /* background-image: url("../public/homepage/wallhaven-8owxrk.jpeg"); */
     background: #1e1e1e;
-    image-rendering: pixelated;
+    /* image-rendering: pixelated; */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 500%;
     z-index: -10;
-    opacity: .8;
+    opacity: 1;
 }
 
 .navbar {
-    border-bottom: .05px solid #E1E1E1;
+    border-bottom: .1px solid #E1E1E1;
     height: var(--header-height);
     justify-content: center;
 }
@@ -402,8 +382,6 @@ input[type="text"]:focus {
     height: 30px;
     background: var(--color-three);
     transition: box-shadow .5s ease-in-out, opacity .5s ease-in-out, text-shadow .5s ease-in-out;
-    position: absolute;
-    right: 1vw;
 }
 
 .circle-search-button:hover {
@@ -412,25 +390,33 @@ input[type="text"]:focus {
     opacity: .8;
 }
 
-.navbar-text-input {
+
+.search-result-container {
+    align-items: flex-start;
+    justify-content: flex-end;
     top: calc(var(--header-height)/3.2);
-    height: calc(var(--header-height)/2.7);
-    border-radius: .4vw;
-    width: 15vw;
-    font-size: 14px;
-    /* right: max( 4vw, 200px ); */
-    right: 50px;
+    height: 10vh;
+    width: 50vw;
+    right: max( 3.5vw, 55px );
     position: absolute;
+    display: flex;
+    z-index: 2;
+}
+
+.navbar-text-input {
+    border-radius: .4vw;
+    width: 20vw;
+    font-size: 14px;
+    margin-right: 1vw;
     transition: width .4s ease-in-out,
                 right .4s ease-in-out,
                 box-shadow .4s ease-in-out,
 }
 
 .navbar-text-input:focus {
-    width: 45vw;
-    box-shadow: .5px .5px 2px #888 !important;
+    box-shadow: .5px .5px 4px #888 !important;
     border-radius: .25vw;
-    right: 5.2vw;
+    width: 40vw;
 }
 
 .landing-page-slide-section {
@@ -441,7 +427,7 @@ input[type="text"]:focus {
     background: #FFF;
     border-top: .1px solid #888;
     border-bottom: .1px solid #888;
-    height: 80vh;
+    height: 70vh;
     margin-top: 8vh;
 }
 
@@ -451,19 +437,19 @@ input[type="text"]:focus {
 
 .landing-page-slide-section-image {
     width: 38vw;
-    height: 80vh;
+    height: 70vh;
 }
 
 
 
 .detached {
     position: fixed;
-    width: 100%;
-    background: var(--detached-header-background-color);
-    color: #444;
-    z-index: 10;
     animation: mymove 1s ease-in-out;
+    color: #444;
+    width: 100%;
     backdrop-filter: blur(18px);
+    z-index: 10;
+    background: var(--detached-header-background-color);
 }
 
 @keyframes mymove {
@@ -507,3 +493,19 @@ input[type="text"]:focus {
     }
 }
 
+.navbar-option {
+    border-radius: 4px;
+    transition: background .4s ease-in-out;
+}
+
+.navbar-option:hover {
+    background: #EFEFEF;
+    border-radius: 4px;
+}
+
+.demo-cards {
+    background: #FFF;
+    transform: scale(80%);
+    -webkit-transform: scale(80%);
+    -moz-transform: scale(80%);
+}

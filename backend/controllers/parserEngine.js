@@ -7,11 +7,6 @@ const ParsingEngine = require("../core/parser.js");
 const Guide = require('../models/guide');
 
 exports.upload = async (req, res, next) => {
-
-    console.log(req.file);
-    console.log(req.body);
-
-
     return res.status(200).json({result: "done", files: req.files});
 };
 
@@ -31,16 +26,6 @@ exports.convert = async (req, res, next) => {
 
 
 exports.uploadGuide = async (req, res, next) => {
-    const parsingEngine = new ParsingEngine(req.body.path);
-    const rendered = parsingEngine.render();
-
-    rendered.then(data => {
-        return res.status(200).send(data);
-    });
-};
-
-
-exports.render = async (req, res, next) => {
     const parsingEngine = new ParsingEngine(req.body.path);
     const rendered = parsingEngine.render();
 
@@ -72,15 +57,22 @@ exports.test = async (req, res, next) => {
 
 
 exports.search = async (req, res, next) => {
-    console.log('/' + req.body.value + '.*/');
-
     if ( req.body.value != "") {
-        // Find any entries with similar name or matches at least one tag
-        // const allResults = await Guide.find({$or: [{name: {$regex: req.body.value + '.*', $options: "i"}}, {tags: {$in: [req.body.value]}}]});
         const allResults = await Guide.find({$or: [{name: {$regex: req.body.value + '.*', $options: "i"}}, {tags: {$regex: req.body.value + '.*' , $options: "i"}}]});
         const result = allResults.slice(0, 3);
+        console.log(result);
         return res.status(200).send({result: result});
     } else {
         return res.status(200).send({result: []});
+    }
+};
+
+exports.render = async (req, res, next) => {
+    if (req.query.id != null) {
+        console.log(`searching for guide with id ${req.query.id}`);
+        const allResults = await Guide.find({_id: req.query.id});
+        console.log('/' + allResults[0].path);
+        // return res.status(200).send('/' + allResults[0].path);
+        return res.status(200).sendFile('/Users/blackfish/lexicon-client-app/backend/' + allResults[0].path);
     }
 };

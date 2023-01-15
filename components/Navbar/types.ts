@@ -1,6 +1,6 @@
 export type NavbarLinkType = {
-  title: string
-  Icon?: any
-  id: string
-  href: string
+    title: string
+    Icon?: any
+    id: string
+    href: string
 }

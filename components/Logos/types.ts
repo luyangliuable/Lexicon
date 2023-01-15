@@ -1,3 +1,3 @@
-export interface iLogo {
-  size: number
+export interface LexiconLogoProps {
+    size: number
 }

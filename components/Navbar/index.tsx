@@ -94,21 +94,25 @@ const Navbar: React.FC<NavbarProp, NavbarState> = ({ pageId }) => {
     return (
         <>
             <nav className="top-0 left-0 bg-white border-b z-10 navbar-container">
-                <SiteContainer className="flex items-center justify-around text-blue-900 navbar">
+                <SiteContainer className="flex items-center navbar">
+
                     {/* Lexicon Logo */}
                     <Link href="/">
                         <div className="flex items-center w-1/6 h-max">
                             <LexiconLogo />
                         </div>
                     </Link>
+
                     {/* Navigation Bar Menu Options */}
                     <div className="w-3/6 hidden md:block">
                         <NavbarOptions></NavbarOptions>
                     </div>
+
                     {/* Search Bar */}
-                    <div className="w-2/6 hidden md:block">
+                    <div className="w-2/6 md:block">
                         <Search />
                     </div>
+
                     <div className="block md:hidden">
                         <WhiteAppButton
                             Icon={<FaBars />}
@@ -116,6 +120,7 @@ const Navbar: React.FC<NavbarProp, NavbarState> = ({ pageId }) => {
                             onClick={() => setSidebarOpen(!sidebarOpen)}
                         />
                     </div>
+
                 </SiteContainer>
             </nav>
 

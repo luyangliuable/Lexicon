@@ -15,7 +15,7 @@ interface studioMainState {
     displayTotalInputScore: boolean,
     showSideBarMenu: boolean,
     objectToBeDeleted: any | null,
-    formulaValues: any,
+    formulaValues: string,
     inputsList: any[],
     metaList: any[],
     outputsList: any[]

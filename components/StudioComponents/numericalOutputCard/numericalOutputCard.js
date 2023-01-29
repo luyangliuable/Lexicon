@@ -12,9 +12,10 @@ function NumericalOutputCard(props) {
         outputDescription: props.cardElement.outputDescription,
         editMode: props.cardElement.editMode,
         totalScore: props.cardElement.totalScore,
-        formula: props.cardElement.formula ? props.cardElement.formula : ''
-
+        formula: props.cardElement.formula ? props.cardElement.formula : '',
+        precision: props.cardElement.precision ? props.cardElement.precision : Math.NaN
     };
+
     const [state, updateNumericalOutputCard] = useReducer(
         handleNumericalOutputCardChanges,
         initialState
@@ -35,8 +36,22 @@ function NumericalOutputCard(props) {
                 outputDescription: state.outputDescription,
                 editMode: state.editMode,
                 totalScore: state.totalScore,
+                precision: action.value
             };
             return updatedState_h;
+        case "PRECISION":
+            const updatedState_pr = {
+                type: state.type,
+                name: state.name,
+                uuid: state.uuid,
+                outputHeading: state.outputHeading,
+                previewModeDisplay: state.previewModeDisplay,
+                outputDescription: state.outputDescription,
+                editMode: state.editMode,
+                totalScore: state.totalScore,
+                precision: action.value
+            };
+            return updatedState_pr;
         case "PREVIEW_MODE":
             const updatedState_p = {
                 type: state.type,
@@ -47,6 +62,7 @@ function NumericalOutputCard(props) {
                 outputDescription: state.outputDescription,
                 editMode: state.editMode,
                 totalScore: state.totalScore,
+                precision: action.value
             };
             return updatedState_p;
         case "DESCRIPTION":
@@ -59,6 +75,7 @@ function NumericalOutputCard(props) {
                 outputDescription: action.value,
                 editMode: state.editMode,
                 totalScore: state.totalScore,
+                precision: action.value
             };
             return updatedState_d;
         case "EDIT":
@@ -236,14 +253,38 @@ function NumericalOutputCard(props) {
               }
             ></textarea>
 
+            <div className="h-9 w-full flex flex-row justify-between">
+              <input
+                className={
+                    state.editMode
+                        ? "h-5/6 w-5/6 px-1 text-blue-900"
+                        : "h-5/6 w-5/6 px-1 text-blue-900 cursor-not-allowed"
+                }
+
+                placeholder="Edit Output Decimal Precision ..."
+
+                readOnly={!state.editMode}
+
+                value={state.precision}
+
+                onChange={event =>
+                    updateNumericalOutputCard({
+                        type: "PRECISION",
+                        value: event.target.value,
+                    })
+                }
+              />
+
+            </div>
+
             {
                 state.editMode ? ([
-                        <p>Math operators</p>,
-                        <button onClick={(e) => addValueToFormula('+')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>+</button>,
-                        <button onClick={(e) => addValueToFormula('-')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>-</button>,
-                        <button onClick={(e) => addValueToFormula('^')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>^</button>,
-                        <button onClick={(e) => addValueToFormula('sqrt(')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>sqrt</button>,
-                        <button onClick={(e) => clearFormula()} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>clear</button>
+                    <p>Math operators</p>,
+                    <button onClick={(e) => addValueToFormula('+')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>+</button>,
+                    <button onClick={(e) => addValueToFormula('-')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>-</button>,
+                    <button onClick={(e) => addValueToFormula('^')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>^</button>,
+                    <button onClick={(e) => addValueToFormula('sqrt(')} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>sqrt</button>,
+                    <button onClick={(e) => clearFormula()} className="inline-block w-1/12 bg-green-100 text-center border-2 border-none my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer mr-2" disabled={!state.editMode}>clear</button>
                 ]) : ""
             }
 

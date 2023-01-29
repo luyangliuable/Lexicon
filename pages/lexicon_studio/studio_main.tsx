@@ -184,6 +184,7 @@ class studioMain extends Component<{}, studioMainState> {
             totalScore?: number,
             outputassociationelement?: any,
             formula?: string,
+            precision?: number,
             outputDescription?: string,
             outputHeading?: string,
             availableVariables: string[],
@@ -304,6 +305,7 @@ class studioMain extends Component<{}, studioMainState> {
                         componentElement.totalScore = 0;
                         componentElement.availableVariables = this.state.inputsList;
                         componentElement.formula =  '';
+                        componentElement.precision =  4; // Default precision is 4
                         this.setState({ outputsList: [...this.state.outputsList, componentElement] });
                         break;
                 }
@@ -317,7 +319,7 @@ class studioMain extends Component<{}, studioMainState> {
                 const stateObjectToBeUpdatedIndex_m = this.state.inputsList.findIndex(item => item.uuid == stateObject.uuid);
                 const updatingCardObject = this.state.inputsList[stateObjectToBeUpdatedIndex_m];
                 const updatingCardName = updatingCardObject.questionText;
-                this.state.formulaValues[updatingCardName] = stateObject.value;
+                // this.state.formulaValues[updatingCardName] = stateObject.value;
 
                 this.setState(prevState => {
                     let inputsListLocalCopy = prevState.inputsList;
@@ -431,6 +433,7 @@ class studioMain extends Component<{}, studioMainState> {
                             outputListLocalCopy[stateObjectToBeUpdatedIndex_o].previewModeDisplay = stateObject.previewModeDisplay;
                             outputListLocalCopy[stateObjectToBeUpdatedIndex_o].totalScore = stateObject.totalScore;
                             outputListLocalCopy[stateObjectToBeUpdatedIndex_o].formula = stateObject.formula;
+                            outputListLocalCopy[stateObjectToBeUpdatedIndex_o].precision = stateObject.precision;
                             outputListLocalCopy[stateObjectToBeUpdatedIndex_o].availableVariables = stateObject.availableVariables;
                             return { outputsList: outputListLocalCopy };
                         });
@@ -1040,36 +1043,49 @@ class studioMain extends Component<{}, studioMainState> {
                         <div className="demo-cards" onClick={() => {
                             this.sideBarOptionSelected('meta', 'DescriptionComponent', null);
                         }}>
-                            <DecriptionCardComponent cardElement={{}} />
+                            <div className="pointer-events-none">
+                                <DecriptionCardComponent cardElement={{}} />
+                            </div>
                         </div>
 
                         <div className="demo-cards" onClick={() => {
                             this.sideBarOptionSelected('meta', 'ReferenceComponent',null);
                         }}>
-                            <ReferenceCard cardElement={{}} />
-                        </div>
 
+                            <div className="pointer-events-none">
+                                <ReferenceCard cardElement={{}} />
+                            </div>
+                        </div>
 
                         <h3>Input Cards</h3>
                         <div className="demo-cards" onClick={() => {
                             this.sideBarOptionSelected('input', 'SelectInput',null);
                         }}>
-                            <SelectInputCard cardElement={{}} />
+
+                            <div className="pointer-events-none">
+                                <SelectInputCard cardElement={{}} />
+                            </div>
                         </div>
                         <div className="demo-cards" onClick={() => {
                             this.sideBarOptionSelected('input', 'NumericalInput',null);
                         }}>
-                            <NumericalInputCard cardElement={{}} />
+                            <div className="pointer-events-none">
+                                <NumericalInputCard cardElement={{}} />
+                            </div>
                         </div>
                         <div className="demo-cards" onClick={() => {
                             this.sideBarOptionSelected('input', 'BivalentInput',null);
                         }} >
-                            <BivalentInputCard className="demo-cards" cardElement={{}} />
+                            <div className="pointer-events-none">
+                                <BivalentInputCard className="demo-cards" cardElement={{}} />
+                            </div>
                         </div>
                         <div className="demo-cards" onClick={() => {
                             this.sideBarOptionSelected('input', 'SliderInput',null);
                         }}>
-                            <SliderInputCard cardElement={{}} />
+                            <div className="pointer-events-none">
+                                <SliderInputCard cardElement={{}} />
+                            </div>
                         </div>
 
                         {/* <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => {
@@ -1082,7 +1098,10 @@ class studioMain extends Component<{}, studioMainState> {
                         <div className="demo-cards" onClick={() => {
                             this.sideBarOptionSelected('output', 'NumericalOutputComponent',null);
                         }}>
-                            <NumericalOutputCard cardElement={{}}/>
+
+                            <div className="pointer-events-none">
+                                <NumericalOutputCard cardElement={{}}/>
+                            </div>
                         </div>
                     </Offcanvas.Body>
                 </Offcanvas>

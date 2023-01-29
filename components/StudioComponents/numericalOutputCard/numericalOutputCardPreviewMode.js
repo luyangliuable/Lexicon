@@ -89,9 +89,15 @@ function NumericalOutputCardPreviewMode(props) {
 
             return eval( formula );
         } catch (e) {
-            return e.message;
+            console.warn(`${ e.message }`);
+            return "There is an error in the formula";
         }
     };
+
+    function round(value, precision = 4) {
+        const exponent = Math.pow(10, precision);
+        return Math.round(value * exponent) / exponent;
+    }
 
     return (
         <>
@@ -110,9 +116,11 @@ function NumericalOutputCardPreviewMode(props) {
             <div className="flex text-blue-900 font-semibold border-1 py-0.5 px-2 rounded justify-between border-blue-900">
               <div>Result:</div>
               <div>
-                {
-                    evalutateFormula(props.cardElement.formula) ? evalutateFormula(props.cardElement.formula) : ""
-                }
+                {(() => {
+                    const result = evalutateFormula(props.cardElement.formula) ? evalutateFormula(props.cardElement.formula) : "";
+                    return typeof(result) == 'number' ? round(result, props.cardElement.precision) : result;
+                })()}
+
               </div>
             </div>
             {/* card result area */}

@@ -13,6 +13,8 @@ const Search: React.FC<[], SearchProps> = () => {
     });
 
     const search = (value: string) => {
+        document.getElementsByClassName("search-result-container")[0].style.display = 'flex';
+
         fetch('http://localhost:9000/parsingEngine/search', {
             method: 'POST',
             headers: {
@@ -46,17 +48,35 @@ const Search: React.FC<[], SearchProps> = () => {
         setSearch({result: []});
     }
 
+    const hideSearchResult = () => {
+        document.getElementsByClassName("search-result-container")[0].style.display = 'none';
+        clearSearch();
+    }
+
     return (
         <div className="flex items-center">
+            <TextInput
+                onChange={(e: any) => search(e.target.value)}
+                onBlur={(e: any) => hideSearchResult()}
+                placeholder={"Search"}
+                value={search || ""}
+                type={"text"}
+                className="navbar-text-input"
+            />
+            <CircleButton
+                className="circle-search-button"
+                onClick={() => {/*TODO*/}}
+                tooltip={"Search"}
+                Icon={
+                    <FaSearch style={{
+                            color: "#FFF",
+                            width: '13px',
+                            height: 'auto' as any
+                        }} />
+                }
+                enable={true}
+            />
             <div className="search-result-container">
-                <div>
-                    <TextInput
-                        onChange={(e: any) => search(e.target.value)}
-                        placeholder={"Search"}
-                        value={search || ""}
-                        type={"text"}
-                        className="navbar-text-input"
-                    />
                     {
                         searchResult["result"].map(( item, index ) => (
                             <div className="search-result-item" onClick={() => {
@@ -66,21 +86,6 @@ const Search: React.FC<[], SearchProps> = () => {
                         )
                         )
                     }
-                </div>
-
-                <CircleButton
-                    className="circle-search-button"
-                    onClick={() => {/*TODO*/}}
-                    tooltip={"Search"}
-                    Icon={
-                        <FaSearch style={{
-                                color: "#FFF",
-                                width: '13px',
-                                height: 'auto' as any
-                            }} />
-                    }
-                    enable={true}
-                />
             </div>
 
         </div>

@@ -29,19 +29,18 @@ function NumericalInputCardPreviewMode(props) {
                 </div>
                 {/* question row */}
                 {/* response row */}
+                <div className="card-error-display" style={{
+                    visibility:
+                    (props.cardElement.value < props.cardElement.minInput || props.cardElement.value > props.cardElement.maxInput) ? 'visible' : 'hidden'
+                }}>
+
                 {
                     props.cardElement.value < props.cardElement.minInput
-                        ?
-                        (<div className="card-error-display">
-                            "Warning: Input value is too small"
-                        </div>)
-                        :
-                        props.cardElement.value > props.cardElement.maxInput
-                        &&
-                        (<div className="card-error-display">
-                            "Warning: Input value is too large"
-                        </div>)
+                        ? "Warning: Input value is too small"
+                        : props.cardElement.value > props.cardElement.maxInput
+                        && "Warning: Input value is too large"
                 }
+                </div>
                 <div className="my-1.5 flex flex-row justify-between px-1">
                     <div className="w-2/5">
                         <div className="pt-2 text-blue-900">Enter your response:</div>

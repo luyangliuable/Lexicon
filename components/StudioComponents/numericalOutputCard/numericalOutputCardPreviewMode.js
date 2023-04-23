@@ -28,9 +28,9 @@ function NumericalOutputCardPreviewMode(props) {
          */
         const matches = [];
 
-        variables && variables.forEach(( item, index ) => {
+        variables && variables.forEach((item, index) => {
             for (var value of cardVariables) {
-                if ( value.questionText == item ) {
+                if (value.questionText == item) {
                     matches.push(value.value);
                 }
             }
@@ -51,7 +51,7 @@ function NumericalOutputCardPreviewMode(props) {
          */
 
         for (let i = 0; i < matches.length; i++) {
-            formula = formula.replace(/\[.*?\]/, JSON.stringify( matches[i] ));
+            formula = formula.replace(/\[.*?\]/, JSON.stringify(matches[i]));
         }
 
         // Remove " symbol
@@ -78,7 +78,7 @@ function NumericalOutputCardPreviewMode(props) {
             const matches = getValueOfVariables(variables, props.cardElement.availableVariables);
             formula = replaceVariableWithValues(matches, formula);
 
-            console.log(formula );
+            console.log(formula);
             const sqrt = Math.sqrt;
             const sum = (valueArray) => {
                 return valueArray.reduce((accumulator, currentValue) => {
@@ -87,9 +87,9 @@ function NumericalOutputCardPreviewMode(props) {
                 }, 0);
             };
 
-            return eval( formula );
+            return eval(formula);
         } catch (e) {
-            console.warn(`${ e.message }`);
+            console.warn(`${e.message}`);
             return "There is an error in the formula";
         }
     };
@@ -99,32 +99,56 @@ function NumericalOutputCardPreviewMode(props) {
         return Math.round(value * exponent) / exponent;
     }
 
+    function detectDuplicateVariables(variables) {
+        /*
+         * Detects duplicate variables in the formula
+         *
+         * Parameters:
+         *  - variables (string[]): List of variables
+         *
+         * Returns: True if there are duplicate variables, false otherwise
+         */
+
+        console.log(variables);
+        const unique = [...new Set(variables.map(item => item.questionText))];
+        return unique.length !== variables.length;
+    }
+
     return (
         <>
-          <div className="w-full border shadow-md p-2 hover:shadow-xl mb-2">
-            {/* card heading row */}
-            <div className="flex flex-row mb-1 mb-0">
-              <div className="inline-block font-bold text-2xl w-full text-blue-900 break-all">
-                {props.cardElement.outputHeading}
-              </div>
+            <div className="w-full border shadow-md p-2 hover:shadow-xl mb-2">
+                {/* card heading row */}
+                <div className="flex flex-row mb-1 mb-0">
+                    <div className="inline-block font-bold text-2xl w-full text-blue-900 break-all">
+                        {props.cardElement.outputHeading}
+                    </div>
+                </div>
+                <div className="card-error-display" style={{
+                    visibility: detectDuplicateVariables(props.cardElement.availableVariables) ? "visible" : "hidden"
+                }}>
+                    {
+                        detectDuplicateVariables(props.cardElement.availableVariables) &&
+                        "Error: There are duplicate variables in the formula"
+                    }
+                </div>
+                {/* card heading row */}
+                {/* card content area */}
+                <div className="mb-1">{props.cardElement.outputDescription}</div>
+                {/* card content area */}
+                {/* card result area */}
+                <div className="flex text-blue-900 font-semibold border-1 py-0.5 px-2 rounded justify-between border-blue-900">
+                    <div>Result:</div>
+                    <div>
+                        {
+                            (() => {
+                                const result = evalutateFormula(props.cardElement.formula) ? evalutateFormula(props.cardElement.formula) : "";
+                                return typeof (result) == 'number' ? round(result, props.cardElement.precision) : result;
+                            })()
+                        }
+                    </div>
+                </div>
+                {/* card result area */}
             </div>
-            {/* card heading row */}
-            {/* card content area */}
-            <div className="mb-1">{props.cardElement.outputDescription}</div>
-            {/* card content area */}
-            {/* card result area */}
-            <div className="flex text-blue-900 font-semibold border-1 py-0.5 px-2 rounded justify-between border-blue-900">
-              <div>Result:</div>
-              <div>
-                {(() => {
-                    const result = evalutateFormula(props.cardElement.formula) ? evalutateFormula(props.cardElement.formula) : "";
-                    return typeof(result) == 'number' ? round(result, props.cardElement.precision) : result;
-                })()}
-
-              </div>
-            </div>
-            {/* card result area */}
-          </div>
         </>
     );
 }

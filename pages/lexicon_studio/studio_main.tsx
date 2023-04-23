@@ -187,7 +187,7 @@ class studioMain extends Component<{}, studioMainState> {
             precision?: number,
             outputDescription?: string,
             outputHeading?: string,
-            availableVariables: string[],
+            availableVariables?: string[],
             outputAssociation?: boolean,
             editMode?: boolean
             url_link?: string,

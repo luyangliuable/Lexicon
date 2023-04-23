@@ -21,9 +21,7 @@ function NumericalOutputCard(props) {
         initialState
     );
 
-    useEffect(() => {
-    } , [props]);
-
+    //Reducer
     function handleNumericalOutputCardChanges(state, action) {
         switch (action.type) {
         case "HEADING":
@@ -36,7 +34,7 @@ function NumericalOutputCard(props) {
                 outputDescription: state.outputDescription,
                 editMode: state.editMode,
                 totalScore: state.totalScore,
-                precision: action.value
+                precision: state.precision,
             };
             return updatedState_h;
         case "PRECISION":
@@ -262,9 +260,7 @@ function NumericalOutputCard(props) {
                 }
 
                 placeholder="Edit Output Decimal Precision ..."
-
                 readOnly={!state.editMode}
-
                 value={state.precision}
 
                 onChange={event =>

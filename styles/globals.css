@@ -517,3 +517,11 @@ input[type="text"]:focus {
 .demo-cards:hover {
     box-shadow: 2px 2px 8px #888;
 }
+
+.card-error-display {
+    background: #FFAA22;
+    color: #FFF;
+    display: inline-block;
+    padding: 4px;
+    border-radius: 2px;
+}

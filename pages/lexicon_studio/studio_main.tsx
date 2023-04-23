@@ -621,14 +621,17 @@ class studioMain extends Component<{}, studioMainState> {
                     }
 
                     // CHECK: Content for the provided options is non-empty.
-                    if (Object.keys(current_card_i.unitsObject).length > 0) {
-                        for (const [key, value] of Object.entries(current_card_i.unitsObject)) {
-                            if (value.length === 0) {
-                                alert('Numerical Input Card: No provided unit option can be empty !');
-                                return false;
-                            }
-                        }
-                    }
+                    // This check is disable because
+                    // 1. It raises errors for some strange reason after editing saved calc.
+                    // 2. It is redundant and sometimes no units is ok.
+                    /* if (current_card_iu && Object.keys(current_card_i.unitsObject).length > 0) {
+                        *     for (const [key, value] of Object.entries(current_card_i.unitsObject)) {
+                        *         if (value.length === 0) {
+                        *             alert('Numerical Input Card: No provided unit option can be empty !');
+                        *             return false;
+                        *         }
+                        *     }
+                        * } */
 
                     break;
 

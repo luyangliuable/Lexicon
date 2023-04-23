@@ -26,66 +26,32 @@ function NumericalOutputCard(props) {
         switch (action.type) {
         case "HEADING":
             const updatedState_h = {
-                type: state.type,
-                name: state.name,
-                uuid: state.uuid,
+                ...state,
                 outputHeading: action.value,
-                previewModeDisplay: state.previewModeDisplay,
-                outputDescription: state.outputDescription,
-                editMode: state.editMode,
-                totalScore: state.totalScore,
-                precision: state.precision,
             };
             return updatedState_h;
         case "PRECISION":
             const updatedState_pr = {
-                type: state.type,
-                name: state.name,
-                uuid: state.uuid,
-                outputHeading: state.outputHeading,
-                previewModeDisplay: state.previewModeDisplay,
-                outputDescription: state.outputDescription,
-                editMode: state.editMode,
-                totalScore: state.totalScore,
+                ...state,
                 precision: action.value
             };
             return updatedState_pr;
         case "PREVIEW_MODE":
             const updatedState_p = {
-                type: state.type,
-                name: state.name,
-                uuid: state.uuid,
-                outputHeading: state.outputHeading,
+                ...state,
                 previewModeDisplay: !state.previewModeDisplay,
-                outputDescription: state.outputDescription,
-                editMode: state.editMode,
-                totalScore: state.totalScore,
-                precision: action.value
             };
             return updatedState_p;
         case "DESCRIPTION":
             const updatedState_d = {
-                type: state.type,
-                name: state.name,
-                uuid: state.uuid,
-                outputHeading: state.outputHeading,
-                previewModeDisplay: state.previewModeDisplay,
+                ...state,
                 outputDescription: action.value,
-                editMode: state.editMode,
-                totalScore: state.totalScore,
-                precision: action.value
             };
             return updatedState_d;
         case "EDIT":
             const updatedState_e = {
-                type: state.type,
-                name: state.name,
-                uuid: state.uuid,
-                outputHeading: state.outputHeading,
-                previewModeDisplay: state.previewModeDisplay,
-                outputDescription: state.outputDescription,
+                ...state,
                 editMode: !state.editMode,
-                totalScore: state.totalScore,
             };
             return updatedState_e;
         case "CLEAR":

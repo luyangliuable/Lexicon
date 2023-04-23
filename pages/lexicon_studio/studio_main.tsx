@@ -800,6 +800,17 @@ class studioMain extends Component<{}, studioMainState> {
         switch(actionType){
             case 'SAVE':
                 if (this.state.saveFormDialogBoxOptions.formName.length > 0) {
+
+                    // Clear the values in the form name
+                    for (var eachInput of this.state.inputsList) {
+                        eachInput.value = Number.NaN;
+                    }
+
+                    // Clear the values in the form name
+                    for (var eachOutput of this.state.outputsList) {
+                        eachOutput.value = Number.NaN;
+                    }
+
                     const FORM_NAME = this.state.saveFormDialogBoxOptions.formName;
                     const META_CARD_LIST = this.state.metaList;
                     const INPUTS_CARD_LIST = this.state.inputsList;

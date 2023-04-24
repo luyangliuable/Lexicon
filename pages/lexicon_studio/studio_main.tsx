@@ -1045,12 +1045,12 @@ class studioMain extends Component<{}, studioMainState> {
 
             <div className="w-100vw min-h-screen">
                 {/* side bar menu for card components */}
-                <Offcanvas show={this.state.showSideBarMenu} onHide={()=>this.toggleSideBarMenu("CREATE-CARD-OPTION")}>
+                <Offcanvas show={this.state.showSideBarMenu} onHide={() => this.toggleSideBarMenu("CREATE-CARD-OPTION")}>
                     <Offcanvas.Header closeButton>
                         <div className="text-4xl text-blue-900">Components</div>
                     </Offcanvas.Header>
 
-                    <Offcanvas.Body className="divide-y divide-gray-300" style={{background: "#EEE"}}>
+                    <Offcanvas.Body className="divide-y divide-gray-300" style={{ background: "#EEE" }}>
                         {/* TODO make these cards click through*/}
 
                         <h3>Meta Cards</h3>
@@ -1063,7 +1063,7 @@ class studioMain extends Component<{}, studioMainState> {
                         </div>
 
                         <div className="demo-cards" onClick={() => {
-                            this.sideBarOptionSelected('meta', 'ReferenceComponent',null);
+                            this.sideBarOptionSelected('meta', 'ReferenceComponent', null);
                         }}>
 
                             <div className="pointer-events-none">
@@ -1073,7 +1073,7 @@ class studioMain extends Component<{}, studioMainState> {
 
                         <h3>Input Cards</h3>
                         <div className="demo-cards" onClick={() => {
-                            this.sideBarOptionSelected('input', 'SelectInput',null);
+                            this.sideBarOptionSelected('input', 'SelectInput', null);
                         }}>
 
                             <div className="pointer-events-none">
@@ -1081,21 +1081,21 @@ class studioMain extends Component<{}, studioMainState> {
                             </div>
                         </div>
                         <div className="demo-cards" onClick={() => {
-                            this.sideBarOptionSelected('input', 'NumericalInput',null);
+                            this.sideBarOptionSelected('input', 'NumericalInput', null);
                         }}>
                             <div className="pointer-events-none">
                                 <NumericalInputCard cardElement={{}} />
                             </div>
                         </div>
                         <div className="demo-cards" onClick={() => {
-                            this.sideBarOptionSelected('input', 'BivalentInput',null);
+                            this.sideBarOptionSelected('input', 'BivalentInput', null);
                         }} >
                             <div className="pointer-events-none">
                                 <BivalentInputCard className="demo-cards" cardElement={{}} />
                             </div>
                         </div>
                         <div className="demo-cards" onClick={() => {
-                            this.sideBarOptionSelected('input', 'SliderInput',null);
+                            this.sideBarOptionSelected('input', 'SliderInput', null);
                         }}>
                             <div className="pointer-events-none">
                                 <SliderInputCard cardElement={{}} />
@@ -1110,11 +1110,11 @@ class studioMain extends Component<{}, studioMainState> {
 
                         <h3>Output Cards</h3>
                         <div className="demo-cards" onClick={() => {
-                            this.sideBarOptionSelected('output', 'NumericalOutputComponent',null);
+                            this.sideBarOptionSelected('output', 'NumericalOutputComponent', null);
                         }}>
 
                             <div className="pointer-events-none">
-                                <NumericalOutputCard cardElement={{}}/>
+                                <NumericalOutputCard cardElement={{}} />
                             </div>
                         </div>
                     </Offcanvas.Body>
@@ -1122,18 +1122,18 @@ class studioMain extends Component<{}, studioMainState> {
                 {/* side bar menu for card components */}
 
                 {/* side bar menu for viewing saved forms menu */}
-                <Offcanvas show={this.state.viewSavedFormsMenu} onHide={()=>this.toggleSideBarMenu("VIEW-SAVED-FORMS-OPTION")}>
+                <Offcanvas show={this.state.viewSavedFormsMenu} onHide={() => this.toggleSideBarMenu("VIEW-SAVED-FORMS-OPTION")}>
                     <Offcanvas.Header closeButton>
                         <div className="text-4xl text-blue-900">Saved Forms</div>
                     </Offcanvas.Header>
                     <Offcanvas.Body className="divide-y divide-gray-300">
                         {this.state.savedFormsList.length > 0 ?
-                                                            (<>{this.state.savedFormsList.map((form, id) => {
-                                                                    return (
-                                                                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" id={id} onClick={() => { this.handleViewSavedFormSelectionRequest(form._id, form.name); }}>{form.name}</div>
-                                                                    );
-                                                                })}</>)
-                                                           :(<div className="text-lg text-blue-900">No saved forms found !</div>)}
+                            (<>{this.state.savedFormsList.map((form, id) => {
+                                return (
+                                    <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" id={id} onClick={() => { this.handleViewSavedFormSelectionRequest(form._id, form.name); }}>{form.name}</div>
+                                );
+                            })}</>)
+                            : (<div className="text-lg text-blue-900">No saved forms found !</div>)}
                     </Offcanvas.Body>
                 </Offcanvas>
                 {/* side bar menu for viewing saved forms menu */}
@@ -1143,7 +1143,7 @@ class studioMain extends Component<{}, studioMainState> {
                     <div className="text-3xl text-blue-900 m-1 inline-block font-semibold">Lexicon Studio</div>
                     <div className="flex items-center">
                         {!this.state.previewMode && (
-                            <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={()=>this.toggleSideBarMenu("CREATE-CARD-OPTION")}>
+                            <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={() => this.toggleSideBarMenu("CREATE-CARD-OPTION")}>
                                 <FontAwesomeIcon icon={faPlusCircle} className="mr-1.5" />Create
                             </div>
                         )}
@@ -1153,7 +1153,7 @@ class studioMain extends Component<{}, studioMainState> {
                         <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={this.handleSaveFormOption}>
                             <FontAwesomeIcon icon={faFileExport} className="mr-1.5" />Save Form
                         </div>
-                        <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={()=>this.toggleSideBarMenu("VIEW-SAVED-FORMS-OPTION")}>
+                        <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={() => this.toggleSideBarMenu("VIEW-SAVED-FORMS-OPTION")}>
                             <FontAwesomeIcon icon={faBook} className="mr-1.5" />View Saved Forms
                         </div>
                     </div>
@@ -1163,15 +1163,16 @@ class studioMain extends Component<{}, studioMainState> {
                 <div className="flex flex-column items-center mt-4">
                     {/* meta column */}
                     <div className="w-1/2 mx-2">
-                        <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
-                            <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Meta
+                        <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none bg-gray-200">
+                            <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />
+                            Meta
                         </div>
                         {this.state.metaList.map((item, index) => (this.conditionalCardRender(item, index)))}
                     </div>
                     {/* meta column */}
                     {/* inputs column */}
                     <div className="w-1/2 mx-2">
-                        <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
+                        <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none bg-gray-200">
                             <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Inputs
                         </div>
                         {this.state.inputsList.map((item, index) => (this.conditionalCardRender(item, index)))}
@@ -1179,7 +1180,7 @@ class studioMain extends Component<{}, studioMainState> {
                     {/* input column */}
                     {/* outputs column */}
                     <div className="w-1/2 mx-2">
-                        <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
+                        <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none bg-gray-200">
                             <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Outputs
                         </div>
                         {this.state.outputsList.map((item, index) => (this.conditionalCardRender(item, index)))}

@@ -68,47 +68,47 @@ function SelectInputCardPreviewMode(props) {
 
     return (
         <>
-          <div className="transition ease-in-out duration-500 w-full none:shadow hover:shadow-md border	px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
-            {/* question row */}
-            <div className="min-h-full font-semibold text-lg text-blue-900 mb-2 break-all">
-              {props.cardElement.questionText}
-            </div>
-            {/* question row */}
-            {/* options row */}
-            {
-                Object.keys(props.cardElement.optionsObject).map((keyName, index) => (
-                    <div
-                      className={updateOptionsStyling(keyName, optionsSelectedArray)}
-                      onClick={
-                          (e) =>
-                          updateOptionsSelectedArray(
-                              keyName,
-                              optionsSelectedArray,
-                              props.cardElement.maxSelectionVal,
-                          )
-                      }
+            <div className="transition ease-in-out duration-500 w-full none:shadow hover:shadow-md border	px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none bg-gray-50">
+                {/* question row */}
+                <div className="min-h-full font-semibold text-lg text-blue-900 mb-2 break-all">
+                    {props.cardElement.questionText}
+                </div>
+                {/* question row */}
+                {/* options row */}
+                {
+                    Object.keys(props.cardElement.optionsObject).map((keyName, index) => (
+                        <div
+                            className={updateOptionsStyling(keyName, optionsSelectedArray)}
+                            onClick={
+                                (e) =>
+                                    updateOptionsSelectedArray(
+                                        keyName,
+                                        optionsSelectedArray,
+                                        props.cardElement.maxSelectionVal,
+                                    )
+                            }
 
-                      key={keyName}
-                    >
-                      <div className="flex flex-row justify-around py-0.5 mx-0.5">
-                        <div className="h-full w-9 text-center pt-0.5 border rounded bg-blue-600 text-white">
-                          {index}
+                            key={keyName}
+                        >
+                            <div className="flex flex-row justify-around py-0.5 mx-0.5">
+                                <div className="h-full w-9 text-center pt-0.5 border rounded bg-blue-600 text-white">
+                                    {index}
+                                </div>
+                            </div>
+                            <div className="font-bold mx-2 mt-1 text-lg text-blue-800 overflow-x-hidden">
+                                {props.cardElement.optionsObject[keyName]}
+                            </div>
                         </div>
-                      </div>
-                      <div className="font-bold mx-2 mt-1 text-lg text-blue-800 overflow-x-hidden">
-                        {props.cardElement.optionsObject[keyName]}
-                      </div>
-                    </div>
-                ))
-            }
-            {/* options row */}
-            {/* note row */}
-            <div className="text-blue-900 text-sm mt-2">
-              <b>NOTE:</b> You can only select {props.cardElement.maxSelectionVal}{" "}
-              option(s).
+                    ))
+                }
+                {/* options row */}
+                {/* note row */}
+                <div className="text-blue-900 text-sm mt-2">
+                    <b>NOTE:</b> You can only select {props.cardElement.maxSelectionVal}{" "}
+                    option(s).
+                </div>
+                {/* note row */}
             </div>
-            {/* note row */}
-          </div>
         </>
     );
 }

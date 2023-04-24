@@ -22,7 +22,7 @@ function NumericalInputCardPreviewMode(props) {
 
     return (
         <>
-            <div className="transition ease-in-out duration-500 w-full none:shadow hover:shadow-md border	px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
+            <div className="transition ease-in-out duration-500 w-full none:shadow hover:shadow-md border	rounded-sm text-blue-900 text-lg p-4 mb-2 select-none bg-gray-50">
                 {/* question row */}
                 <div className="inline-block font-semibold text-xl w-full text-blue-900 break-all">
                     {props.cardElement.questionText}

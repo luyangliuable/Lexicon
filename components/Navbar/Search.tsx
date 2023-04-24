@@ -7,7 +7,8 @@ interface SearchProps {
     result: String[]
 }
 
-const Search: React.FC<[], SearchProps> = () => {
+const Search: React.FC<[], SearchProps> = (props) => {
+
     const [searchResult, setSearch] = useState({
         result: []
     });

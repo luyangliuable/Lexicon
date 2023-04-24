@@ -525,3 +525,7 @@ input[type="text"]:focus {
     padding: 4px;
     border-radius: 2px;
 }
+
+.height-fit-text {
+    height: 40vh !important;
+}

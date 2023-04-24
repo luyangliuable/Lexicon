@@ -15,11 +15,11 @@ function NumericalInputCard(props) {
         maxInput: props.cardElement.maxInput,
         unitsObject: props.cardElement.unitsObject,
         editMode: props.cardElement.editMode,
-    }
+    };
     const [state, updateNumericalInputCard] = useReducer(
         handleNumericalInputCardChanges,
         initialState
-    )
+    );
 
     function handleNumericalInputCardChanges(state, action) {
         switch (action.type) {
@@ -34,8 +34,9 @@ function NumericalInputCard(props) {
                     maxInput: state.maxInput,
                     unitsObject: state.unitsObject,
                     editMode: state.editMode,
-                }
-                return updatedState_question_text
+                };
+            return updatedState_question_text;
+
             case "PREVIEW_MODE":
                 const updatedState_preview_mode = {
                     type: state.type,
@@ -47,12 +48,12 @@ function NumericalInputCard(props) {
                     maxInput: state.maxInput,
                     unitsObject: state.unitsObject,
                     editMode: state.editMode,
-                }
-                return updatedState_preview_mode
+                };
+            return updatedState_preview_mode;
             case "MIN_INPUT":
                 const min_input_value = Number.isNaN(parseInt(action.value))
                     ? action.value
-                    : parseInt(action.value)
+                : parseInt(action.value);
                 const updatedState_min_input = {
                     type: state.type,
                     name: state.name,
@@ -63,8 +64,8 @@ function NumericalInputCard(props) {
                     maxInput: state.maxInput,
                     unitsObject: state.unitsObject,
                     editMode: state.editMode,
-                }
-                return updatedState_min_input
+                };
+            return updatedState_min_input;
             case "MAX_INPUT":
                 const max_input_value = Number.isNaN(parseInt(action.value))
                     ? action.value
@@ -224,8 +225,8 @@ function NumericalInputCard(props) {
                                 <div
                                     className="inline-block w-5/12 text-center border-2 border-blue-900 my-1 rounded hover:bg-blue-900 hover:text-white cursor-pointer"
                                     onClick={() => {
-                                        updateNumericalInputCard({ type: "EDIT" })
-                                        saveChanges(state)
+                                        updateNumericalInputCard({ type: "EDIT" });
+                                        saveChanges(state);
                                     }}
                                 >
                                     Done

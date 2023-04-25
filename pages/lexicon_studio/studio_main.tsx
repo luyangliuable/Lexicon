@@ -954,28 +954,24 @@ class studioMain extends Component<{}, studioMainState> {
     fetchSavedForm() {
         const formToBeViewedUUID = this.state.viewSavedFormsDialogBox.selectedFormDetails['UUID'];
 
-        if (formToBeViewedUUID != undefined || formToBeViewedUUID != '') {
-            fetchForm(formToBeViewedUUID).then(data => {
-                if (data.error) {
-                    alert(' Failure in fetching the form. Please try again later !');
-                } else {
-                    this.setState({
-                        metaList: data.form.metaCardList,
-                        inputsList: data.form.inputsCardList,
-                        outputsList: data.form.outputsCardList,
-                        viewSavedFormsDialogBox: {
-                            display: false,
-                            viewSelectedForm: false,
-                            deleteSelectedForm: false,
-                            selectedFormDetails: { UUID: '', name: '' }
-                        },
-                        viewSavedFormsMenu: false
-                    });
-                }
-            }).catch(err => console.warn(err));
-        } else {
-            alert('Please select a form to view !');
-        }
+        fetchForm(formToBeViewedUUID).then(data => {
+            if (data.error) {
+                console.warn(' Failure in fetching the form. Please try again later !');
+            } else {
+                this.setState({
+                    metaList: data.form.metaCardList,
+                    inputsList: data.form.inputsCardList,
+                    outputsList: data.form.outputsCardList,
+                    viewSavedFormsDialogBox: {
+                        display: false,
+                        viewSelectedForm: false,
+                        deleteSelectedForm: false,
+                        selectedFormDetails: { UUID: '', name: '' }
+                    },
+                    viewSavedFormsMenu: false
+                });
+            }
+        }).catch(err => console.warn(err));
     }
 
     render() {

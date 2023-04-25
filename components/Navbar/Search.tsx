@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { FaSearch } from "react-icons/fa"
 import { CircleButton } from "../AppButton"
 import TextInput from "../utils/Form/TextInput"
@@ -9,9 +9,32 @@ interface SearchProps {
 
 const Search: React.FC<[], SearchProps> = (props) => {
 
+    const searchInputRef = useRef(null);
+
+    const resultsListRef = useRef(null);
+
     const [searchResult, setSearch] = useState({
         result: []
     });
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+
+            // Temporary solution because searchInputRef is not working.
+            const searchInput = document.getElementById("search-bar");
+
+            if (searchInput && !searchInput.contains(event.target) && resultsListRef.current && !resultsListRef.current.contains(event.target)) {
+                hideSearchResult();
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+
+    }, [searchInputRef, resultsListRef]);
 
     const search = (value: string) => {
         document.getElementsByClassName("search-result-container")[0].style.display = 'flex';
@@ -21,7 +44,7 @@ const Search: React.FC<[], SearchProps> = (props) => {
             headers: {
                 "content-type": "Application/Json"
             },
-            body: JSON.stringify({value: value})
+            body: JSON.stringify({ value: value })
         })
             .then(response => response.json())
             .then(response => {
@@ -54,15 +77,18 @@ const Search: React.FC<[], SearchProps> = (props) => {
     }
 
     return (
-        <div className="flex items-center">
+        <div className="flex items-center" >
+
             <TextInput
                 onChange={(e: any) => search(e.target.value)}
-                onBlur={(e: any) => hideSearchResult()}
+                onFocus={(e: any) => search(e.target.value)}
+                ref={searchInputRef}
                 placeholder={"Search"}
                 value={search || ""}
                 type={"text"}
                 className="navbar-text-input"
             />
+
             <CircleButton
                 className="circle-search-button"
                 onClick={() => {/*TODO*/ }}
@@ -76,15 +102,27 @@ const Search: React.FC<[], SearchProps> = (props) => {
                 }
                 enable={true}
             />
-            <div className="search-result-container">
+
+            <div className="search-result-container" ref={resultsListRef}>
                 {
-                    searchResult["result"].map((item, index) => (
-                        <div className="search-result-item" onClick={() => {
-                            window.location.href = `http://localhost:9000/parsingEngine/render?id=638c47281f34a9aa711a7736`;
-                        }}
-                        >{item.name}</div>
-                    )
-                    )
+                    searchResult["result"].map((item, index) => {
+                        let url;
+
+                        if ('inputsCardList' in item) {
+                            url = `http://localhost:3000/lexicon_studio?formName=${item._id}`
+                        } else {
+                            url = `http://localhost:9000/parsingEngine/render?id=${item._id}`
+                        }
+
+                        console.log(url);
+
+                        return (
+                            <div className="search-result-item" onClick={() => {
+                                window.location.href = url;
+                            }}
+                            >{item.name}</div>
+                        );
+                    })
                 }
             </div>
 

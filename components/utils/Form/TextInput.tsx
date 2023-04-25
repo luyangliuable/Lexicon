@@ -1,4 +1,5 @@
 import React from "react"
+import { useRef, forwardRef } from "react"
 
 import { isEmpty } from "../index"
 import Input from "./Input"
@@ -15,25 +16,29 @@ interface iTextInput {
     rounded: boolean
 }
 
-const TextInput: React.FC<iTextInput> = ({
-    label,
-    onChange,
-    placeholder,
-    value,
-    type,
-    disable,
-    error,
-    name,
-    rounded,
-    className,
-    ...rest
-}) => {
+const TextInput: React.FC<iTextInput> = forwardRef(function TextInput({
+        label,
+        onChange,
+        placeholder,
+        value,
+        type,
+        disable,
+        error,
+        name,
+        rounded,
+        className,
+        ...rest
+    } , ref) {
+    /* const TextInput: React.FC<iTextInput> = ({ */
     return (
         <>
             {!isEmpty(label) && (
                 <p className="text-sm flex item-center mb-1">{label}</p>
             )}
+
             <Input
+                id="search-bar"
+                ref={ref}
                 name={name}
                 type={type}
                 onChange={(e: any) => {
@@ -45,6 +50,6 @@ const TextInput: React.FC<iTextInput> = ({
             />
         </>
     )
-}
+});
 
 export default TextInput

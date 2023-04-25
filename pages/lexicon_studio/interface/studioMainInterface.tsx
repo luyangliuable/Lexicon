@@ -1,5 +1,5 @@
 interface studioMainState {
-    totalInputScore: number
+    totalInputScore: number,
     saveFormDialogBoxOptions: any,
     error: {
         occurence: boolean,

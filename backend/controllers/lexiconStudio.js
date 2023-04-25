@@ -55,7 +55,6 @@ exports.fetchForm = async ( req, res, next ) => {
 };
 
 
-
 exports.main = async ( req, res, next ) => {
     try {
         return res.status(200).send("<div style='background: #1e90ff; padding: 20px; width: 80px;'>It's working</div>");

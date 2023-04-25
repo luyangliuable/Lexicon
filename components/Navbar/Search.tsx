@@ -25,8 +25,7 @@ const Search: React.FC<[], SearchProps> = (props) => {
         })
             .then(response => response.json())
             .then(response => {
-                console.log(response.result);
-                if ( response.result ) {
+                if (response.result) {
                     setSearch(prev => {
                         return {
                             ...prev,
@@ -38,15 +37,15 @@ const Search: React.FC<[], SearchProps> = (props) => {
                 }
             })
             .catch(err => {
-                console.log(err);
+                console.error(err);
             });
 
-        return [ searchResult.result ];
+        return [searchResult.result];
 
     }
 
     const clearSearch = () => {
-        setSearch({result: []});
+        setSearch({ result: [] });
     }
 
     const hideSearchResult = () => {
@@ -66,27 +65,27 @@ const Search: React.FC<[], SearchProps> = (props) => {
             />
             <CircleButton
                 className="circle-search-button"
-                onClick={() => {/*TODO*/}}
+                onClick={() => {/*TODO*/ }}
                 tooltip={"Search"}
                 Icon={
                     <FaSearch style={{
-                            color: "#FFF",
-                            width: '13px',
-                            height: 'auto' as any
-                        }} />
+                        color: "#FFF",
+                        width: '13px',
+                        height: 'auto' as any
+                    }} />
                 }
                 enable={true}
             />
             <div className="search-result-container">
-                    {
-                        searchResult["result"].map(( item, index ) => (
-                            <div className="search-result-item" onClick={() => {
-                                window.location.href = `http://localhost:9000/parsingEngine/render?id=638c47281f34a9aa711a7736`;
-                            }}
-                            >{ item.name }</div>
-                        )
-                        )
-                    }
+                {
+                    searchResult["result"].map((item, index) => (
+                        <div className="search-result-item" onClick={() => {
+                            window.location.href = `http://localhost:9000/parsingEngine/render?id=638c47281f34a9aa711a7736`;
+                        }}
+                        >{item.name}</div>
+                    )
+                    )
+                }
             </div>
 
         </div>

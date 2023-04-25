@@ -242,7 +242,7 @@ input[type="text"]:focus {
 
 
 .search-result-item {
-    width: 40vw;
+    width: 30vw;
     background: #FFF;
     font-size: 10px;
     display: flex;
@@ -392,14 +392,16 @@ input[type="text"]:focus {
 
 
 .search-result-container {
-    align-items: flex-start;
-    justify-content: flex-end;
-    top: calc(var(--header-height)/3.2);
+    display: none;
+    /* display: flex; */
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    top: calc(var(--header-height));
     height: 10vh;
-    width: 50vw;
+    width: 30vw;
     right: max( 3.5vw, 55px );
     position: absolute;
-    display: flex;
     z-index: 2;
 }
 
@@ -416,7 +418,7 @@ input[type="text"]:focus {
 .navbar-text-input:focus {
     box-shadow: .5px .5px 4px #888 !important;
     border-radius: .25vw;
-    width: 40vw;
+    width: 30vw;
 }
 
 .landing-page-slide-section {
@@ -504,8 +506,26 @@ input[type="text"]:focus {
 }
 
 .demo-cards {
+    cursor: pointer;
     background: #FFF;
     transform: scale(80%);
     -webkit-transform: scale(80%);
     -moz-transform: scale(80%);
+    transition: box-shadow .5s ease-in-out;
+}
+
+.demo-cards:hover {
+    box-shadow: 2px 2px 8px #888;
+}
+
+.card-error-display {
+    background: #FFAA22;
+    color: #FFF;
+    display: inline-block;
+    padding: 4px;
+    border-radius: 2px;
+}
+
+.height-fit-text {
+    height: 40vh !important;
 }

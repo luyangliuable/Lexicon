@@ -28,12 +28,13 @@ class studioMain extends Component<{}, studioMainState> {
 
     constructor(props) {
         super(props);
+
         this.state = {
             showSideBarMenu: false,
             metaList: [],
             inputsList: [],
             outputsList: [],
-            previewMode: false,
+            previewMode: true,
             formulaValues: {},
             cardDeleteConfirmation: false,
             cardDeleteModalDisplay: false,
@@ -71,18 +72,53 @@ class studioMain extends Component<{}, studioMainState> {
         this.capturePreviewFieldStateChange = this.capturePreviewFieldStateChange.bind(this);
     }
 
+    getFormIdFromQuery() {
+        const searchParams: any = new URLSearchParams(window.location.search);
+
+        const queryObj: any = {};
+
+        for (let [key, value] of searchParams.entries()) {
+            queryObj[key] = value;
+        }
+        
+        this.setState(
+            {
+                ...this.state,
+                viewSavedFormsDialogBox: {
+                    ...this.state.viewSavedFormsDialogBox,
+                    selectedFormDetails: {
+                        ...this.state.viewSavedFormsDialogBox.selectedFormDetails,
+                        UUID: queryObj['formId'] || queryObj['formName']
+                    }
+                }
+            }
+        );
+    }
+
     componentDidMount() {
         document.getElementsByClassName("navbar-option")[1].style.background = "#00bfff";
         document.getElementsByClassName("navbar-option")[1].style.color = "#FFF";
 
+        this.getFormIdFromQuery();
+
+        // TODO fix this part, somehow the state updates after 200 miliseconds.
+        setTimeout(
+            () => {
+                console.log(this.state.viewSavedFormsDialogBox.selectedFormDetails['UUID'])
+                this.fetchSavedForm();
+            }, 200
+        );
+
+
+
     }
 
     componentDidUpdate(prevProps, prevState) {
-
         // For some reason when the props (new inputs are added) the child elements does not update its state with new props.
         for (let output of this.state.outputsList) {
             output.availableVariables = this.state.inputsList;
         }
+
     }
 
     // method for updating the total score for input cards
@@ -118,7 +154,7 @@ class studioMain extends Component<{}, studioMainState> {
 
     // method for handling the opening and the closure of the side bar menu
     toggleSideBarMenu(callingEntity) {
-        switch(callingEntity){
+        switch (callingEntity) {
             case "CREATE-CARD-OPTION":
                 if (!this.state.previewMode) {
                     if (this.state.showSideBarMenu) {
@@ -131,7 +167,7 @@ class studioMain extends Component<{}, studioMainState> {
                 }
                 break;
             case "VIEW-SAVED-FORMS-OPTION":
-                if (this.state.viewSavedFormsMenu){
+                if (this.state.viewSavedFormsMenu) {
                     this.setState({ viewSavedFormsMenu: false });
                 } else {
                     this.setState({ viewSavedFormsMenu: true });
@@ -184,9 +220,10 @@ class studioMain extends Component<{}, studioMainState> {
             totalScore?: number,
             outputassociationelement?: any,
             formula?: string,
+            precision?: number,
             outputDescription?: string,
             outputHeading?: string,
-            availableVariables: string[],
+            availableVariables?: string[],
             outputAssociation?: boolean,
             editMode?: boolean
             url_link?: string,
@@ -207,20 +244,20 @@ class studioMain extends Component<{}, studioMainState> {
         };
 
         switch (componentElement.type) {
-                // meta list type element
+            // meta list type element
             case 'meta':
                 switch (componentElement.name) {
 
-                        // Description Card
+                    // Description Card
                     case 'DescriptionComponent':
                         componentElement.descriptionHeading = '';
                         componentElement.content = '';
                         componentElement.previewModeDisplay = true;
                         componentElement.editMode = false;
-                        this.setState({ metaList: [...this.state.metaList, componentElement], displayCardAdditionToast: true});
+                        this.setState({ metaList: [...this.state.metaList, componentElement], displayCardAdditionToast: true });
                         break;
 
-                        // Reference Card
+                    // Reference Card
                     case 'ReferenceComponent':
                         componentElement.referenceName = '';
                         componentElement.url_link = '';
@@ -231,11 +268,11 @@ class studioMain extends Component<{}, studioMainState> {
                 }
                 break;
 
-                // input list type element
+            // input list type element
             case 'input':
                 switch (componentElement.name) {
 
-                        // Bivalent Input Card
+                    // Bivalent Input Card
                     case 'BivalentInput':
                         componentElement.questionText = '';
                         componentElement.previewModeDisplay = true;
@@ -244,7 +281,7 @@ class studioMain extends Component<{}, studioMainState> {
                         this.setState({ inputsList: [...this.state.inputsList, componentElement], displayCardAdditionToast: true });
                         break;
 
-                        // Slider Input Card
+                    // Slider Input Card
                     case 'SliderInput':
                         componentElement.questionText = '';
                         componentElement.minInput = Number.NaN;
@@ -256,7 +293,7 @@ class studioMain extends Component<{}, studioMainState> {
                         this.setState({ inputsList: [...this.state.inputsList, componentElement], displayCardAdditionToast: true });
                         break;
 
-                        // Select Input Card
+                    // Select Input Card
                     case 'SelectInput':
                         componentElement.questionText = '';
                         componentElement.previewModeDisplay = true;
@@ -267,7 +304,7 @@ class studioMain extends Component<{}, studioMainState> {
                         this.setState({ inputsList: [...this.state.inputsList, componentElement], displayCardAdditionToast: true });
                         break;
 
-                        // Numerical Input Card
+                    // Numerical Input Card
                     case 'NumericalInput':
                         componentElement.questionText = '';
                         componentElement.value = Number.NaN;
@@ -279,7 +316,7 @@ class studioMain extends Component<{}, studioMainState> {
                         this.setState({ inputsList: [...this.state.inputsList, componentElement], displayCardAdditionToast: true });
                         break;
 
-                        // Point Input Card
+                    // Point Input Card
                     case 'PointInput':
                         componentElement.questionText = '';
                         componentElement.previewModeDisplay = true;
@@ -293,7 +330,7 @@ class studioMain extends Component<{}, studioMainState> {
                 }
                 break;
 
-                // output list type element
+            // output list type element
             case 'output':
                 switch (componentElement.name) {
                     case 'NumericalOutputComponent':
@@ -303,7 +340,8 @@ class studioMain extends Component<{}, studioMainState> {
                         componentElement.editMode = false;
                         componentElement.totalScore = 0;
                         componentElement.availableVariables = this.state.inputsList;
-                        componentElement.formula =  '';
+                        componentElement.formula = '';
+                        componentElement.precision = 4; // Default precision is 4
                         this.setState({ outputsList: [...this.state.outputsList, componentElement] });
                         break;
                 }
@@ -312,12 +350,12 @@ class studioMain extends Component<{}, studioMainState> {
     }
 
     capturePreviewFieldStateChange(stateObject) {
-        switch(stateObject.type) {
+        switch (stateObject.type) {
             case "input":
                 const stateObjectToBeUpdatedIndex_m = this.state.inputsList.findIndex(item => item.uuid == stateObject.uuid);
                 const updatingCardObject = this.state.inputsList[stateObjectToBeUpdatedIndex_m];
                 const updatingCardName = updatingCardObject.questionText;
-                this.state.formulaValues[updatingCardName] = stateObject.value;
+                // this.state.formulaValues[updatingCardName] = stateObject.value;
 
                 this.setState(prevState => {
                     let inputsListLocalCopy = prevState.inputsList;
@@ -431,6 +469,7 @@ class studioMain extends Component<{}, studioMainState> {
                             outputListLocalCopy[stateObjectToBeUpdatedIndex_o].previewModeDisplay = stateObject.previewModeDisplay;
                             outputListLocalCopy[stateObjectToBeUpdatedIndex_o].totalScore = stateObject.totalScore;
                             outputListLocalCopy[stateObjectToBeUpdatedIndex_o].formula = stateObject.formula;
+                            outputListLocalCopy[stateObjectToBeUpdatedIndex_o].precision = stateObject.precision;
                             outputListLocalCopy[stateObjectToBeUpdatedIndex_o].availableVariables = stateObject.availableVariables;
                             return { outputsList: outputListLocalCopy };
                         });
@@ -618,14 +657,17 @@ class studioMain extends Component<{}, studioMainState> {
                     }
 
                     // CHECK: Content for the provided options is non-empty.
-                    if (Object.keys(current_card_i.unitsObject).length > 0) {
-                        for (const [key, value] of Object.entries(current_card_i.unitsObject)) {
-                            if (value.length === 0) {
-                                alert('Numerical Input Card: No provided unit option can be empty !');
-                                return false;
-                            }
-                        }
-                    }
+                    // This check is disable because
+                    // 1. It raises errors for some strange reason after editing saved calc.
+                    // 2. It is redundant and sometimes no units is ok.
+                    /* if (current_card_iu && Object.keys(current_card_i.unitsObject).length > 0) {
+                        *     for (const [key, value] of Object.entries(current_card_i.unitsObject)) {
+                        *         if (value.length === 0) {
+                        *             alert('Numerical Input Card: No provided unit option can be empty !');
+                        *             return false;
+                        *         }
+                        *     }
+                        * } */
 
                     break;
 
@@ -720,7 +762,7 @@ class studioMain extends Component<{}, studioMainState> {
     // method for conditionally rendering card components
     conditionalCardRender(cardItem, index) {
         switch (this.state.previewMode) {
-                // if preview mode is disabled
+            // if preview mode is disabled
             case false:
                 switch (cardItem.name) {
                     case "SelectInput":
@@ -740,7 +782,7 @@ class studioMain extends Component<{}, studioMainState> {
                     case "NumericalOutputComponent":
                         return (<NumericalOutputCard cardElement={cardItem} deleteMethod={this.handleCardComponentDelete} stateChangeMethod={this.captureCardComponentStateChange} elementIndex={index} key={cardItem.uuid}></NumericalOutputCard>);
                 }
-                // if preview mode is enabled
+            // if preview mode is enabled
             case true:
                 switch (cardItem.name) {
                     case "SelectInput":
@@ -790,10 +832,21 @@ class studioMain extends Component<{}, studioMainState> {
     }
 
     // method for handling the save form option confirmation
-    handleSaveFormOptionConfirmation(actionType){
-        switch(actionType){
+    handleSaveFormOptionConfirmation(actionType) {
+        switch (actionType) {
             case 'SAVE':
                 if (this.state.saveFormDialogBoxOptions.formName.length > 0) {
+
+                    // Clear the values in the form name
+                    for (var eachInput of this.state.inputsList) {
+                        eachInput.value = Number.NaN;
+                    }
+
+                    // Clear the values in the form name
+                    for (var eachOutput of this.state.outputsList) {
+                        eachOutput.value = Number.NaN;
+                    }
+
                     const FORM_NAME = this.state.saveFormDialogBoxOptions.formName;
                     const META_CARD_LIST = this.state.metaList;
                     const INPUTS_CARD_LIST = this.state.inputsList;
@@ -819,7 +872,7 @@ class studioMain extends Component<{}, studioMainState> {
                 } else {
                     this.setState(prevState => {
                         prevState.saveFormDialogBoxOptions['name_requirement_warning'] = true;
-                        return {saveFormDialogBoxOptions: prevState.saveFormDialogBoxOptions };
+                        return { saveFormDialogBoxOptions: prevState.saveFormDialogBoxOptions };
                     });
                 }
                 break;
@@ -836,8 +889,8 @@ class studioMain extends Component<{}, studioMainState> {
     }
 
     // method for handling the save form option
-    handleSaveFormOption(){
-        if (this.state.previewMode){
+    handleSaveFormOption() {
+        if (this.state.previewMode) {
 
             const META_CARD_LIST = this.state.metaList;
             const INPUTS_CARD_LIST = this.state.inputsList;
@@ -858,9 +911,10 @@ class studioMain extends Component<{}, studioMainState> {
     }
 
     // method for handling saved form selection request
-    handleViewSavedFormSelectionRequest(formID, formName){
+    handleViewSavedFormSelectionRequest(formID, formName) {
         const selectedFormUUID = formID;
         const selectedFormName = formName;
+
         this.setState({
             viewSavedFormsDialogBox: {
                 display: true,
@@ -872,13 +926,13 @@ class studioMain extends Component<{}, studioMainState> {
     }
 
     // method for handling delete saved form request
-    deleteSavedFormRequest(){
+    deleteSavedFormRequest() {
         const formToBeDeletedUUID = this.state.viewSavedFormsDialogBox.selectedFormDetails['UUID'];
         deleteForm(formToBeDeletedUUID).then(data => {
             if (data.error) {
                 alert(' Form deletion failed. Please try again later ! ');
             } else {
-                this.setState( prevState => {
+                this.setState(prevState => {
                     const savedFormListFilteredCopy = prevState.savedFormsList.filter(form => form._id != this.state.viewSavedFormsDialogBox['selectedFormDetails']['UUID']);
                     return {
                         viewSavedFormsDialogBox: {
@@ -893,36 +947,31 @@ class studioMain extends Component<{}, studioMainState> {
                 });
                 alert('The form has been deleted successfully !');
             }
-        }).catch(err => {console.warn(err);});
+        }).catch(err => { console.warn(err); });
     }
 
     // method for handling the fetching a saved form request
-    fetchSavedForm(){
-        // Checking if the preview mode is enabled.
-        if (this.state.previewMode){
-            const formToBeViewedUUID = this.state.viewSavedFormsDialogBox.selectedFormDetails['UUID'];
-            fetchForm(formToBeViewedUUID).then( data => {
-                if (data.error){
-                    alert( ' Failure in fetching the form. Please try again later !' );
-                } else {
-                    this.setState({
-                        metaList: data.form.metaCardList,
-                        inputsList: data.form.inputsCardList,
-                        outputsList: data.form.outputsCardList,
-                        viewSavedFormsDialogBox: {
-                            display: false,
-                            viewSelectedForm: false,
-                            deleteSelectedForm: false,
-                            selectedFormDetails: { UUID: '', name: '' }
-                        },
-                        viewSavedFormsMenu: false
-                    });
-                }
-            }).catch(err => console.warn(err));
+    fetchSavedForm() {
+        const formToBeViewedUUID = this.state.viewSavedFormsDialogBox.selectedFormDetails['UUID'];
 
-        } else {
-            alert('Please enable preview mode to view a saved form !');
-        }
+        fetchForm(formToBeViewedUUID).then(data => {
+            if (data.error) {
+                console.warn(' Failure in fetching the form. Please try again later !');
+            } else {
+                this.setState({
+                    metaList: data.form.metaCardList,
+                    inputsList: data.form.inputsCardList,
+                    outputsList: data.form.outputsCardList,
+                    viewSavedFormsDialogBox: {
+                        display: false,
+                        viewSelectedForm: false,
+                        deleteSelectedForm: false,
+                        selectedFormDetails: { UUID: '', name: '' }
+                    },
+                    viewSavedFormsMenu: false
+                });
+            }
+        }).catch(err => console.warn(err));
     }
 
     render() {
@@ -931,12 +980,12 @@ class studioMain extends Component<{}, studioMainState> {
             {/* View Selected Saved Form Dialog Box */}
             <Modal
                 show={this.state.viewSavedFormsDialogBox['display']}
-                onHide = { () => {
+                onHide={() => {
                     this.setState(prevState => {
                         prevState.viewSavedFormsDialogBox['display'] = false;
                         return { viewSavedFormsDialogBox: prevState.viewSavedFormsDialogBox };
                     });
-                } }
+                }}
                 backdrop="static"
                 keyboard={false}>
 
@@ -954,12 +1003,12 @@ class studioMain extends Component<{}, studioMainState> {
             {/* Save Form Dialog Box */}
             <Modal
                 show={this.state.saveFormDialogBoxOptions['display']}
-                onHide = { () => {
+                onHide={() => {
                     this.setState(prevState => {
                         prevState.saveFormDialogBoxOptions['display'] = false;
                         return { saveFormDialogBoxOptions: prevState.saveFormDialogBoxOptions };
                     });
-                } }
+                }}
                 backdrop="static"
                 keyboard={false}>
 
@@ -972,15 +1021,15 @@ class studioMain extends Component<{}, studioMainState> {
                         <input
                             className="w-full border-2 border-black	rounded p-1 px-2 mt-1.5"
                             placeholder="Form Name"
-                            value = {this.state.saveFormDialogBoxOptions['formName']}
-                            onChange={(e)=>{
-                                this.setState(prevState=>{
+                            value={this.state.saveFormDialogBoxOptions['formName']}
+                            onChange={(e) => {
+                                this.setState(prevState => {
                                     let saveFormDialogBoxOptionsCopy = prevState.saveFormDialogBoxOptions;
                                     saveFormDialogBoxOptionsCopy['formName'] = e.target.value;
                                     return { saveFormDialogBoxOptions: saveFormDialogBoxOptionsCopy };
                                 });
                             }
-                            }/>
+                            } />
                     </div>
                     {this.state.saveFormDialogBoxOptions['name_requirement_warning'] && (
                         <div className="text-sm mt-2 text-red-500">
@@ -988,10 +1037,10 @@ class studioMain extends Component<{}, studioMainState> {
                         </div>)}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={()=>{this.handleSaveFormOptionConfirmation('CANCEL');}}>
+                    <Button variant="primary" onClick={() => { this.handleSaveFormOptionConfirmation('CANCEL'); }}>
                         Close
                     </Button>
-                    <Button variant="success" onClick={()=>{this.handleSaveFormOptionConfirmation('SAVE');}}>
+                    <Button variant="success" onClick={() => { this.handleSaveFormOptionConfirmation('SAVE'); }}>
                         Save
                     </Button>
                 </Modal.Footer>
@@ -1000,7 +1049,7 @@ class studioMain extends Component<{}, studioMainState> {
 
             {/* Card Selection Confirmation Toast message */}
             <ToastContainer position='bottom-end' className="m-4">
-                <Toast onClose={() => this.setState({displayCardAdditionToast: false})} show={this.state.displayCardAdditionToast} delay={5000} autohide>
+                <Toast onClose={() => this.setState({ displayCardAdditionToast: false })} show={this.state.displayCardAdditionToast} delay={5000} autohide>
                     <Toast.Header>
                         <strong className="me-auto text-blue-900">Alert</strong>
                     </Toast.Header>
@@ -1028,48 +1077,61 @@ class studioMain extends Component<{}, studioMainState> {
 
             <div className="w-100vw min-h-screen">
                 {/* side bar menu for card components */}
-                <Offcanvas show={this.state.showSideBarMenu} onHide={()=>this.toggleSideBarMenu("CREATE-CARD-OPTION")}>
+                <Offcanvas show={this.state.showSideBarMenu} onHide={() => this.toggleSideBarMenu("CREATE-CARD-OPTION")}>
                     <Offcanvas.Header closeButton>
                         <div className="text-4xl text-blue-900">Components</div>
                     </Offcanvas.Header>
 
-                    <Offcanvas.Body className="divide-y divide-gray-300" style={{background: "#EEE"}}>
+                    <Offcanvas.Body className="divide-y divide-gray-300" style={{ background: "#EEE" }}>
                         {/* TODO make these cards click through*/}
 
                         <h3>Meta Cards</h3>
                         <div className="demo-cards" onClick={() => {
                             this.sideBarOptionSelected('meta', 'DescriptionComponent', null);
                         }}>
-                            <DecriptionCardComponent cardElement={{}} />
+                            <div className="pointer-events-none">
+                                <DecriptionCardComponent cardElement={{}} />
+                            </div>
                         </div>
 
                         <div className="demo-cards" onClick={() => {
-                            this.sideBarOptionSelected('meta', 'ReferenceComponent',null);
+                            this.sideBarOptionSelected('meta', 'ReferenceComponent', null);
                         }}>
-                            <ReferenceCard cardElement={{}} />
-                        </div>
 
+                            <div className="pointer-events-none">
+                                <ReferenceCard cardElement={{}} />
+                            </div>
+                        </div>
 
                         <h3>Input Cards</h3>
                         <div className="demo-cards" onClick={() => {
-                            this.sideBarOptionSelected('input', 'SelectInput',null);
+                            this.sideBarOptionSelected('input', 'SelectInput', null);
                         }}>
-                            <SelectInputCard cardElement={{}} />
+
+                            <div className="pointer-events-none">
+                                <SelectInputCard cardElement={{}} />
+                            </div>
                         </div>
                         <div className="demo-cards" onClick={() => {
-                            this.sideBarOptionSelected('input', 'NumericalInput',null);
+                            this.sideBarOptionSelected('input', 'NumericalInput', null);
                         }}>
-                            <NumericalInputCard cardElement={{}} />
+                            <div className="pointer-events-none">
+                                <NumericalInputCard cardElement={{}} />
+                            </div>
                         </div>
                         <div className="demo-cards" onClick={() => {
-                            this.sideBarOptionSelected('input', 'BivalentInput',null);
+                            this.sideBarOptionSelected('input', 'BivalentInput', null);
                         }} >
-                            <BivalentInputCard className="demo-cards" cardElement={{}} />
+                            <div className="pointer-events-none">
+                                <BivalentInputCard className="demo-cards" cardElement={{}} />
+                            </div>
                         </div>
                         <div className="demo-cards" onClick={() => {
-                            this.sideBarOptionSelected('input', 'SliderInput',null);
+                            this.sideBarOptionSelected('input', 'SliderInput', null);
                         }}>
-                            <SliderInputCard cardElement={{}} />
+                            <div className="pointer-events-none">
+                                <SliderInputCard cardElement={{}} />
+                            </div>
                         </div>
 
                         {/* <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" onClick={() => {
@@ -1080,27 +1142,30 @@ class studioMain extends Component<{}, studioMainState> {
 
                         <h3>Output Cards</h3>
                         <div className="demo-cards" onClick={() => {
-                            this.sideBarOptionSelected('output', 'NumericalOutputComponent',null);
+                            this.sideBarOptionSelected('output', 'NumericalOutputComponent', null);
                         }}>
-                            <NumericalOutputCard cardElement={{}}/>
+
+                            <div className="pointer-events-none">
+                                <NumericalOutputCard cardElement={{}} />
+                            </div>
                         </div>
                     </Offcanvas.Body>
                 </Offcanvas>
                 {/* side bar menu for card components */}
 
                 {/* side bar menu for viewing saved forms menu */}
-                <Offcanvas show={this.state.viewSavedFormsMenu} onHide={()=>this.toggleSideBarMenu("VIEW-SAVED-FORMS-OPTION")}>
+                <Offcanvas show={this.state.viewSavedFormsMenu} onHide={() => this.toggleSideBarMenu("VIEW-SAVED-FORMS-OPTION")}>
                     <Offcanvas.Header closeButton>
                         <div className="text-4xl text-blue-900">Saved Forms</div>
                     </Offcanvas.Header>
                     <Offcanvas.Body className="divide-y divide-gray-300">
                         {this.state.savedFormsList.length > 0 ?
-                                                            (<>{this.state.savedFormsList.map((form, id) => {
-                                                                    return (
-                                                                        <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" id={id} onClick={() => { this.handleViewSavedFormSelectionRequest(form._id, form.name); }}>{form.name}</div>
-                                                                    );
-                                                                })}</>)
-                                                           :(<div className="text-lg text-blue-900">No saved forms found !</div>)}
+                            (<>{this.state.savedFormsList.map((form, id) => {
+                                return (
+                                    <div className="text-xl py-2 cursor-pointer hover:underline hover:bg-gray-200 text-blue-900" id={id} onClick={() => { this.handleViewSavedFormSelectionRequest(form._id, form.name); }}>{form.name}</div>
+                                );
+                            })}</>)
+                            : (<div className="text-lg text-blue-900">No saved forms found !</div>)}
                     </Offcanvas.Body>
                 </Offcanvas>
                 {/* side bar menu for viewing saved forms menu */}
@@ -1110,7 +1175,7 @@ class studioMain extends Component<{}, studioMainState> {
                     <div className="text-3xl text-blue-900 m-1 inline-block font-semibold">Lexicon Studio</div>
                     <div className="flex items-center">
                         {!this.state.previewMode && (
-                            <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={()=>this.toggleSideBarMenu("CREATE-CARD-OPTION")}>
+                            <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={() => this.toggleSideBarMenu("CREATE-CARD-OPTION")}>
                                 <FontAwesomeIcon icon={faPlusCircle} className="mr-1.5" />Create
                             </div>
                         )}
@@ -1120,7 +1185,7 @@ class studioMain extends Component<{}, studioMainState> {
                         <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={this.handleSaveFormOption}>
                             <FontAwesomeIcon icon={faFileExport} className="mr-1.5" />Save Form
                         </div>
-                        <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={()=>this.toggleSideBarMenu("VIEW-SAVED-FORMS-OPTION")}>
+                        <div className="text-blue-900 text-lg mr-2 px-1.5 py-1 cursor-pointer border-b-2 border-transparent hover:border-blue-900" onClick={() => this.toggleSideBarMenu("VIEW-SAVED-FORMS-OPTION")}>
                             <FontAwesomeIcon icon={faBook} className="mr-1.5" />View Saved Forms
                         </div>
                     </div>
@@ -1130,15 +1195,16 @@ class studioMain extends Component<{}, studioMainState> {
                 <div className="flex flex-column items-center mt-4">
                     {/* meta column */}
                     <div className="w-1/2 mx-2">
-                        <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
-                            <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Meta
+                        <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none bg-gray-200">
+                            <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />
+                            Meta
                         </div>
                         {this.state.metaList.map((item, index) => (this.conditionalCardRender(item, index)))}
                     </div>
                     {/* meta column */}
                     {/* inputs column */}
                     <div className="w-1/2 mx-2">
-                        <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
+                        <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none bg-gray-200">
                             <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Inputs
                         </div>
                         {this.state.inputsList.map((item, index) => (this.conditionalCardRender(item, index)))}
@@ -1146,7 +1212,7 @@ class studioMain extends Component<{}, studioMainState> {
                     {/* input column */}
                     {/* outputs column */}
                     <div className="w-1/2 mx-2">
-                        <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none">
+                        <div className="transition ease-in-out duration-500 w-full sm:shadow hover:shadow-md border px-2 rounded-sm text-blue-900 text-lg py-2 mb-2 select-none bg-gray-200">
                             <FontAwesomeIcon icon={faEllipsisV} className="mr-2" />Outputs
                         </div>
                         {this.state.outputsList.map((item, index) => (this.conditionalCardRender(item, index)))}
